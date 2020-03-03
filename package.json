@@ -1,0 +1,14 @@
+{
+  "name": "java-unit-docs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:xiyun-international/java-unit-docs.git",
+  "author": "wubaiqing (琉璃) <wubaiqing@vip.qq.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "dumi dev"
+  },
+  "dependencies": {
+    "dumi": "^1.0.0"
+  }
+}
