@@ -23,6 +23,7 @@ export default {
   logo: "https://f2.xiyunerp.com/xy-logo.png",
   title: "禧云信息",
   description: "Java 单元测试作战手册",
+  publicPath: '/java-unit-docs/',
   menus: {
     "/docs": getMenus({ base: "/docs" })
   },

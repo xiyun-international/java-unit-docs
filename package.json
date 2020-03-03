@@ -6,7 +6,8 @@
   "author": "wubaiqing (琉璃) <wubaiqing@vip.qq.com>",
   "license": "MIT",
   "scripts": {
-    "start": "dumi dev"
+    "doc:dev": "dumi dev",
+    "doc:build": "dumi build"
   },
   "dependencies": {
     "dumi": "^1.0.0"
