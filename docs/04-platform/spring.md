@@ -5,5 +5,5 @@ group:
   order: 4
 ---
 
-# ci.spring
+# Spring
 
