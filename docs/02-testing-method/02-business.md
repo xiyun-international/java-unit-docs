@@ -1,8 +1,8 @@
 ---
-order: 3
+order: 2
 group:
   title: 编写测试用例
   order: 2
 ---
 
-# 集成测试
+# 业务性测试
