@@ -25,3 +25,4 @@ hs_err_pid*
 .umi/
 node_modules/
 dist/
+.umi-production/
