@@ -4,5 +4,6 @@ export default {
   logo: "https://f2.xiyunerp.com/xy-logo.png",
   mode: "docs",
   exportStatic: {},
+  base: "/java-unit-docs/",
   publicPath: "/java-unit-docs/",
 };
