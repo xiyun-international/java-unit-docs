@@ -1,0 +1,10 @@
+version: "3.1"
+services:
+  node:
+    build: .
+    ports:
+    - 8000:8000
+    volumes:
+    - .:/workspaceFolder
+    working_dir: /workspaceFolder
+    command: bash -c "dumi dev"
