@@ -70,7 +70,7 @@ import static org.mockito.Mockito.*;
 //静态的导入Mockito,这样代码看起来更清晰
 import static org.mockito.Mockito.*;
 
-	@Test
+    @Test
     void firstDemo() {
         //创建模拟对象
  		List mockedList = mock(List.class);
