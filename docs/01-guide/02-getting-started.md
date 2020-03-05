@@ -73,15 +73,15 @@ import static org.mockito.Mockito.*;
     @Test
     void firstDemo() {
         //创建模拟对象
- 		List mockedList = mock(List.class);
-
- 		//使用模拟对象
- 		mockedList.add("one");
- 		mockedList.clear();
-
- 		//验证
- 		verify(mockedList).add("one");
- 		verify(mockedList).clear();
+        List mockedList = mock(List.class);
+        
+        //使用模拟对象
+        mockedList.add("one");
+        mockedList.clear();
+        
+        //验证
+        verify(mockedList).add("one");
+        verify(mockedList).clear();
     }
  
 ```
