@@ -7,11 +7,13 @@ group:
 
 # 快速上手
 
-本节将介绍如何在项目中使用 `Mockito`。我们还提供了演示demo的**[源码](https://github.com/xiyun-international/java-unit-docs/tree/master/src/test/java/com/xiyun)**，您可以从我们提供的demo进行入门学习。
+本节将介绍如何在工程中快速使用 `Mockito`。我们还提供了演示demo的**[源码](https://github.com/xiyun-international/java-unit-docs/tree/master/src/test/java/com/xiyun)**，您可以实际运行我们提供的demo来查看运行结果。
+
+
 
 ## 准备工作
 
-在这里，我将告诉您的是：您不需要准备任何的环境、依赖的包。Spring集成了Mockito，它会帮您引入较新的版本。在您创建项目时Spring也会自动帮您引入starter-test模块，采用JUnit5。
+我们采用的测试工具是JUnit + Mockito。在这里，我将告诉您的是：您不需要准备任何的环境、依赖的包。Spring集成了Mockito，它会帮您引入较新的版本。在您创建项目时Spring也会自动帮您引入starter-test模块。
 
 ```
 <dependency>
@@ -20,7 +22,9 @@ group:
 </dependency>
 ```
 
-您只需要在编写测试代码时，静态的引入Mockito包即可。
+
+
+**您只需要在编写测试代码时，静态的引入Mockito包即可。**
 
 ```java
 import static org.mockito.Mockito.*;
@@ -30,7 +34,7 @@ import static org.mockito.Mockito.*;
 
 ## 演示Demo
 
-您可以创建一个新的项目，来执行以下代码。其中我模拟了List接口，因为大多数人都熟悉集合接口（例如add()、get()和clear()方法）。在开发时请不要模拟集合类，应使用一个真实的实例。
+其中我模拟了List接口，因为大多数人都熟悉集合接口（例如add()、get()和clear()方法）。在开发时请不要模拟集合类，应使用一个真实的实例。
 
 ```java
 //静态的导入Mockito,这样代码看起来更清晰
@@ -50,7 +54,7 @@ import static org.mockito.Mockito.*;
         verify(mockedList).add("one");
         verify(mockedList).clear();
         
-        //验证是否调用remove方法
+        //由于没有执行remove方法，运行到这里会抛出异常
         verify(mockedList).remove("one");
     }
 
@@ -60,7 +64,7 @@ import static org.mockito.Mockito.*;
 
 ## 运行结果
 
-```
+```java
 Wanted but not invoked:
 list.remove("one");
 -> at com.xiyun.xiyuntest.web.XiyunTestWebApplicationTests.firstExample(XiyunTestWebApplicationTests.java:27)
