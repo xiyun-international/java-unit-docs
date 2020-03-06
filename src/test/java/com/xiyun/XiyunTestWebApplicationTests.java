@@ -1,4 +1,4 @@
-package test.java.com.xiyun.xiyuntest.web;
+package test.java.com.xiyun;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
