@@ -14,11 +14,16 @@ class XiyunTestWebApplicationTests {
     void firstExample() {
         //创建模拟对象
         List mockedList = mock(List.class);
+
         //使用模拟对象
         mockedList.add("one");
         mockedList.clear();
-        //验证
+
+        //默认情况下验证方法调用1次
         verify(mockedList).add("one");
         verify(mockedList).clear();
+
+        //验证是否调用remove方法
+        verify(mockedList).remove("one");
     }
 }
