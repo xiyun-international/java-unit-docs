@@ -1,7 +1,5 @@
-
--- ----------------------------
--- Table structure for t_user
--- ----------------------------
+create database middle_stage;
+use middle_stage;
 DROP TABLE IF EXISTS `t_user`;
 CREATE TABLE `t_user`  (
   `id` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
