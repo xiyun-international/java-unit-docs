@@ -21,4 +21,5 @@ services:
     ports:
     - "3306:3306"
     tty: true
+    stdin_open: true
 
