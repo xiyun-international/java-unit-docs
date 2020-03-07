@@ -20,5 +20,5 @@ services:
     container_name: my-mysql
     ports:
     - "3306:3306"
-    tty:
-    true
+    tty: true
+
