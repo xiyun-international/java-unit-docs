@@ -20,14 +20,12 @@
 
         //因为get(999)没有设置桩代码，所以会打印null
         System.out.println(mockedList.get(999));
-        
+
         verify(mockedList).get(0);
     }
 ```
 
 默认情况下，对于有返回值的方法，`Mockito`将会根据需要返回`null`。如：`int/Integer返回0`，`boolean/Boolean返回false`。[桩代码](https://baike.baidu.com/item/%E6%A1%A9%E4%BB%A3%E7%A0%81/6907051?fr=aladdin)可以被覆盖。一旦设置桩代码，不管调用多少次，该方法都将始终返回存根值。
-
-
 
 ### 参数匹配器
 
@@ -85,4 +83,4 @@
 
 有些情况下，您可能需要验证方法的执行次数。您可以根据**API**灵活的设置调用次数。默认`times(1)`，可以显示的省略使用`times(1)`。
 
-如果您还想了解更多，请访问[**Mockito官方API**](https://javadoc.io/static/org.mockito/mockito-core/3.3.1/org/mockito/Mockito.html)进行深入学习。
+如果您还想了解更多，请访问[**Mockito 官方 API**](https://javadoc.io/static/org.mockito/mockito-core/3.3.1/org/mockito/Mockito.html)进行深入学习。
