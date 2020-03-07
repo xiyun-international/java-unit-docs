@@ -8,6 +8,11 @@ spring:
     minIdle: 2
     maxActive: 5
     maxWait: 60000
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force-response: true
 mybatis:
   mapper-locations: classpath:mapper/*.xml
 logging:
