@@ -1,6 +1,5 @@
 
-use mysql;
-create database middle_stage;
+create database if not exists middle_stage;
 use middle_stage;
 -- ----------------------------
 -- Table structure for t_user
