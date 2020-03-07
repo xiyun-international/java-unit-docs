@@ -9,10 +9,10 @@ services:
     working_dir: /workspaceFolder
     command: bash -c "dumi dev"
   mysql:
-    image: mysql
+    image: mysql:5.7
     environment:
     - MYSQL_ROOT_PASSWORD=123456
-    - MYSQL_DATABASE=java
+    - MYSQL_DATABASE=middle_stage
     volumes:
     - $PWD/conf:/etc/mysql/conf.d
     - $PWD/logs:/logs
