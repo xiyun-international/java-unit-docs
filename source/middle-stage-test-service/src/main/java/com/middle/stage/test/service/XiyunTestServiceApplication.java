@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan(basePackages = "com.xiyun.xiyun.test.dao.mapper")
+@MapperScan(basePackages = "com.middle.stage.test.dao.mapper")
 public class XiyunTestServiceApplication {
 
     public static void main(String[] args) {
