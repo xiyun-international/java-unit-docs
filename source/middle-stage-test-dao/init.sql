@@ -14,9 +14,9 @@
  Date: 07/03/2020 17:29:35
 */
 
-SET NAMES utf8mb4;
-SET FOREIGN_KEY_CHECKS = 0;
-
+use mysql;
+create database middle_stage;
+use middle_stage;
 -- ----------------------------
 -- Table structure for t_user
 -- ----------------------------
