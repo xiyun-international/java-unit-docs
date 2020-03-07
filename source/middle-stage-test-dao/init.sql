@@ -1,18 +1,3 @@
-/*
- Navicat MySQL Data Transfer
-
- Source Server         : 本地
- Source Server Type    : MySQL
- Source Server Version : 50717
- Source Host           : 
- Source Schema         : 
-
- Target Server Type    : MySQL
- Target Server Version : 50717
- File Encoding         : 65001
-
- Date: 07/03/2020 17:29:35
-*/
 
 use mysql;
 create database middle_stage;

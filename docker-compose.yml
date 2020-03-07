@@ -14,8 +14,8 @@ services:
     - MYSQL_ROOT_PASSWORD=123456
     - MYSQL_DATABASE=middle_stage
     volumes:
-    - /usr/local/data:/var/lib/mysql
-    - /usr/local/init:/docker-entrypoint-initdb.d/
+    - /usr/local/mysql/data:/var/lib/mysql
+    - /usr/local/mysql/init:/docker-entrypoint-initdb.d/
     container_name: my-mysql
     ports:
     - "3306:3306"
