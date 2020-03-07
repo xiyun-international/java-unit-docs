@@ -2,11 +2,13 @@ package com.xiyun.xiyun.test.service.impl;
 
 import com.xiyun.xiyun.test.dao.data.UserDO;
 import com.xiyun.xiyun.test.dao.mapper.UserDOMapper;
-import com.xiyun.xiyun.test.service.IUserService;
+import com.xiyun.xiyun.test.service.UserService;
 import com.xiyun.xiyun.test.service.commons.CallResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 /**
  * @author zhaoyongqiang
@@ -14,9 +16,9 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @Slf4j
-public class UserServiceImpl implements IUserService {
+public class UserServiceImpl implements UserService {
 
-    @Autowired
+    @Resource
     private UserDOMapper userDOMapper;
 
     /**
