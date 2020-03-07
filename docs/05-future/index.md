@@ -107,6 +107,14 @@ services:
 
 在商业上，已经有很多类似的系统，但很少有针对于公司的私服。我们在推广测试标准时，如何强有力的推广，实际上也离不开可视化平台的展示。要找到可以支撑公司的这套系统，把整个测试环节搭建起来。
 
+### 演示视频
+
+CircleCI 讲解
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/CB7vnoXI0pE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+### 商业系统
+
 当前对 GitHub 免费开放的 CI 商业系统有：
 
 - [CircleCI](https://circleci.com/)
