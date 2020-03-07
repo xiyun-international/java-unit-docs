@@ -32,6 +32,11 @@ public class CallResult {
     public static final int RETURN_STATUS_PASW_INCORRECT = -3;
 
     /**
+     * 参数异常
+     */
+    public static final int RETURN_STATUS_PARAM_ERROR = -4;
+
+    /**
      * 状态值
      */
     private int code;
