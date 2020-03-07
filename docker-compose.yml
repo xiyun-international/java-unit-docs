@@ -14,9 +14,7 @@ services:
     - MYSQL_ROOT_PASSWORD=123456
     - MYSQL_DATABASE=middle_stage
     volumes:
-    - $PWD/conf:/etc/mysql/conf.d
-    - $PWD/logs:/logs
-    - $PWD/data:/var/lib/mysql
+    - $/usr/local/data:/var/lib/mysql
     container_name: my-mysql
     ports:
     - "3306:3306"
