@@ -7,7 +7,15 @@ group:
 
 # 快速上手
 
-本节将介绍如何在工程中快速使用 `Mockito`。我们还提供了演示demo的**[源码](https://github.com/xiyun-international/java-unit-docs/tree/master/src/test/java/com/xiyun)**，您可以实际运行我们提供的demo来查看运行结果。
+本节将介绍什么是Mockito及如何在单元测试中快速使用 `Mockito`。我们还提供了后续所有演示demo的**[源码](https://github.com/xiyun-international/java-unit-docs/tree/master/source)**，您可以实际运行我们提供的demo来查看运行结果。
+
+本节的演示demo与业务一节的演示demo相同。这里只介绍Mockito用法。
+
+
+
+## Mokito
+
+Mockito是一个针对 Java 的 Mock 框架。它能以一种可控的方式去获取一个假对象，通过假对象来模拟真实的对象行为。单元测测试的思路是想在不涉及依赖关系的情况下，测试代码的有效性，而我们就是通过Mockito来隔离这种依赖关系。
 
 
 
@@ -34,45 +42,105 @@ import static org.mockito.Mockito.*;
 
 ## 演示Demo
 
-其中我模拟了List接口，因为大多数人都熟悉集合接口（例如add()、get()和clear()方法）。在开发时请不要模拟集合类，应使用一个真实的实例。
 
-```java
-//静态的导入Mockito,这样代码看起来更清晰
-import static org.mockito.Mockito.*;
 
-    @Test
-    void firstExample() {
-        
-        //创建模拟对象
-        List mockedList = mock(List.class);
-        
-        //使用模拟对象
-        mockedList.add("one");
-        mockedList.clear();
-        
-        //默认情况下验证方法调用1次
-        verify(mockedList).add("one");
-        verify(mockedList).clear();
-        
-        //由于没有执行remove方法，运行到这里会抛出异常
-        verify(mockedList).remove("one");
-    }
+### Mapper代码
 
 ```
+/**
+ * 通过手机号查询
+ * @param mobile
+ * @return
+ */
+UserDO selectByMobile(String mobile);
+```
+
+
+
+### 业务代码
+
+```java
+@Service
+@Slf4j
+public class UserServiceImpl implements UserService {
+
+    @Resource
+    private UserDOMapper userDOMapper;
+
+    @Override
+    public CallResult login(UserDO userDO) {
+        UserDO userEntity = userDOMapper.selectByMobile(userDO.getMobile());
+        if (userEntity == null) {
+            log.info("没有该用户信息，请先注册！");
+            return CallResult.fail(CallResult.RETURN_STATUS_UNREGISTERED, "没有该用户信息，请先注册！");
+        }
+        if (!userDO.getPassword().equals(userEntity.getPassword())) {
+            return CallResult.fail(CallResult.RETURN_STATUS_PASW_INCORRECT, "您的密码不正确！");
+        }
+        return CallResult.success(CallResult.RETURN_STATUS_OK, "登录成功！", userEntity);
+    }
+}
+```
+
+
+
+### 测试代码
+
+```
+@SpringBootTest
+class MiddleStageTestServiceByAnnotationApplicationTests {
+
+    @Test
+    @DisplayName("登录测试")
+    void login() {
+
+        //验证测试用例是否创建
+        Assertions.assertNotNull(userDO, "userDO is null");
+
+        //1.模拟登录业务中，依赖的dao层查询接口
+        UserDOMapper mockUserDOMapper = mock(UserDOMapper.class);
+        //将模拟的接口注入
+        UserServiceImpl userService = new UserServiceImpl(mockUserDOMapper);
+
+        //2.当程序运行时，模拟查询结果，返回我们指定的预期结果
+        when(mockUserDOMapper.selectByMobile(mobile)).thenReturn(userEntity);
+
+		//3.执行登录方法
+        CallResult loginCallResult = userService.login(userDO);
+
+        //4.验证是否执行
+        verify(mockUserDOMapper).selectByMobile(mobile);
+
+        //验证是否与我们预期的状态值相符
+        Assertions.assertEquals(CallResult.RETURN_STATUS_PASW_INCORRECT, loginCallResult.getCode());
+    }
+}
+```
+
+
+
+## 使用介绍
+
+1. 在这里，我模拟了用户登录的场景。通过mock方法，传入具有依赖关系的UserDOMapper的类类型，来获取一个模拟的接口。
+2. 将模拟接口设置进UserServiceImpl中，并设置桩代码。当mockUserDOMapper.selectByMobile方法输入参数为mobile时，return模拟的结果。
+3. 执行被测试业务方法。
+4. 验证业务方法是否执行，及验证业务状态码是否符合预期。
 
 
 
 ## 运行结果
 
+由于我期望的状态码为1(CallResult.RETURN_STATUS_OK)，实际处理的状态码为-3，密码不匹配的状态码。所以抛出了异常。
+
 ```java
-Wanted but not invoked:
-list.remove("one");
--> at com.xiyun.xiyuntest.web.XiyunTestWebApplicationTests.firstExample(XiyunTestWebApplicationTests.java:27)
+org.opentest4j.AssertionFailedError: 
+Expected :1
+Actual   :-3
 ```
 
 
 
 ## 说明
 
-一旦模拟类创建，Mockito将记住所有交互。然后，您可以有选择地验证您感兴趣的任何交互。譬如我验证了mockedList的add、clear及remove方法是否执行，由于remove方法并没有得到执行，所以产生了异常。您可以试着验证其他方法，观察运行结果会有什么不同。
+单元测试的思路就是要在不涉及依赖关系的情况下测试代码。如果您依赖的代码通过了单元测试，并且依赖关系也正常，那么他们就会同时工作正常。所以您可以通过Mockito来模拟这种依赖关系，而不产生真实调用。
 
