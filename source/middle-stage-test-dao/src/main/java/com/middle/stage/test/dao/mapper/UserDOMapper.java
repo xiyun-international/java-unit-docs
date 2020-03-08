@@ -10,12 +10,10 @@ public interface UserDOMapper {
 
     /**
      * 添加不为空字段
-     * @param record
+     * @param userDO
      * @return
      */
-    int insertSelective(UserDO record);
-
-    UserDO selectByPrimaryKey(String id);
+    int insertSelective(UserDO userDO);
 
     /**
      * 通过手机号查询
