@@ -127,7 +127,16 @@ class MiddleStageTestServiceByAnnotationApplicationTests {
 ## 运行结果
 
 ```java
-
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json;charset=UTF-8"]
+     Content type = application/json
+             Body = {"code":-2,"msg":"没有该用户信息，请先注册！","content":null}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+2020-03-08 19:44:39.795  INFO 19020 --- [main] s.t.w.MiddleStageTestWebApplicationTests : 测试通过
 ```
 
 
