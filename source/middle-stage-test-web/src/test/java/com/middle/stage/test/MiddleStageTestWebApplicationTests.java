@@ -1,8 +1,9 @@
-package com.middle.stage.test.web;
+package com.middle.stage.test;
 
 import com.alibaba.fastjson.JSONObject;
-import com.middle.stage.test.dao.data.UserDO;
-import com.middle.stage.test.service.commons.CallResult;
+import com.middle.stage.test.commons.CallResult;
+import com.middle.stage.test.data.UserDO;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -16,6 +17,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+@Slf4j
 @SpringBootTest
 @AutoConfigureMockMvc
 class MiddleStageTestWebApplicationTests {
@@ -48,7 +50,9 @@ class MiddleStageTestWebApplicationTests {
         Assertions.assertNotEquals(MockMvcResultMatchers.status().isOk(), response.getStatus());
         CallResult callResult = JSONObject.parseObject(response.getContentAsString(), CallResult.class);
         //验证业务状态码
-        Assertions.assertEquals(callResult.getCode(), CallResult.RETURN_STATUS_OK);
+        Assertions.assertEquals(callResult.getCode(), CallResult.RETURN_STATUS_UNREGISTERED);
+
+        log.info("测试通过");
 
     }
 }

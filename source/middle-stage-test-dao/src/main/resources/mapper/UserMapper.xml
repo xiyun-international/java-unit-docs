@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.middle.stage.test.dao.mapper.UserDOMapper">
+<mapper namespace="com.middle.stage.test.dao.mapper.UserMapper">
 
     <resultMap id="BaseResultMap" type="com.middle.stage.test.dao.data.UserDO">
         <id column="id" property="id" jdbcType="VARCHAR"/>
@@ -14,13 +14,6 @@
     <sql id="Base_Column_List">
         id, user_name, password, crate_time, update_time, mobile
     </sql>
-
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
-        select
-        <include refid="Base_Column_List"/>
-        from t_user
-        where id = #{id,jdbcType=VARCHAR}
-    </select>
 
     <insert id="insert" parameterType="com.middle.stage.test.dao.data.UserDO">
         insert into t_user (id, user_name, password,

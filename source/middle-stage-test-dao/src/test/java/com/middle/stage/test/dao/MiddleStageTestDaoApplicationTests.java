@@ -1,6 +1,6 @@
 package com.middle.stage.test.dao;
 
-import com.middle.stage.test.dao.mapper.UserDOMapper;
+import com.middle.stage.test.dao.mapper.UserMapper;
 import com.middle.stage.test.dao.data.UserDO;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
@@ -16,7 +16,7 @@ import java.util.UUID;
 class MiddleStageTestDaoApplicationTests {
 
     @Autowired
-    private UserDOMapper userDOMapper;
+    private UserMapper userMapper;
 
     static UserDO userDO;
 
@@ -44,8 +44,8 @@ class MiddleStageTestDaoApplicationTests {
         //验证测试用例是否创建
         Assertions.assertNotNull(userDO, "userDO is null");
 
-        userDOMapper.insertSelective(userDO);
-        UserDO userEntity = userDOMapper.selectByMobile(mobile);
+        userMapper.insertSelective(userDO);
+        UserDO userEntity = userMapper.selectByMobile(mobile);
 
         //验证是否添加成功
         Assertions.assertNotNull(userEntity, "insert error");

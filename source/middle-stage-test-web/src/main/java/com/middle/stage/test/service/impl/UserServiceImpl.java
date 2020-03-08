@@ -1,9 +1,9 @@
 package com.middle.stage.test.service.impl;
 
+import com.middle.stage.test.commons.CallResult;
 import com.middle.stage.test.data.UserDO;
 import com.middle.stage.test.mapper.UserMapper;
 import com.middle.stage.test.service.UserService;
-import com.middle.stage.test.commons.CallResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +25,7 @@ public class UserServiceImpl implements UserService {
      *
      * @param userMapper
      */
+
     public UserServiceImpl(UserMapper userMapper) {
         this.userMapper = userMapper;
     }

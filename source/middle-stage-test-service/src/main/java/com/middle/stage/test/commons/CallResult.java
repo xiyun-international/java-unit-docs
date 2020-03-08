@@ -1,4 +1,4 @@
-package com.middle.stage.test.service.commons;
+package com.middle.stage.test.commons;
 
 import lombok.Data;
 

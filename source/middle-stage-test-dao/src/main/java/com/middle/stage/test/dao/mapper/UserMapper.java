@@ -4,7 +4,7 @@ import com.middle.stage.test.dao.data.UserDO;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface UserDOMapper {
+public interface UserMapper {
 
     int insert(UserDO record);
 
