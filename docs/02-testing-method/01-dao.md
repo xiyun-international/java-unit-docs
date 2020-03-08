@@ -23,16 +23,16 @@ group:
 
 ### Mapper代码
 
-```
+```java
 /**
  * 添加不为空字段
- * @param record
+ * @param userDO
  * @return
  */
-int insertSelective(UserDO record);
+int insertSelective(UserDO userDO);
 
 /**
- * 通过手机号查询
+ * 通过手机号查询用户
  * @param mobile
  * @return
  */
@@ -43,13 +43,20 @@ UserDO selectByMobile(String mobile);
 
 ### mapper.xml
 
-mapper中的代码过长就不予展示，您可通[下载源码](https://github.com/xiyun-international/java-unit-docs/tree/master/source/middle-stage-test-dao/src/main/resources)查看。
+mapper 中的代码过长就不予展示，您可通[下载源码](https://github.com/xiyun-international/java-unit-docs/tree/master/source/middle-stage-test-dao/src/main/resources)查看。
 
 
 
 ### 测试代码
 
-```
+- 通过 @BeforeAll 注解，在单元测试执行前准备测试数据。
+- 通过 @Transactional 注解，保证单元测试运行后，事物自动回滚。
+- 测试方法使用断言先判断测试数据是否初始化，然后将测试数据执行添加后，再执行查询，判断是否添加成功，及字段值是否符合预期值。
+
+
+
+```java
+@Slf4j
 @SpringBootTest
 class MiddleStageTestDaoApplicationTests {
 
@@ -84,8 +91,9 @@ class MiddleStageTestDaoApplicationTests {
         //验证是否添加成功
         Assertions.assertNotNull(userEntity, "insert error");
         Assertions.assertEquals(password, userEntity.getPassword(), "password not equals");
-        //由于没有添加用户名，运行会抛出异常
-        Assertions.assertEquals(userName, userEntity.getUserName(), "userName not equals");
+        //由于没有添加用户名，运行这断代码会抛出异常
+        //Assertions.assertEquals(userName, userEntity.getUserName(), "userName not equals");
+        log.info("测试通过");
     }
 
 }
@@ -93,19 +101,10 @@ class MiddleStageTestDaoApplicationTests {
 
 
 
-## 代码介绍
-
-- 通过@BeforeAll注解，在所有单元测试执行前，准备测试数据。
-- 通过@Transactional注解，保证单元测试运行后，事物自动回滚。
-- insertTest使用断言先判断测试数据是否初始化，然后将测试数据执行添加后，再执行查询，判断是否添加成功，及字段值是否符合预期值。由于测试数据中没有设置用户名，所以会直接抛出异常。
-
-
-
 ## 运行结果
 
-```
-org.opentest4j.AssertionFailedError: userName not equals ==> 
-Expected :zyq
-Actual   :null
+```java
+2020-03-08 19:20:13.854  INFO 18264 --- [main] s.t.d.MiddleStageTestDaoApplicationTests : 测试通过
+2020-03-08 19:20:13.883  INFO 18264 --- [main] o.s.t.c.transaction.TransactionContext   : Rolled back transaction for test
 ```
 

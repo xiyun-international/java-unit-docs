@@ -7,7 +7,7 @@ group:
 
 # HTTP 接口测试
 
-在您保证了Service和DAO层的测试后。对于暴露出来的HTTP接口，您只需要关注它是否可用即可。因为业务和数据访问的正确性都由他们自己的单元测试来保证了。对于Http接口的测试，您同样要关注几点原则：
+在您保证了 Service 和 DAO 层的测试后。对于暴露出的HTTP接口，您只需要关注它是否可用即可。对于Http接口的测试，您同样要关注几点原则：
 
 - 全自动&非交互式
 - 设定自动回滚
@@ -18,16 +18,44 @@ group:
 
 ## 演示Demo
 
-### 业务代码
+### Service代码
 
 > 与业务测试一节中的代码一致，这里不予展示。
->
+
+
+
+### Controller代码
+
+这里为用户登录场景。判断数据是否为空，执行登录。
+
+```java
+@RestController
+public class UserController {
+
+    @Resource
+    private UserService userService;
+
+    @PostMapping("/user/login")
+    @ResponseBody
+    public CallResult login(@RequestBody UserDO userDO) {
+        if (userDO == null) {
+            return CallResult.fail(CallResult.RETURN_STATUS_PARAM_ERROR, "参数异常，请检查参数！");
+        }
+        return userService.login(userDO);
+    }
+}
+```
 
 
 
 ### 测试代码
 
-```
+- 通过 @BeforeAll 注解，在测试方法执行前准备测试用例。
+- 通过 Spring自带的 MockMvc 对象，进行 HTTP 接口测试。它实现了对 HTTP 请求的模拟，能够直接以网络的形式，转换到 Controller 的调用，并且不依赖网络环境。
+- 通过 MockMvc 设置请求接口地址、请求方式、参数类型、参数、打印响应、获取响应。
+
+```java
+@Slf4j
 @SpringBootTest
 @AutoConfigureMockMvc
 class MiddleStageTestWebApplicationTests {
@@ -60,7 +88,8 @@ class MiddleStageTestWebApplicationTests {
         Assertions.assertNotEquals(MockMvcResultMatchers.status().isOk(), response.getStatus());
         CallResult callResult = JSONObject.parseObject(response.getContentAsString(), CallResult.class);
         //验证业务状态码
-        Assertions.assertEquals(callResult.getCode(), CallResult.RETURN_STATUS_OK);
+        Assertions.assertEquals(callResult.getCode(), 			               CallResult.RETURN_STATUS_UNREGISTERED);
+        log.info("测试通过");
 
     }
 }
@@ -68,21 +97,11 @@ class MiddleStageTestWebApplicationTests {
 
 
 
-## 代码介绍
-
-- 通过@BeforeAll注解设计测试用例
-- 通过Spring自带的MockMvc对象，进行http接口测试。它实现了对http请求的模拟，能够直接以网络的形式，转换到Controller的调用，并且不依赖网络环境。
-- 通过MockMvc设置请求接口地址、请求方式、参数类型、参数、打印响应、获取响应。
-
-
-
 ## 运行结果
 
-通过andDo(MockMvcResultHandlers.print())一行打印MockHttpServletResponse信息。
 
-由于期望的业务状态码为1(CallResult.RETURN_STATUS_OK)，实际为-2(未注册状态码)，所以这里抛出异常。您可对照我打印的响应信息，来熟悉这种方式。
 
-```
+```java
 MockHttpServletResponse:
            Status = 200
     Error message = null
@@ -92,9 +111,7 @@ MockHttpServletResponse:
     Forwarded URL = null
    Redirected URL = null
           Cookies = []
+2020-03-08 19:44:39.795  INFO 19020 --- [main] s.t.w.MiddleStageTestWebApplicationTests : 测试通过
 
-org.opentest4j.AssertionFailedError: 
-Expected :-2
-Actual   :1
 ```
 

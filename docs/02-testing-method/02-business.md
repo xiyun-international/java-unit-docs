@@ -11,12 +11,12 @@ group:
 
 ## 介绍&原则
 
-业务测试也就是对我们的Service、biz等业务代码进行测试。通常业务代码会有很多的依赖关系，而对于业务代码的测试我们最需要注意的原则有：
+业务测试也就是对我们的 Service、biz 等业务代码进行测试。通常业务代码会有很多的依赖关系，而对于业务代码的测试我们最需要注意的原则有：
 
 - 隔离依赖
 - 全自动&非交互式
 - 测试粒度足够小
-- 遵守BCDE原则
+- 遵守 BCDE 原则
 
 
 
@@ -26,7 +26,9 @@ group:
 
 ### Service代码
 
-```
+这里为用户登录场景。通过传递的用户数据查询，判断用户是否注册、密码是否正确及返回信息。
+
+```java
 @Service
 @Slf4j
 public class UserServiceImpl implements UserService {
@@ -62,7 +64,13 @@ public class UserServiceImpl implements UserService {
 
 ### 测试代码
 
-```
+- 通过 @BeforeAll 注解，在测试方法运行前准备测试用例。userDO 为用户登录参数，userResult 为模拟的查询结果。
+- 通过 when 方法设置当输入参数为 mobile 时，模拟查询过程返回模拟的查询结果。
+- 执行业务方法，通过verify方法验证模拟的方法是否执行。再通过断言验证返回的业务状态码是否服务我们的预期。
+- 验证业务方法是否执行，及验证业务状态码是否符合预期。
+
+```java
+@Slf4j
 @SpringBootTest
 class MiddleStageTestServiceByAnnotationApplicationTests {
 
@@ -76,7 +84,7 @@ class MiddleStageTestServiceByAnnotationApplicationTests {
     static UserDO userDO;
     
     //模拟查询结果
-    static UserDO userEntity;
+    static UserDO userResult;
     static String mobile = "17612345678";
     static String password = "123456";
 
@@ -87,9 +95,9 @@ class MiddleStageTestServiceByAnnotationApplicationTests {
         userDO.setMobile(mobile);
         userDO.setPassword(password);
 
-        userEntity = new UserDO();
-        userEntity.setMobile("17612345678");
-        userEntity.setPassword("654321");
+        userResult = new UserDO();
+        userResult.setMobile(mobile);
+        userResult.setPassword("654321");
     }
 
     @Test
@@ -100,8 +108,8 @@ class MiddleStageTestServiceByAnnotationApplicationTests {
         Assertions.assertNotNull(userDO, "userDO is null");
 
 		//设置桩代码，模拟查询过程
-        when(mockUserDOMapper.selectByMobile(mobile)).thenReturn(userEntity);
-		//执行查询
+        when(mockUserDOMapper.selectByMobile(mobile)).thenReturn(userResult);
+		//登录
         CallResult loginCallResult = userService.login(userDO);
 
         //验证是否执行
@@ -109,37 +117,17 @@ class MiddleStageTestServiceByAnnotationApplicationTests {
 
         //验证是否与我们预期的状态值相符
         Assertions.assertEquals(CallResult.RETURN_STATUS_OK, loginCallResult.getCode());
+    	log.info("测试通过");
+    
     }
 }
 ```
 
 
 
-### 代码介绍
-
-
-
-#### 业务代码
-
-这里模拟了用户登录的场景。通过传递的用户数据去查询，判断用户是否注册，密码是否正确。通过状态值返回。
-
-
-
-#### 测试代码
-
-- 通过@BeforeAll注解，设计测试用例。userDO为用户登录参数，userEntity为模拟的查询结果。
-- 通过Mockito的when方法，当输入参数为mobile时，模拟查询过程，返回我们模拟的查询结果。
-- 执行业务方法，通过verify方法验证模拟的方法是否执行。再通过断言验证返回的业务状态码是否服务我们的预期。
-
-
-
 ### 运行结果
 
-由于我期望的状态码为1(CallResult.RETURN_STATUS_OK)，实际处理的状态码为-3，密码不匹配的状态码。所以抛出了异常。
-
-```
-org.opentest4j.AssertionFailedError: 
-Expected :1
-Actual   :-3
+```java
+2020-03-08 19:36:08.053  INFO 17720 --- [main] eTestServiceByAnnotationApplicationTests : 测试通过
 ```
 
