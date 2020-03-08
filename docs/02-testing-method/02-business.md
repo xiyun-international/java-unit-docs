@@ -67,7 +67,6 @@ public class UserServiceImpl implements UserService {
 - 通过 @BeforeAll 注解，在测试方法运行前准备测试用例。userDO 为用户登录参数，userResult 为模拟的查询结果。
 - 通过 when 方法设置当输入参数为 mobile 时，模拟查询过程返回模拟的查询结果。
 - 执行业务方法，通过verify方法验证模拟的方法是否执行。再通过断言验证返回的业务状态码是否服务我们的预期。
-- 验证业务方法是否执行，及验证业务状态码是否符合预期。
 
 ```java
 @Slf4j
