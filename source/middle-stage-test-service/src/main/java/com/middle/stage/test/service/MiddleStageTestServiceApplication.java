@@ -6,10 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @MapperScan(basePackages = "com.middle.stage.test.dao.mapper")
-public class XiyunTestServiceApplication {
+public class MiddleStageTestServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(XiyunTestServiceApplication.class, args);
+        SpringApplication.run(MiddleStageTestServiceApplication.class, args);
     }
 
 }

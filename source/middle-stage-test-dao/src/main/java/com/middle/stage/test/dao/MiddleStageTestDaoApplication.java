@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class XinyunTestDaoApplication {
+public class MiddleStageTestDaoApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(XinyunTestDaoApplication.class, args);
+        SpringApplication.run(MiddleStageTestDaoApplication.class, args);
     }
 
 }

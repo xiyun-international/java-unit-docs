@@ -6,10 +6,10 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan(basePackages = "com.middle.stage.test.*")
-public class XiyunTestWebApplication {
+public class MiddleStageTestWebApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(XiyunTestWebApplication.class, args);
+        SpringApplication.run(MiddleStageTestWebApplication.class, args);
     }
 
 }

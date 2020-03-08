@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.UUID;
 
 @SpringBootTest
-class XinyunTestDaoApplicationTests {
+class MiddleStageTestDaoApplicationTests {
 
     @Autowired
     private UserDOMapper userDOMapper;

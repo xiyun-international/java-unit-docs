@@ -13,7 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
-class XiyunTestServiceByCodeApplicationTests {
+class MiddleStageTestServiceByCodeApplicationTests {
 
     //登录参数
     static UserDO userDO;

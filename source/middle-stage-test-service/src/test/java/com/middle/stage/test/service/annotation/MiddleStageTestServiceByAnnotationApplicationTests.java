@@ -17,7 +17,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-class XiyunTestServiceByAnnotationApplicationTests {
+class MiddleStageTestServiceByAnnotationApplicationTests {
 
     @Mock
     //通过注解模拟依赖的接口或类
@@ -51,7 +51,7 @@ class XiyunTestServiceByAnnotationApplicationTests {
 
     @Test
     @DisplayName("登录测试")
-    void loginTest() {
+    void login() {
 
         //验证测试用例是否创建
         Assertions.assertNotNull(userDO, "userDO is null");
