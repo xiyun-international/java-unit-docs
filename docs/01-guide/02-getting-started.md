@@ -15,13 +15,13 @@ group:
 
 ## Mokito
 
-Mockito是一个针对 Java 的 Mock 框架。它能以一种可控的方式去获取一个假对象，通过假对象来模拟真实的对象行为。单元测测试的思路是想在不涉及依赖关系的情况下，测试代码的有效性，而我们就是通过Mockito来隔离这种依赖关系。
+单元测试的思路是：想在不涉及依赖关系的情况下，测试代码的有效性，而我们就是通过 Mockito 来隔离这种依赖关系。Mockito 是一个针对 Java 的 Mock 框架。它能以一种可控的方式去获取一个假对象，通过假对象来模拟真实的对象行为。
 
 
 
 ## 准备工作
 
-我们采用的测试工具是JUnit + Mockito。在这里，我将告诉您的是：您不需要准备任何的环境、依赖的包。Spring集成了Mockito，它会帮您引入较新的版本。在您创建项目时Spring也会自动帮您引入starter-test模块。
+我们采用的测试工具是 JUnit + Mockito。在这里，我将告诉您的是：您不需要准备任何的环境、依赖的包。Spring 集成了 Mockito，它会帮您引入较新的版本。在您创建项目时 Spring 也会自动帮您引入 starter-test 模块。
 
 ```
 <dependency>
@@ -32,7 +32,7 @@ Mockito是一个针对 Java 的 Mock 框架。它能以一种可控的方式去�
 
 
 
-**您只需要在编写测试代码时，静态的引入Mockito包即可。**
+**您只需要在编写测试代码时，静态的引入 Mockito 包即可。**
 
 ```java
 import static org.mockito.Mockito.*;
@@ -42,13 +42,11 @@ import static org.mockito.Mockito.*;
 
 ## 演示Demo
 
-
-
 ### Mapper代码
 
-```
+```java
 /**
- * 通过手机号查询
+ * 通过手机号查询用户
  * @param mobile
  * @return
  */
@@ -57,7 +55,9 @@ UserDO selectByMobile(String mobile);
 
 
 
-### 业务代码
+### Service代码
+
+这里为用户登录场景。通过手机号查询用户信息，判断用户是否未注册、登录密码是否正确，并返回信息。
 
 ```java
 @Service
@@ -86,7 +86,12 @@ public class UserServiceImpl implements UserService {
 
 ### 测试代码
 
-```
+1. 通过 mock 方法，模拟出依赖的 UserDOMapper。
+2. 将模拟的 mapper 设置进 UserServiceImpl 中，并设置桩代码。当 mockUserDOMapper.selectByMobile 方法输入参数为 mobile 时，return 模拟的结果。
+3. 执行被测试业务方法。
+4. 验证业务方法是否执行，及验证业务状态码是否符合预期。
+
+```java
 @SpringBootTest
 class MiddleStageTestServiceByAnnotationApplicationTests {
 
@@ -119,28 +124,11 @@ class MiddleStageTestServiceByAnnotationApplicationTests {
 
 
 
-## 使用介绍
-
-1. 在这里，我模拟了用户登录的场景。通过mock方法，传入具有依赖关系的UserDOMapper的类类型，来获取一个模拟的接口。
-2. 将模拟接口设置进UserServiceImpl中，并设置桩代码。当mockUserDOMapper.selectByMobile方法输入参数为mobile时，return模拟的结果。
-3. 执行被测试业务方法。
-4. 验证业务方法是否执行，及验证业务状态码是否符合预期。
-
-
-
 ## 运行结果
 
-由于我期望的状态码为1(CallResult.RETURN_STATUS_OK)，实际处理的状态码为-3，密码不匹配的状态码。所以抛出了异常。
-
 ```java
-org.opentest4j.AssertionFailedError: 
-Expected :1
-Actual   :-3
+
 ```
 
 
-
-## 说明
-
-单元测试的思路就是要在不涉及依赖关系的情况下测试代码。如果您依赖的代码通过了单元测试，并且依赖关系也正常，那么他们就会同时工作正常。所以您可以通过Mockito来模拟这种依赖关系，而不产生真实调用。
 
