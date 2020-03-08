@@ -39,7 +39,7 @@ class MiddleStageTestServiceByAnnotationApplicationTests {
 
 
     @BeforeAll
-    static void beforInsertTest() {
+    static void beforLoginTest() {
         userDO = new UserDO();
         userDO.setMobile(mobile);
         userDO.setPassword(password);
@@ -64,7 +64,7 @@ class MiddleStageTestServiceByAnnotationApplicationTests {
         verify(mockUserDOMapper).selectByMobile(mobile);
 
         //验证是否与我们预期的状态值相符
-        Assertions.assertEquals(CallResult.RETURN_STATUS_PASW_INCORRECT, loginCallResult.getCode());
+        Assertions.assertEquals(CallResult.RETURN_STATUS_OK, loginCallResult.getCode());
     }
 
 }

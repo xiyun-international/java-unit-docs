@@ -26,7 +26,7 @@ class MiddleStageTestServiceByCodeApplicationTests {
     static String password = "123456";
 
     @BeforeAll
-    static void beforInsertTest() {
+    static void beforLoginTest() {
         userDO = new UserDO();
         userDO.setMobile(mobile);
         userDO.setPassword(password);

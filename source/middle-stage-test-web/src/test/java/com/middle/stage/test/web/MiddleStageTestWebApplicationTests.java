@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.middle.stage.test.dao.data.UserDO;
 import com.middle.stage.test.service.commons.CallResult;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -22,12 +23,20 @@ class MiddleStageTestWebApplicationTests {
     @Autowired
     private MockMvc mockMvc;
 
+    static UserDO userDO;
+
+    @BeforeAll
+    static void beforLoginTest() {
+        userDO = new UserDO();
+        userDO.setMobile("17612345678");
+        userDO.setPassword("123456");
+    }
+
     @Test
     void loginInterfaceTest() throws Exception {
 
-        UserDO userDO = new UserDO();
-        userDO.setMobile("17612345678");
-        userDO.setPassword("123456");
+        //验证测试用例是否创建
+        Assertions.assertNotNull(userDO, "userDO is null");
 
         MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.post("/user/login")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -42,6 +51,4 @@ class MiddleStageTestWebApplicationTests {
         Assertions.assertEquals(callResult.getCode(), CallResult.RETURN_STATUS_OK);
 
     }
-
-
 }
