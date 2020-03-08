@@ -8,15 +8,3 @@ services:
     - .:/workspaceFolder
     working_dir: /workspaceFolder
     command: bash -c "dumi dev"
-  mysql:
-    image: mysql:5.7
-    environment:
-    - MYSQL_ROOT_PASSWORD=123456
-    volumes:
-    - /usr/local/mysql/data:/var/lib/mysql
-    - /usr/local/mysql/init:/docker-entrypoint-initdb.d/
-    container_name: my-mysql
-    ports:
-    - "3306:3306"
-    tty: true
-    stdin_open: true
