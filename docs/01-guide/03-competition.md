@@ -9,7 +9,7 @@ group:
 
 ## 技术选型
 
-​ 现在市场上的 mock 框架有:Mockito、EasyMock、Jmock。而PowerMock实际上是对 Mockito 以及 EasyMock 的扩展。针对他们不具备模拟静态，私有方法等功能做的扩展，扩展的语法与各自的 mock 框架语法一致。下面简单介绍一下这些 mock 框架。
+​现在市场上的 mock 框架有:Mockito、EasyMock、Jmock。而PowerMock实际上是对 Mockito 以及 EasyMock 的扩展。针对他们不具备模拟静态，私有方法等功能做的扩展，扩展的语法与各自的 mock 框架语法一致。下面简单介绍一下这些 mock 框架。
 
 - **Jmock**
 

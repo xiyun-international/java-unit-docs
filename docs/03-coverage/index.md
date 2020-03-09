@@ -99,7 +99,7 @@ class UserServiceImplTest {
 
 
 
-```
+```java
 2020-03-09 20:49:24.351  INFO 9372 --- [main] c.m.s.test.coverage.UserServiceImplTest  : 测试通过
 ```
 
