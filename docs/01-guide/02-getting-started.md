@@ -7,7 +7,7 @@ group:
 
 # 快速上手
 
-本节将介绍什么是 Mockito 及如何在单元测试中快速使用 `Mockito`。我们还提供了后续所有演示 demo 的**[源码](https://github.com/xiyun-international/java-unit-docs/tree/master/source)**，您可以实际运行我们提供的 demo 来查看运行结果。
+本节将介绍什么是 Mockito 及如何在单元测试中快速使用 `Mockito`。我们还提供了后续所有演示 demo 的[**源码**](https://github.com/xiyun-international/java-unit-docs/tree/master/source)，您可以实际运行我们提供的 demo 来查看运行结果。
 
 本节的演示 demo 与业务一节的演示 demo 相同。这里只介绍 Mockito 用法。
 
@@ -55,19 +55,19 @@ UserDO selectByMobile(String mobile);
 public class UserServiceImpl implements UserService {
 
     @Resource
-    private UserDOMapper userDOMapper;
+    private UserMapper userMapper;
 
     @Override
     public CallResult login(UserDO userDO) {
-        UserDO userEntity = userDOMapper.selectByMobile(userDO.getMobile());
-        if (userEntity == null) {
+        UserDO userResult = userMapper.selectByMobile(userDO.getMobile());
+        if (userResult == null) {
             log.info("没有该用户信息，请先注册！");
             return CallResult.fail(CallResult.RETURN_STATUS_UNREGISTERED, "没有该用户信息，请先注册！");
         }
-        if (!userDO.getPassword().equals(userEntity.getPassword())) {
+        if (!userDO.getPassword().equals(userResult.getPassword())) {
             return CallResult.fail(CallResult.RETURN_STATUS_PASW_INCORRECT, "您的密码不正确！");
         }
-        return CallResult.success(CallResult.RETURN_STATUS_OK, "登录成功！", userEntity);
+        return CallResult.success(CallResult.RETURN_STATUS_OK, "登录成功！", userResult);
     }
 }
 ```
@@ -91,18 +91,17 @@ class MiddleStageTestServiceByAnnotationApplicationTests {
         Assertions.assertNotNull(userDO, "userDO is null");
 
         //1.模拟登录业务中，依赖的dao层查询接口
-        UserDOMapper mockUserDOMapper = mock(UserDOMapper.class);
+        UserMapper mockUserMapper = mock(UserMapper.class);
         //将模拟的接口注入
-        UserServiceImpl userService = new UserServiceImpl(mockUserDOMapper);
+        UserServiceImpl userService = new UserServiceImpl(mockUserMapper);
 
         //2.当程序运行时，模拟查询结果，返回我们指定的预期结果
-        when(mockUserDOMapper.selectByMobile(mobile)).thenReturn(userEntity);
-
-		//3.执行登录方法
+        when(mockUserDOMapper.selectByMobile(mobile)).thenReturn(userResult);
+        //3.执行登录方法
         CallResult loginCallResult = userService.login(userDO);
 
         //4.验证是否执行
-        verify(mockUserDOMapper).selectByMobile(mobile);
+        verify(mockUserMapper).selectByMobile(mobile);
 
         //验证是否与我们预期的状态值相符
         Assertions.assertEquals(CallResult.RETURN_STATUS_PASW_INCORRECT, loginCallResult.getCode());
@@ -113,14 +112,5 @@ class MiddleStageTestServiceByAnnotationApplicationTests {
 ## 运行结果
 
 ```java
-MockHttpServletResponse:
-           Status = 200
-    Error message = null
-          Headers = [Content-Type:"application/json;charset=UTF-8"]
-     Content type = application/json
-             Body = {"code":-2,"msg":"没有该用户信息，请先注册！","content":null}
-    Forwarded URL = null
-   Redirected URL = null
-          Cookies = []
 2020-03-08 19:44:39.795  INFO 19020 --- [main] s.t.w.MiddleStageTestWebApplicationTests : 测试通过
 ```

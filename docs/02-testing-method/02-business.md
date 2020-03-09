@@ -7,9 +7,9 @@ group:
 
 # 业务性测试
 
-## 介绍&原则
+## 介绍
 
-业务测试也就是对我们的 Service、biz 等业务代码进行测试。通常业务代码会有很多的依赖关系，而对于业务代码的测试我们最需要注意的原则有：
+业务测试也就是对您的 Service、biz 等业务代码进行测试。通常业务代码会有很多的依赖关系，而对于业务代码的测试我们最需要注意的原则有：
 
 - 隔离依赖
 - 全自动&非交互式
@@ -28,28 +28,28 @@ group:
 public class UserServiceImpl implements UserService {
 
     @Resource
-    private UserDOMapper userDOMapper;
+    private UserMapper userMapper;
 
     /**
      * Mockito使用注解注入依赖关系，需提供构造器
      *
-     * @param userDOMapper
+     * @param userMapper
      */
-    public UserServiceImpl(UserDOMapper userDOMapper) {
-        this.userDOMapper = userDOMapper;
+    public UserServiceImpl(UserMapper userMapper) {
+        this.userMapper = userMapper;
     }
 
     @Override
     public CallResult login(UserDO userDO) {
-        UserDO userEntity = userDOMapper.selectByMobile(userDO.getMobile());
-        if (userEntity == null) {
+        UserDO userResult = userMapper.selectByMobile(userDO.getMobile());
+        if (userResult == null) {
             log.info("没有该用户信息，请先注册！");
             return CallResult.fail(CallResult.RETURN_STATUS_UNREGISTERED, "没有该用户信息，请先注册！");
         }
-        if (!userDO.getPassword().equals(userEntity.getPassword())) {
+        if (!userDO.getPassword().equals(userResult.getPassword())) {
             return CallResult.fail(CallResult.RETURN_STATUS_PASW_INCORRECT, "您的密码不正确！");
         }
-        return CallResult.success(CallResult.RETURN_STATUS_OK, "登录成功！", userEntity);
+        return CallResult.success(CallResult.RETURN_STATUS_OK, "登录成功！", userResult);
     }
 }
 ```
@@ -67,7 +67,7 @@ class MiddleStageTestServiceByAnnotationApplicationTests {
 
     @Mock
     //通过注解模拟依赖的接口或类
-    private UserDOMapper mockUserDOMapper;
+    private UserMapper mockUserMapper;
     @InjectMocks
     //通过注解自动注入依赖关系
     private UserServiceImpl userService;
@@ -97,14 +97,15 @@ class MiddleStageTestServiceByAnnotationApplicationTests {
 
         //验证测试用例是否创建
         Assertions.assertNotNull(userDO, "userDO is null");
-
-		//设置桩代码，模拟查询过程
-        when(mockUserDOMapper.selectByMobile(mobile)).thenReturn(userResult);
-		//登录
+        
+        //设置桩代码，模拟查询过程
+        when(mockUserMapper.selectByMobile(mobile)).thenReturn(userResult);
+        
+        //登录
         CallResult loginCallResult = userService.login(userDO);
 
         //验证是否执行
-        verify(mockUserDOMapper).selectByMobile(mobile);
+        verify(mockUserMapper).selectByMobile(mobile);
 
         //验证是否与我们预期的状态值相符
         Assertions.assertEquals(CallResult.RETURN_STATUS_OK, loginCallResult.getCode());

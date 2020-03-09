@@ -7,6 +7,7 @@ group:
 
 # HTTP 接口测试
 
+## 介绍
 在您保证了 Service 和 DAO 层的测试后。对于暴露出的 HTTP 接口，您只需要关注它是否可用即可。对于 Http 接口的测试，您同样要关注几点原则：
 
 - 全自动&非交互式
@@ -72,7 +73,7 @@ class MiddleStageTestWebApplicationTests {
         //验证测试用例是否创建
         Assertions.assertNotNull(userDO, "userDO is null");
 
-        MockHttpServletResponse response = 		mockMvc.perform(MockMvcRequestBuilders.post("/user/login")
+        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.post("/user/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JSONObject.toJSONString(userDO)))
                 .andDo(MockMvcResultHandlers.print())
@@ -82,7 +83,7 @@ class MiddleStageTestWebApplicationTests {
         Assertions.assertNotEquals(MockMvcResultMatchers.status().isOk(), response.getStatus());
         CallResult callResult = JSONObject.parseObject(response.getContentAsString(), CallResult.class);
         //验证业务状态码
-        Assertions.assertEquals(callResult.getCode(), 			               CallResult.RETURN_STATUS_UNREGISTERED);
+        Assertions.assertEquals(callResult.getCode(),CallResult.RETURN_STATUS_UNREGISTERED);
         log.info("测试通过");
 
     }

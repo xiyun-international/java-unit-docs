@@ -7,9 +7,9 @@ group:
 
 # 数据访问测试
 
-## 介绍&原则
+## 介绍
 
-也就是我们项目中的 DAO 层测试。DAO 的测试相对简单，与您以往的测试方式相差不大。这一层不需要隔离依赖，您只需要遵守单元测试的几点原则：
+数据访问测试也就是您项目中的 DAO 层测试。DAO 的测试相对简单，与您以往的测试方式相差不大。这一层不需要隔离依赖，您只需要遵守单元测试的几点原则：
 
 - 全自动&非交互式
 - 设定自动回滚
@@ -51,7 +51,7 @@ mapper 中的代码过长就不予展示，您可通[下载源码](https://githu
 class MiddleStageTestDaoApplicationTests {
 
     @Autowired
-    private UserDOMapper userDOMapper;
+    private UserMapper userMapper;
     static UserDO userDO;
     static String mobile = "17612345678";
     static String password = "123456";
@@ -75,14 +75,15 @@ class MiddleStageTestDaoApplicationTests {
         //验证测试用例是否创建
         Assertions.assertNotNull(userDO, "userDO is null");
 
-        userDOMapper.insertSelective(userDO);
-        UserDO userEntity = userDOMapper.selectByMobile(mobile);
+        userMapper.insertSelective(userDO);
+        UserDO userResult = userDOMapper.selectByMobile(mobile);
 
         //验证是否添加成功
-        Assertions.assertNotNull(userEntity, "insert error");
-        Assertions.assertEquals(password, userEntity.getPassword(), "password not equals");
+        Assertions.assertNotNull(userResult, "insert error");
+        Assertions.assertEquals(password, userResult.getPassword(), "password not equals");
+        
         //由于没有添加用户名，运行这断代码会抛出异常
-        //Assertions.assertEquals(userName, userEntity.getUserName(), "userName not equals");
+        //Assertions.assertEquals(userName, userResult.getUserName(), "userName not equals");
         log.info("测试通过");
     }
 
