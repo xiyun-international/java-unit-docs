@@ -7,8 +7,6 @@ group:
 
 # 业务性测试
 
-
-
 ## 介绍&原则
 
 业务测试也就是对我们的 Service、biz 等业务代码进行测试。通常业务代码会有很多的依赖关系，而对于业务代码的测试我们最需要注意的原则有：
@@ -18,13 +16,9 @@ group:
 - 测试粒度足够小
 - 遵守 BCDE 原则
 
+## 演示 Demo
 
-
-## 演示Demo
-
-
-
-### Service代码
+### Service 代码
 
 这里为用户登录场景。通过传递的用户数据查询，判断用户是否注册、密码是否正确及返回信息。
 
@@ -60,13 +54,11 @@ public class UserServiceImpl implements UserService {
 }
 ```
 
-
-
 ### 测试代码
 
 - 通过 @BeforeAll 注解，在测试方法运行前准备测试用例。userDO 为用户登录参数，userResult 为模拟的查询结果。
 - 通过 when 方法设置当输入参数为 mobile 时，模拟查询过程返回模拟的查询结果。
-- 执行业务方法，通过verify方法验证模拟的方法是否执行。再通过断言验证返回的业务状态码是否服务我们的预期。
+- 执行业务方法，通过 verify 方法验证模拟的方法是否执行。再通过断言验证返回的业务状态码是否服务我们的预期。
 
 ```java
 @Slf4j
@@ -81,7 +73,7 @@ class MiddleStageTestServiceByAnnotationApplicationTests {
     private UserServiceImpl userService;
     //登录参数
     static UserDO userDO;
-    
+
     //模拟查询结果
     static UserDO userResult;
     static String mobile = "17612345678";
@@ -117,16 +109,13 @@ class MiddleStageTestServiceByAnnotationApplicationTests {
         //验证是否与我们预期的状态值相符
         Assertions.assertEquals(CallResult.RETURN_STATUS_OK, loginCallResult.getCode());
     	log.info("测试通过");
-    
+
     }
 }
 ```
-
-
 
 ### 运行结果
 
 ```java
 2020-03-08 19:36:08.053  INFO 17720 --- [main] eTestServiceByAnnotationApplicationTests : 测试通过
 ```
-

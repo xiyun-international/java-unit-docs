@@ -30,13 +30,13 @@ group:
 
 项目的进展，怎么能如期执行？
 
-> （1）项目排期是否正常执行，如期汇报的接口真的通了吗？传递的 `Postman` 跟不上你的迭代速度，不方便交流。  
+> （1）项目排期是否正常执行，如期汇报的接口真的通了吗？传递的 `Postman` 跟不上你的迭代速度，不方便交流。
 > （2）在跨公司协作时，这部分的业务都对接了哪些系统及接口，怎么向对方保证，我的接口真的没问题？  
 > （3）怎么指定研发人员必须写这个测试。
 
 ## 产生共鸣
 
-上面描述的问题，无非是`工程质量`的问题；那么如何尽早发现或者提前避免呢，这离不开本手册的主题，那就是`测试`。工程测试是一项基础 ，但我们欠缺的是一个展示的平台，不需要下载代码、不需要安装 IDE，就能直观地看到测试结果。
+上面描述的问题，无非是`工程质量`的问题；那么如何尽早发现或者提前避免呢，这离不开本手册的主题，那就是`测试`。工程测试是一项基础，但我们欠缺的是一个展示的平台，不需要下载代码、不需要安装 IDE，就能直观地看到测试结果。
 
 所以才有了本项目的一些初衷，用于研发部门的**质量监控平台**。
 
@@ -51,7 +51,9 @@ group:
 ![](http://qn.40zhe.com/20200307152047.png)
 
 这时可以在 CE、GitLab、Jenkins 等平台，设置一个钩子，这个钩子可以用于，提交代码让《质量监控平台》感知到。  
-只要代码提交成功，就读取 `xy.yml`（类似于 [docker-compose](https://docs.docker.com/compose/reference/overview/) 或 [circle.yml](https://github.com/wubaiqing/zaobao/blob/master/circle.yml)）文件。  
+
+只要代码提交成功，就读取 `xy.yml` 类似于 [docker-compose](https://docs.docker.com/compose/reference/overview/) 或 [circle.yml](https://github.com/wubaiqing/zaobao/blob/master/circle.yml) 文件。
+
 检查测试标识是否包含 `wechat` 并且运行相关的测试命令。
 
 ```yml

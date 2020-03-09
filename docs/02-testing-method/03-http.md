@@ -7,24 +7,20 @@ group:
 
 # HTTP 接口测试
 
-在您保证了 Service 和 DAO 层的测试后。对于暴露出的HTTP接口，您只需要关注它是否可用即可。对于Http接口的测试，您同样要关注几点原则：
+在您保证了 Service 和 DAO 层的测试后。对于暴露出的 HTTP 接口，您只需要关注它是否可用即可。对于 Http 接口的测试，您同样要关注几点原则：
 
 - 全自动&非交互式
 - 设定自动回滚
-- 遵守AIR原则
-- 遵守BCDE原则
+- 遵守 AIR 原则
+- 遵守 BCDE 原则
 
+## 演示 Demo
 
-
-## 演示Demo
-
-### Service代码
+### Service 代码
 
 > 与业务测试一节中的代码一致，这里不予展示。
 
-
-
-### Controller代码
+### Controller 代码
 
 这里为用户登录场景。判断数据是否为空，执行登录。
 
@@ -46,12 +42,10 @@ public class UserController {
 }
 ```
 
-
-
 ### 测试代码
 
 - 通过 @BeforeAll 注解，在测试方法执行前准备测试用例。
-- 通过 Spring自带的 MockMvc 对象，进行 HTTP 接口测试。它实现了对 HTTP 请求的模拟，能够直接以网络的形式，转换到 Controller 的调用，并且不依赖网络环境。
+- 通过 Spring 自带的 MockMvc 对象，进行 HTTP 接口测试。它实现了对 HTTP 请求的模拟，能够直接以网络的形式，转换到 Controller 的调用，并且不依赖网络环境。
 - 通过 MockMvc 设置请求接口地址、请求方式、参数类型、参数、打印响应、获取响应。
 
 ```java
@@ -95,11 +89,7 @@ class MiddleStageTestWebApplicationTests {
 }
 ```
 
-
-
 ## 运行结果
-
-
 
 ```java
 MockHttpServletResponse:
@@ -114,4 +104,3 @@ MockHttpServletResponse:
 2020-03-08 19:44:39.795  INFO 19020 --- [main] s.t.w.MiddleStageTestWebApplicationTests : 测试通过
 
 ```
-

@@ -7,21 +7,17 @@ group:
 
 # 数据访问测试
 
-
-
 ## 介绍&原则
 
-也就是我们项目中的DAO层测试。DAO的测试相对简单，与您以往的测试方式相差不大。这一层不需要隔离依赖，您只需要遵守单元测试的几点原则：
+也就是我们项目中的 DAO 层测试。DAO 的测试相对简单，与您以往的测试方式相差不大。这一层不需要隔离依赖，您只需要遵守单元测试的几点原则：
 
 - 全自动&非交互式
 - 设定自动回滚
-- 遵守AIR原则
+- 遵守 AIR 原则
 
+## 演示 Demo
 
-
-## 演示Demo
-
-### Mapper代码
+### Mapper 代码
 
 ```java
 /**
@@ -39,21 +35,15 @@ int insertSelective(UserDO userDO);
 UserDO selectByMobile(String mobile);
 ```
 
-
-
 ### mapper.xml
 
 mapper 中的代码过长就不予展示，您可通[下载源码](https://github.com/xiyun-international/java-unit-docs/tree/master/source/middle-stage-test-dao/src/main/resources)查看。
-
-
 
 ### 测试代码
 
 - 通过 @BeforeAll 注解，在单元测试执行前准备测试数据。
 - 通过 @Transactional 注解，保证单元测试运行后，事物自动回滚。
 - 测试方法使用断言先判断测试数据是否初始化，然后将测试数据执行添加后，再执行查询，判断是否添加成功，及字段值是否符合预期值。
-
-
 
 ```java
 @Slf4j
@@ -99,12 +89,9 @@ class MiddleStageTestDaoApplicationTests {
 }
 ```
 
-
-
 ## 运行结果
 
 ```java
 2020-03-08 19:20:13.854  INFO 18264 --- [main] s.t.d.MiddleStageTestDaoApplicationTests : 测试通过
 2020-03-08 19:20:13.883  INFO 18264 --- [main] o.s.t.c.transaction.TransactionContext   : Rolled back transaction for test
 ```
-

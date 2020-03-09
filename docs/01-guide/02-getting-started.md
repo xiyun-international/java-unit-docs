@@ -1,36 +1,30 @@
 ---
 order: 2
-group: 
+group:
   title: 介绍
   order: 1
 ---
 
 # 快速上手
 
-本节将介绍什么是Mockito及如何在单元测试中快速使用 `Mockito`。我们还提供了后续所有演示demo的**[源码](https://github.com/xiyun-international/java-unit-docs/tree/master/source)**，您可以实际运行我们提供的demo来查看运行结果。
+本节将介绍什么是 Mockito 及如何在单元测试中快速使用 `Mockito`。我们还提供了后续所有演示 demo 的**[源码](https://github.com/xiyun-international/java-unit-docs/tree/master/source)**，您可以实际运行我们提供的 demo 来查看运行结果。
 
-本节的演示demo与业务一节的演示demo相同。这里只介绍Mockito用法。
-
-
+本节的演示 demo 与业务一节的演示 demo 相同。这里只介绍 Mockito 用法。
 
 ## Mokito
 
 单元测试的思路是：想在不涉及依赖关系的情况下，测试代码的有效性，而我们就是通过 Mockito 来隔离这种依赖关系。Mockito 是一个针对 Java 的 Mock 框架。它能以一种可控的方式去获取一个假对象，通过假对象来模拟真实的对象行为。
 
-
-
 ## 准备工作
 
 我们采用的测试工具是 JUnit + Mockito。在这里，我将告诉您的是：您不需要准备任何的环境、依赖的包。Spring 集成了 Mockito，它会帮您引入较新的版本。在您创建项目时 Spring 也会自动帮您引入 starter-test 模块。
 
-```
+```xml
 <dependency>
 	<groupId>org.springframework.boot</groupId>
 	<artifactId>spring-boot-starter-test</artifactId>
 </dependency>
 ```
-
-
 
 **您只需要在编写测试代码时，静态的引入 Mockito 包即可。**
 
@@ -38,11 +32,9 @@ group:
 import static org.mockito.Mockito.*;
 ```
 
+## 演示 Demo
 
-
-## 演示Demo
-
-### Mapper代码
+### Mapper 代码
 
 ```java
 /**
@@ -53,9 +45,7 @@ import static org.mockito.Mockito.*;
 UserDO selectByMobile(String mobile);
 ```
 
-
-
-### Service代码
+### Service 代码
 
 这里为用户登录场景。通过手机号查询用户信息，判断用户是否未注册、登录密码是否正确，并返回信息。
 
@@ -81,8 +71,6 @@ public class UserServiceImpl implements UserService {
     }
 }
 ```
-
-
 
 ### 测试代码
 
@@ -122,8 +110,6 @@ class MiddleStageTestServiceByAnnotationApplicationTests {
 }
 ```
 
-
-
 ## 运行结果
 
 ```java
@@ -138,6 +124,3 @@ MockHttpServletResponse:
           Cookies = []
 2020-03-08 19:44:39.795  INFO 19020 --- [main] s.t.w.MiddleStageTestWebApplicationTests : 测试通过
 ```
-
-
-

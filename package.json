@@ -14,6 +14,6 @@
     "dumi": "^1.0.0"
   },
   "devDependencies": {
-    "lint-md": "^0.2.0"
+    "lint-md": "^0.0.8"
   }
 }
