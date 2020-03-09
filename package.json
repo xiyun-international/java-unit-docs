@@ -7,9 +7,13 @@
   "license": "MIT",
   "scripts": {
     "doc:dev": "dumi dev",
-    "doc:build": "dumi build"
+    "doc:build": "dumi build",
+    "lint:md": "lint-md ./docs/"
   },
   "dependencies": {
     "dumi": "^1.0.0"
+  },
+  "devDependencies": {
+    "lint-md": "^0.2.0"
   }
 }
