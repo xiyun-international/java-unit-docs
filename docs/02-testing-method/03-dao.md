@@ -15,7 +15,7 @@ group:
 - 设定自动回滚
 - 遵守 AIR 原则
 
-## 演示 Demo
+## 演示 [Demo](https://github.com/xiyun-international/java-unit-docs/tree/master/source/middle-stage-test-dao)
 
 ### Mapper 代码
 
@@ -76,7 +76,7 @@ class MiddleStageTestDaoApplicationTests {
         Assertions.assertNotNull(userDO, "userDO is null");
 
         userMapper.insertSelective(userDO);
-        UserDO userResult = userDOMapper.selectByMobile(mobile);
+        UserDO userResult = userMapper.selectByMobile(mobile);
 
         //验证是否添加成功
         Assertions.assertNotNull(userResult, "insert error");
