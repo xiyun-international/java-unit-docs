@@ -1,8 +1,7 @@
 ---
-order: 1
+order: 3
 group:
   title: 代码覆盖率
-  order: 3
 ---
 
 # 代码覆盖率
