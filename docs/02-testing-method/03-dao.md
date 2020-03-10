@@ -81,7 +81,7 @@ class MiddleStageTestDaoApplicationTests {
         //验证是否添加成功
         Assertions.assertNotNull(userResult, "insert error");
         Assertions.assertEquals(password, userResult.getPassword(), "password not equals");
-        
+
         //由于没有添加用户名，运行这断代码会抛出异常
         //Assertions.assertEquals(userName, userResult.getUserName(), "userName not equals");
         log.info("测试通过");

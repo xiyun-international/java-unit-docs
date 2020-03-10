@@ -13,25 +13,21 @@ group:
 
 如果您看过单元测试原则，那您一定会知道，代码覆盖率通常会被拿来作为衡量单元测试好坏的指标。
 
-单元测试的基本目标：代码覆盖率达到 70% ；核心应用、核心业务、核心模块的语句覆盖率要达到100%。所以这可能会让您费尽心思去设计测试用例，但是试想一下，假设您的业务场景可能与下图业务一样至关重要。
+单元测试的基本目标：代码覆盖率达到 70% ；核心应用、核心业务、核心模块的语句覆盖率要达到 100%。所以这可能会让您费尽心思去设计测试用例，但是试想一下，假设您的业务场景可能与下图业务一样至关重要。
 
-![https://github.com/xiyun-international/java-unit-docs/blob/master/docs/02-testing-method/pic/flowchart.png]()
+![](../assets/flowchart.png)
 
 如果其中某一个环节出现问题，都将导致交易失败，这种损失是我们所不能承受的。所以在单元测试时，我们应尽可能的来保证其中每一个环节的运行覆盖率，这样可以很大程度上的规避 bug，减少核心业务的出错几率，保证服务的稳定性。
 
-
-
 ## 工具
 
-您可以通过idea自带的工具来查看单元测试的代码覆盖率。
+您可以通过 idea 自带的工具来查看单元测试的代码覆盖率。
 
-您只需要将鼠标光标停放到被测试的方法上，通过 Ctrl + Shift + T (idea for windows快捷键）生成单元测试方法，运行测试方法时选择 Run login() whith Coverage 选项，在测试完成后，通过Coverage工具栏查看覆盖率即可。
-
-
+您只需要将鼠标光标停放到被测试的方法上，通过 Ctrl + Shift + T (idea for windows 快捷键）生成单元测试方法，运行测试方法时选择 Run login() whith Coverage 选项，在测试完成后，通过 Coverage 工具栏查看覆盖率即可。
 
 ## 演示 [Demo](https://github.com/xiyun-international/java-unit-docs/tree/master/source/middle-stage-test-coverage)
 
-这里的演示 Demo 与业务测试一节的 Demo 完全一致。只是单元测试方法是通过 Ctrl + Shift + T (idea for windows快捷键）创建。您在实际运行时，直接选择 Run login() whith Coverage 选项运行即可。
+这里的演示 Demo 与业务测试一节的 Demo 完全一致。只是单元测试方法是通过 Ctrl + Shift + T (idea for windows 快捷键）创建。您在实际运行时，直接选择 Run login() whith Coverage 选项运行即可。
 
 ```java
 @Slf4j
@@ -89,17 +85,12 @@ class UserServiceImplTest {
 }
 ```
 
-
-
 ## 运行结果
 
 当以这种方式运行单元测试后，右侧工具栏会显示出，相关包、代码的覆盖率情况。您可以具体点进去找到您的业务代码查看覆盖率。图中央红框部分，绿色部分展示了在测试过程中执行到的代码，红色部分为未执行代码。
 
-![https://github.com/xiyun-international/java-unit-docs/blob/master/docs/02-testing-method/pic/idea.png]()
-
-
+![](../assets/idea.png)
 
 ```java
 2020-03-09 20:49:24.351  INFO 9372 --- [main] c.m.s.test.coverage.UserServiceImplTest  : 测试通过
 ```
-

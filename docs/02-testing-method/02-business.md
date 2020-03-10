@@ -97,10 +97,10 @@ class MiddleStageTestServiceByAnnotationApplicationTests {
 
         //验证测试用例是否创建
         Assertions.assertNotNull(userDO, "userDO is null");
-        
+
         //设置桩代码，模拟查询过程
         when(mockUserMapper.selectByMobile(mobile)).thenReturn(userResult);
-        
+
         //登录
         CallResult loginCallResult = userService.login(userDO);
 
