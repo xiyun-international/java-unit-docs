@@ -8,6 +8,8 @@ spring:
     minIdle: 2
     maxActive: 5
     maxWait: 60000
+    schema: classpath:schema.sql
+    initialization-mode: always
   http:
     encoding:
       charset: UTF-8
