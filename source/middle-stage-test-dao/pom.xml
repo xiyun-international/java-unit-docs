@@ -8,10 +8,10 @@
         <version>2.2.5.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.xiyun</groupId>
-    <artifactId>xinyun-test-dao</artifactId>
+    <groupId>com.middle.stage</groupId>
+    <artifactId>middle-stage-test-dao</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>xinyun-test-dao</name>
+    <name>middle.stage-test-dao</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>

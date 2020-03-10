@@ -8,10 +8,10 @@
         <version>2.2.5.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.xiyun</groupId>
-    <artifactId>xiyun-test-web</artifactId>
+    <groupId>com.middle.stage</groupId>
+    <artifactId>middle-stage-test-web</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>xiyun-test-web</name>
+    <name>middle-stage-test-web</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
