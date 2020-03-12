@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/asd?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=utf-8&useSSL=false&allowMultiQueries=true&serverTimezone=Asia/Shanghai
+    username: deployment
+    password: 123456
+    initialSize: 2
+    minIdle: 2
+    maxActive: 5
+    maxWait: 60000
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force-response: true
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+logging:
+  level:
+    com.xiyun.xiyuntest.dao: DEBUG
