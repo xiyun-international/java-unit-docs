@@ -9,11 +9,9 @@ group:
 
 ## 介绍
 
-质量好的代码，在结构上往往比较清晰容易阅读。但现实中，随着需求迭代等一些因素，导致代码变的臃肿，如下图。这样的代码可读性差、难以维护。所以本节将介绍针对于臃肿代码，怎么利用单元测试进行重构。
+质量好的代码，在结构上往往比较清晰容易阅读。但现实中，随着需求迭代等因素，导致代码变的臃肿，如下图。这样的代码不仅可读性差、难以维护，还不便于测试。想象一下，130 行的代码，在进行单元测试时，有时可能都不知道程序运行到某一行时会得到什么样的结果，这就增加了编写桩代码的难度，并且单元测试的代码覆盖率也难以保证。所以本节将介绍，站在单元测试的角度，怎么针对臃肿代码进行优化。
 
 ![](../assets/service.png)
-
-想象一下，130 行的代码，在进行单元测试时，有时可能都不知道程序运行到某一行时会得到什么样的结果，这就增加了我们编写桩代码的难度，并且单元测试的代码覆盖率也难以保证。
 
 
 
@@ -21,7 +19,7 @@ group:
 
 ### [案例](https://github.com/xiyun-international/java-unit-docs/tree/master/source/middle-stage-test-optimization)
 
-图1（错误示范图）是业务代码混乱的效果。为了便于理解，我以一个虚拟的业务（更新门店餐别）来讲解如何重构代码。先来大致的了解下业务逻辑：
+图1（错误示范图）是业务代码混乱的效果。为了便于理解，我以一个虚拟的业务（更新门店餐别）来讲解代码优化，先来大致的了解下业务逻辑：
 
 - 数据为空，向集合中添加【全天】餐别。
 - 处理新旧数据集合。获取各自的差集、交集。
@@ -33,7 +31,12 @@ group:
 
 ### [正确示范](https://github.com/xiyun-international/java-unit-docs/blob/master/source/middle-stage-test-optimization/src/main/java/com/middle/stage/test/optimization/service/impl/ShopServiceImpl.java)
 
-根据不同功能、业务进行代码拆分。拆分后的模块由上层业务进行逻辑的组装。如下方展示的伪代码。
+- 根据不同功能、业务进行代码拆分。
+- 拆分准则做到模块的输入输出可预测。
+- 拆分后的模块独立测试。
+- 上层业务组织下层模块代码，测试业务时，模拟下层业务。
+
+如下方展示的伪代码。
 
 ```java
 public void operate(){
@@ -51,26 +54,6 @@ public void operate(){
 	push(); 
 }
 ```
-
-
-
-### 拆分准则
-
-拆分的代码要保持输入输出可预测，不论是测试代码中的桩代码，还是断言，都是在已知结果的基础上编写，所以才能去做逻辑上的校验。如下方代码。
-
-```java
-//通用集合求差集、交集
-CommonsListUtil commonsListUtil = new CommonsListUtil(newDinnerTypeDOList, oldDinnerTypeDOList).invoke();
-//新集合求出交集
-List tmpIntersectNewObjectList = commonsListUtil.getTmpIntersectNewObjectList();
-
-Assertions.assertEquals(1, tmpIntersectNewObjectList.size());
-
-```
-
-此处代码为通用交集、差集处理类的测试代码。详细测试代码请看下节。
-
-
 
 ### 优势
 
