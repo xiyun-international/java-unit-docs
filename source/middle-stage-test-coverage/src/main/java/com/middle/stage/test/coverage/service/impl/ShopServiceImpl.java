@@ -9,20 +9,14 @@ import com.middle.stage.test.coverage.dubbo.UserDubboService;
 import com.middle.stage.test.coverage.enums.PayTypeEnum;
 import com.middle.stage.test.coverage.mapper.ShopMapper;
 import com.middle.stage.test.coverage.service.ShopService;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-
-import javax.annotation.Resource;
 
 /**
  * @author zhaoyongqiang
  * @date 2020/3/7
  */
-@Slf4j
 public class ShopServiceImpl implements ShopService {
 
-    @Resource
     private ShopMapper shopMapper;
 
     private FuyouDubboService fuyouDubboService;
