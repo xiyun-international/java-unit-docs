@@ -51,7 +51,7 @@ class MiddleStageTestDaoApplicationTests {
         Assertions.assertNotNull(userEntity, "insert error");
         Assertions.assertEquals(password, userEntity.getPassword(), "password not equals");
         //Assertions.assertEquals(userName, userEntity.getUserName(), "userName not equals");
-        log.info("测试通过");
+        log.info("[测试通过]");
     }
 
 }

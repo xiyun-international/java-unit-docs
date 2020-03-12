@@ -52,7 +52,7 @@ class MiddleStageTestWebApplicationTests {
         //验证业务状态码
         Assertions.assertEquals(callResult.getCode(), CallResult.RETURN_STATUS_UNREGISTERED);
 
-        log.info("测试通过");
+        log.info("[测试通过]");
 
     }
 }

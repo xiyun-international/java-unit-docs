@@ -100,6 +100,6 @@ class ShopServiceImplTest {
         UserModel userModel = JSONObject.parseObject(callResult.getContent(), UserModel.class);
         Assertions.assertEquals(mockUserModel.getMobile(), userModel.getMobile());
 
-        log.info("测试通过");
+        log.info("[测试通过]");
     }
 }

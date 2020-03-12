@@ -66,7 +66,7 @@ class MiddleStageTestServiceByAnnotationApplicationTests {
 
         //验证是否与我们预期的状态值相符
         Assertions.assertEquals(CallResult.RETURN_STATUS_PASW_INCORRECT, loginCallResult.getCode());
-        log.info("测试通过");
+        log.info("[测试通过]");
     }
 
 }
