@@ -84,7 +84,7 @@ class MiddleStageTestDaoApplicationTests {
 
         //由于没有添加用户名，运行这断代码会抛出异常
         //Assertions.assertEquals(userName, userResult.getUserName(), "userName not equals");
-        log.info("测试通过");
+        log.info("[测试通过]");
     }
 
 }
@@ -93,6 +93,6 @@ class MiddleStageTestDaoApplicationTests {
 ## 运行结果
 
 ```java
-2020-03-08 19:20:13.854  INFO 18264 --- [main] s.t.d.MiddleStageTestDaoApplicationTests : 测试通过
+2020-03-08 19:20:13.854  INFO 18264 --- [main] s.t.d.MiddleStageTestDaoApplicationTests : [测试通过]
 2020-03-08 19:20:13.883  INFO 18264 --- [main] o.s.t.c.transaction.TransactionContext   : Rolled back transaction for test
 ```

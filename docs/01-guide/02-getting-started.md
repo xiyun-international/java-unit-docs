@@ -122,6 +122,7 @@ class MiddleStageTestServiceByAnnotationApplicationTests {
 
         //验证是否与我们预期的状态值相符
         Assertions.assertEquals(CallResult.RETURN_STATUS_PASW_INCORRECT, loginCallResult.getCode());
+        log.info("[测试通过]");
     }
 }
 ```
@@ -129,5 +130,5 @@ class MiddleStageTestServiceByAnnotationApplicationTests {
 ## 运行结果
 
 ```java
-2020-03-08 19:44:39.795  INFO 19020 --- [main] s.t.w.MiddleStageTestWebApplicationTests : 测试通过
+2020-03-08 19:44:39.795  INFO 19020 --- [main] s.t.w.MiddleStageTestWebApplicationTests : [测试通过]
 ```

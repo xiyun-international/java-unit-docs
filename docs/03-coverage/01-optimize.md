@@ -167,11 +167,11 @@ class MiddleStageTestOptimizationApplicationTests {
         CommonsListUtil commonsListUtil = new CommonsListUtil(newDinnerTypeDOList, oldDinnerTypeDOList).invoke();
         //新集合求出交集
         List tmpIntersectNewObjectList = commonsListUtil.getTmpIntersectNewObjectList();
-        //就集合求出交集
+        //旧集合求出交集
         List tmpIntersectOldObjectList = commonsListUtil.getTmpIntersectOldObjectList();
-        //新集合差集
+        //新集求出合差集
         List tmpNewObjectList = commonsListUtil.getTmpNewObjectList();
-        //旧集合差集
+        //旧集求出合差集
         List tmpOldObjectList = commonsListUtil.getTmpOldObjectList();
 
         Assertions.assertEquals(1, tmpIntersectNewObjectList.size());
@@ -184,7 +184,7 @@ class MiddleStageTestOptimizationApplicationTests {
         log.info("tmpIntersectOldObjectList = [{}]", JSONObject.toJSONString(tmpIntersectOldObjectList));
 
         //如果感兴趣，可以验证集合里的数据
-        log.info("测试通过");
+        log.info("[测试通过]");
     }
 }
 ```
@@ -198,7 +198,7 @@ class MiddleStageTestOptimizationApplicationTests {
 2020-03-12 17:41:39.547  INFO 15924 --- [main] dleStageTestOptimizationApplicationTests : oldObjectList = [[{"defaultEndTime":250,"defaultStartTime":200,"dinnerTypeId":3,"dinnerTypeName":"晚餐"}]]
 2020-03-12 17:41:39.547  INFO 15924 --- [main] dleStageTestOptimizationApplicationTests : tmpIntersectNewObjectList = [[{"defaultEndTime":180,"defaultStartTime":120,"dinnerTypeId":2,"dinnerTypeName":"午餐"}]]
 2020-03-12 17:41:39.547  INFO 15924 --- [main] dleStageTestOptimizationApplicationTests : tmpIntersectOldObjectList = [[{"defaultEndTime":180,"defaultStartTime":130,"dinnerTypeId":2,"dinnerTypeName":"午餐"}]]
-2020-03-12 17:41:39.547  INFO 15924 --- [main] dleStageTestOptimizationApplicationTests : 测试通过
+2020-03-12 17:41:39.547  INFO 15924 --- [main] dleStageTestOptimizationApplicationTests : [测试通过]
 
 ```
 

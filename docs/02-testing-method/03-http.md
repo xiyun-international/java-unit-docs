@@ -85,7 +85,7 @@ class MiddleStageTestWebApplicationTests {
         CallResult callResult = JSONObject.parseObject(response.getContentAsString(), CallResult.class);
         //验证业务状态码
         Assertions.assertEquals(callResult.getCode(),CallResult.RETURN_STATUS_UNREGISTERED);
-        log.info("测试通过");
+        log.info("[测试通过]");
 
     }
 }
@@ -103,6 +103,6 @@ MockHttpServletResponse:
     Forwarded URL = null
    Redirected URL = null
           Cookies = []
-2020-03-08 19:44:39.795  INFO 19020 --- [main] s.t.w.MiddleStageTestWebApplicationTests : 测试通过
+2020-03-08 19:44:39.795  INFO 19020 --- [main] s.t.w.MiddleStageTestWebApplicationTests : [测试通过]
 
 ```

@@ -109,8 +109,7 @@ class MiddleStageTestServiceByAnnotationApplicationTests {
 
         //验证是否与我们预期的状态值相符
         Assertions.assertEquals(CallResult.RETURN_STATUS_OK, loginCallResult.getCode());
-    	log.info("测试通过");
-
+    	log.info("[测试通过]");
     }
 }
 ```
@@ -118,5 +117,5 @@ class MiddleStageTestServiceByAnnotationApplicationTests {
 ### 运行结果
 
 ```java
-2020-03-08 19:36:08.053  INFO 17720 --- [main] eTestServiceByAnnotationApplicationTests : 测试通过
+2020-03-08 19:36:08.053  INFO 17720 --- [main] eTestServiceByAnnotationApplicationTests : [测试通过]
 ```

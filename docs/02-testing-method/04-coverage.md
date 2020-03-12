@@ -151,7 +151,7 @@ class ShopServiceImplTest {
         UserModel userModel = JSONObject.parseObject(callResult.getContent(), UserModel.class);
         Assertions.assertEquals(mockUserModel.getMobile(), userModel.getMobile());
 
-        log.info("测试通过");
+        log.info("[测试通过]");
     }
 }
 ```
@@ -163,5 +163,5 @@ class ShopServiceImplTest {
 ![](../assets/idea.png)
 
 ```java
-2020-03-09 20:49:24.351  INFO 9372 --- [main] c.m.s.test.coverage.UserServiceImplTest  : 测试通过
+2020-03-09 20:49:24.351  INFO 9372 --- [main] c.m.s.test.coverage.UserServiceImplTest  : [测试通过]
 ```
