@@ -9,13 +9,19 @@ group:
 
 ## 介绍
 
-质量好的代码，在结构上往往比较清晰，容易阅读，代码的功能函数相对也比较简短，做出来的产品问题相对也会较少（ ps : 没有程序员不喜欢简洁的代码）。但在开发中，经常会出大段的逻辑混乱的业务代码，那这时应该怎么办？我们先不去讨论业务代码变成这样的历史原因，站在便于进行单元测试的角度，来探讨一下，如果时间允许怎么对这样的业务代码进行优化。如果需要重构，请参考设计模式的原则及更多模式。
+质量好的代码，在结构上往往比较清晰容易阅读。但现实中，随着需求迭代等一些因素，导致代码变的臃肿，如下图。这样的代码可读性差、难以维护。所以本节将介绍针对于臃肿代码，怎么利用单元测试进行重构。
 
-## 减小代码体积
+![](../assets/service.png)
+
+想象一下，130 行的代码，在进行单元测试时，有时可能都不知道程序运行到某一行时会得到什么样的结果，这就增加了我们编写桩代码的难度，并且单元测试的代码覆盖率也难以保证。
+
+
+
+## 业务场景
 
 ### [案例](https://github.com/xiyun-international/java-unit-docs/tree/master/source/middle-stage-test-optimization)
 
-为了能理解下方更新门店餐别业务代码，先来大致的了解下处理逻辑：
+图1（错误示范图）是业务代码混乱的效果。为了便于理解，我以一个虚拟的业务（更新门店餐别）来讲解如何重构代码。先来大致的了解下业务逻辑：
 
 - 数据为空，向集合中添加【全天】餐别。
 - 处理新旧数据集合。获取各自的差集、交集。
@@ -25,20 +31,12 @@ group:
 
 ![](../assets/670f60a22e085246f3ea8aa8540820d.png)
 
-### 错误示范
-
-没有优化的代码如下图，所有业务处理都在一个方法中。
-
-![](../assets/service.png)
-
-想象一下，130 行的代码，在进行单元测试时，有时可能都不知道程序运行到某一行时会得到什么样的结果，这就增加了我们编写桩代码的难度，并且单元测试的代码覆盖率也难以保证。
-
-### 正确示范
+### [正确示范](https://github.com/xiyun-international/java-unit-docs/blob/master/source/middle-stage-test-optimization/src/main/java/com/middle/stage/test/optimization/service/impl/ShopServiceImpl.java)
 
 此处展示伪代码。根据不同功能、业务进行代码提取来减小代码体积。
 
 ```java
-operate(){
+public void operate(){
 	//验证并设置基础数据
 	baseData = validate();
 	//得到新旧餐别数据集合，获取交集、差集
@@ -53,6 +51,26 @@ operate(){
 	push(); 
 }
 ```
+
+
+
+### 拆分准则
+
+拆分的代码要保持输入输出可预测，不论是测试代码中的桩代码，还是断言，都是在已知结果的基础上编写，所以才能去做逻辑上的校验。如下方代码。
+
+```java
+//通用集合求差集、交集
+CommonsListUtil commonsListUtil = new CommonsListUtil(newDinnerTypeDOList, oldDinnerTypeDOList).invoke();
+//新集合求出交集
+List tmpIntersectNewObjectList = commonsListUtil.getTmpIntersectNewObjectList();
+
+Assertions.assertEquals(1, tmpIntersectNewObjectList.size());
+
+```
+
+此处代码为通用交集、差集处理类的测试代码。详细测试代码请看下节。
+
+
 
 ### 优势
 
@@ -69,26 +87,9 @@ processData(){
 
 
 
-## 输入输出可预测
+## 测试 Demo
 
-如果还想便于进行测试，就要保持这些逻辑单元的输入输出可预测。请回忆一下在业务测试一节通过 Mockito 编写桩代码的示例，测试用例在进行单元测试后的结果都是已知的，所以才能通过这种方式去做逻辑上的校验。
-
-```java
-//设置桩代码，模拟查询过程
-when(mockUserMapper.selectByMobile(mobile)).thenReturn(userResult);
-
-//验证是否与我们预期的状态值相符
-Assertions.assertEquals(CallResult.RETURN_STATUS_OK, loginCallResult.getCode());
-
-```
-
-当然工程中可以拥有很复杂的处理数据的过程，就像处理交集、差集一样，但处理后得到的始终是一个结果，如果桩代码的输入参数都不符合预期，那自然也不会得到预期的结果。
-
-
-
-## 测试代码
-
-此处测试获取差集、交集。
+此处展示的代码为获取两个集合差集、交集的工具类。
 
 ### 工具代码
 
