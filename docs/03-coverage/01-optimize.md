@@ -179,7 +179,7 @@ class MiddleStageTestOptimizationApplicationTests {
         Assertions.assertEquals(1, tmpNewObjectList.size());
         Assertions.assertEquals(1, tmpOldObjectList.size());
         log.info("tmpNewObjectList = [{}]", JSONObject.toJSONString(tmpNewObjectList));
-        log.info("oldObjectList = [{}]", JSONObject.toJSONString(tmpOldObjectList));
+        log.info("tmpOldObjectList = [{}]", JSONObject.toJSONString(tmpOldObjectList));
         log.info("tmpIntersectNewObjectList = [{}]", JSONObject.toJSONString(tmpIntersectNewObjectList));
         log.info("tmpIntersectOldObjectList = [{}]", JSONObject.toJSONString(tmpIntersectOldObjectList));
 
