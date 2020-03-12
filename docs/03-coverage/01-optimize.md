@@ -33,7 +33,7 @@ group:
 
 ### [正确示范](https://github.com/xiyun-international/java-unit-docs/blob/master/source/middle-stage-test-optimization/src/main/java/com/middle/stage/test/optimization/service/impl/ShopServiceImpl.java)
 
-此处展示伪代码。根据不同功能、业务进行代码提取来减小代码体积。
+根据不同功能、业务进行代码拆分。拆分后的模块由上层业务进行逻辑的组装。如下方展示的伪代码。
 
 ```java
 public void operate(){
