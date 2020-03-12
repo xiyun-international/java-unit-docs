@@ -91,8 +91,8 @@ public class UserServiceImpl implements UserService {
 
 ### 测试代码
 
-1. 通过 mock 方法，模拟出依赖的 UserDOMapper。
-2. 将模拟的 mapper 设置进 UserServiceImpl 中，并设置桩代码。当 mockUserDOMapper.selectByMobile 方法输入参数为 mobile 时，return 模拟的结果。
+1. 通过 mock 方法，模拟出依赖的 UserMapper。
+2. 将模拟的 mapper 设置进 UserServiceImpl 中，并设置桩代码。当 mockUserMapper.selectByMobile 方法输入参数为 mobile 时，return 模拟的结果。
 3. 执行被测试业务方法。
 4. 验证业务方法是否执行，及验证业务状态码是否符合预期。
 
