@@ -9,7 +9,7 @@ group:
 
 ## 介绍
 
-质量较好的代码，结构、逻辑一般比较清晰，也比较易读，做出来的产品问题相对也会较少。（ ps : 我相信没有程序员不喜欢简短的代码）。对于动则上百行的代码，优化还是比较耗时的。如果在开发的过程中，可以参考设计模式的原则：[单一职责](https://blog.csdn.net/zhengzhb/article/details/7278174)、[里氏替换](https://blog.csdn.net/zhengzhb/article/details/7281833)、[依赖倒置](https://blog.csdn.net/zhengzhb/article/details/7289269)、[接口隔离](https://blog.csdn.net/zhengzhb/article/details/7296921)、[迪米特法则](https://blog.csdn.net/zhengzhb/article/details/7296930)、[开闭原则](https://blog.csdn.net/zhengzhb/article/details/7296944)及更多模式，可能就不会写出大段的业务代码，在之后的优化过程中可能就会轻松许多。
+质量好的代码，在结构上往往比较清晰，容易阅读，做出来的产品问题相对也会较少。（ ps : 我相信没有程序员不喜欢简短的代码）。对于动则上百行的代码，优化还是比较耗时的。如果在开发的过程中，可以参考设计模式的原则：[单一职责](https://blog.csdn.net/zhengzhb/article/details/7278174)、[里氏替换](https://blog.csdn.net/zhengzhb/article/details/7281833)、[依赖倒置](https://blog.csdn.net/zhengzhb/article/details/7289269)、[接口隔离](https://blog.csdn.net/zhengzhb/article/details/7296921)、[迪米特法则](https://blog.csdn.net/zhengzhb/article/details/7296930)、[开闭原则](https://blog.csdn.net/zhengzhb/article/details/7296944)及更多模式，可能就不会写出大段的业务代码，在之后的优化过程中可能就会轻松许多。
 
 如果在开发中，已经出现了大段的业务代码，这时应该怎么办？先不去讨论业务代码变成这样的历史原因，站在便于进行单元测试的角度，来探讨一下，如果时间允许怎么对这样的业务代码进行优化。如果需要重构，请参考设计模式的原则及更多模式。
 
