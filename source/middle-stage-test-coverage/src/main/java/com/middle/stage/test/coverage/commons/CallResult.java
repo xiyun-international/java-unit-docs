@@ -49,20 +49,20 @@ public class CallResult {
     /**
      * 数据对象
      */
-    private Object content;
+    private String content;
 
     public CallResult(int code, String msg) {
         this.code = code;
         this.msg = msg;
     }
 
-    public CallResult(int code, String msg, Object content) {
+    public CallResult(int code, String msg, String content) {
         this.code = code;
         this.msg = msg;
         this.content = content;
     }
 
-    public static CallResult success(int code, String msg, Object content) {
+    public static CallResult success(int code, String msg, String content) {
         return new CallResult(code, msg, content);
     }
 
