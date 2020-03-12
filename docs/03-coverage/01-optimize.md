@@ -13,7 +13,7 @@ group:
 
 ## 减小代码体积
 
-### 案例
+### [案例](https://github.com/xiyun-international/java-unit-docs/tree/master/source/middle-stage-test-optimization)
 
 为了能理解下方更新门店餐别业务代码，先来大致的了解下处理逻辑：
 
@@ -37,7 +37,7 @@ group:
 
 此处展示伪代码。根据不同功能、业务进行代码提取来减小代码体积。
 
-```
+```java
 operate(){
 	//验证并设置基础数据
 	baseData = validate();
@@ -58,7 +58,7 @@ operate(){
 
 这些功能单一、规模较小的逻辑单元会有较大的复用性。在庞大的业务代码中，是不是总有一些代码由于耦合度较高，没办法复用？以这种提取方式，在之后的开发中，如果需要这些功能，就不需要再写重复的代码去做处理。
 
-```
+```java
 processData(){
 	// 求差集
 	getDifference();
@@ -73,7 +73,7 @@ processData(){
 
 如果还想便于进行测试，就要保持这些逻辑单元的输入输出可预测。请回忆一下在业务测试一节通过 Mockito 编写桩代码的示例，测试用例在进行单元测试后的结果都是已知的，所以才能通过这种方式去做逻辑上的校验。
 
-```
+```java
 //设置桩代码，模拟查询过程
 when(mockUserMapper.selectByMobile(mobile)).thenReturn(userResult);
 
@@ -92,7 +92,7 @@ Assertions.assertEquals(CallResult.RETURN_STATUS_OK, loginCallResult.getCode());
 
 ### 工具代码
 
-```
+```java
 @Data
 public class CommonsListUtil<T> {
 
@@ -153,7 +153,7 @@ public class CommonsListUtil<T> {
 
 ### 测试代码
 
-```
+```java
 @Slf4j
 @SpringBootTest
 class MiddleStageTestOptimizationApplicationTests {
@@ -207,9 +207,9 @@ class MiddleStageTestOptimizationApplicationTests {
 
 
 
-## 运行结果
+### 运行结果
 
-```
+```java
 2020-03-12 17:41:39.546  INFO 15924 --- [main] dleStageTestOptimizationApplicationTests : tmpNewObjectList = [[{"defaultEndTime":120,"defaultStartTime":60,"dinnerTypeId":1,"dinnerTypeName":"早餐"}]]
 2020-03-12 17:41:39.547  INFO 15924 --- [main] dleStageTestOptimizationApplicationTests : oldObjectList = [[{"defaultEndTime":250,"defaultStartTime":200,"dinnerTypeId":3,"dinnerTypeName":"晚餐"}]]
 2020-03-12 17:41:39.547  INFO 15924 --- [main] dleStageTestOptimizationApplicationTests : tmpIntersectNewObjectList = [[{"defaultEndTime":180,"defaultStartTime":120,"dinnerTypeId":2,"dinnerTypeName":"午餐"}]]
