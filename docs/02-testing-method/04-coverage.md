@@ -12,16 +12,16 @@ group:
 设想一下，假如在做支付系统，整个交易环节流程如下：
 ![](../assets/flowchart.png)
 
-当一个环节出现问题时，都将导致整体交易失败。所以我们做单元测试尽可能的保证每一个环节都会被测试到，这样可以很大程度规避 Bug，从而减少核心业务的`出错几率`，保证服务的稳定性。
+当一个环节出现问题时，将导致整体交易失败。所以我们做单元测试尽可能的保证每一个环节都会被测试到，这样可以很大程度规避 Bug，从而减少核心业务的`出错几率`，保证服务的稳定性。
 
 单元测试的基本目标：代码覆盖率达到 70% ；核心的应用、业务、模块的语句覆盖率要达到 100%。[《Java 开发手册》](https://github.com/alibaba/p3c/blob/master/p3c-gitbook/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95.md#L17)
 
 
 ## 工具
 
-您可以通过 IDEA 自带的工具来查看单元测试的代码覆盖率。
+可以通过 IDEA 自带的工具来查看单元测试的代码覆盖率。
 
-您只需要将鼠标光标停放到被测试的方法上，通过 Ctrl + Shift + T (idea for windows 快捷键）生成单元测试方法，运行测试方法时选择 Run login() whith Coverage 选项，在测试完成后，通过 Coverage 工具栏查看覆盖率即可。
+只需要将鼠标光标停放到被测试的方法上，通过 Ctrl + Shift + T 生成单元测试方法，运行测试方法时选择 Run login() whith Coverage 选项，在测试完成后，通过 Coverage 工具栏查看覆盖率即可。
 
 ## 演示 [Demo](https://github.com/xiyun-international/java-unit-docs/tree/master/source/middle-stage-test-coverage)
 
