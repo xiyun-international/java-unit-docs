@@ -6,11 +6,9 @@ order: 2
 
 本节将介绍什么是 Mockito 及如何在单元测试中快速使用 `Mockito`。我们还提供了后续所有演示 demo 的[**源码**](https://github.com/xiyun-international/java-unit-docs/tree/master/source)，您可以实际运行我们提供的 demo 来查看运行结果。
 
-本节的演示 demo 与业务一节的演示 demo 相同。这里只介绍 Mockito 用法。
-
 ## Mokito
 
-单元测试的思路是：想在不涉及依赖关系的情况下，测试代码的有效性，而我们就是通过 Mockito 来隔离这种依赖关系。Mockito 是一个针对 Java 的 Mock 框架。它能以一种可控的方式去获取一个假对象，通过假对象来模拟真实的对象行为。
+单元测试的思路是：想在`不涉及依赖关系`的情况下，测试代码的有效性，而我们就是通过 Mockito 来`隔离`这种依赖关系。Mockito 是一个针对 Java 的 Mock 框架。它能以一种可控的方式去获取一个假对象，通过假对象来模拟真实的对象行为。
 
 ## 准备工作
 
