@@ -4,13 +4,13 @@ order: 1
 
 # 介绍
 
-禧云信息《Java 单元测试作战手册》是中台研发部针对于公司推出的测试作战手册。我们希望用通俗易懂的方式进行描述，让单元测试真正的运用到项目上；
+禧云信息《Java 单元测试作战手册》是中台研发部针对于公司推出的单元测试的作战手册。我们希望用通俗易懂的方式进行描述，让单元测试真正的运用到项目上；
 
 整个手册，主要分为两大类：
 
-**基础讲解**：[快速上手](http://localhost:8000/java-unit-docs/01-guide/02-getting-started)、[业务测试](http://localhost:8000/java-unit-docs/02-testing-method/01-business)、[数据库访问测试](http://localhost:8000/java-unit-docs/02-testing-method/02-dao)、[HTTP 接口测试](http://localhost:8000/java-unit-docs/02-testing-method/03-http)。
+**基础讲解**：[快速上手](/java-unit-docs/getting-started)、[业务测试](/java-unit-docs/01-testing-method/01-business)、[数据库访问测试](/java-unit-docs/01-testing-method/02-dao)、[HTTP 接口测试](/java-unit-docs/01-testing-method/03-http)。
 
-**高级技巧**：如何查看-[代码覆盖率](http://localhost:8000/java-unit-docs/02-testing-method/04-coverage)、如何进行[代码重构](http://localhost:8000/java-unit-docs/03-coverage/01-optimize)、遇到[上游系统无法使用](http://localhost:8000/java-unit-docs/03-coverage/02-faker)该如何做测试。
+**高级技巧**：如何查看-[代码覆盖率](/java-unit-docs/01-testing-method/04-coverage)、如何进行[代码重构](/java-unit-docs/02-coverage/01-optimize)、遇到[上游系统无法使用](/java-unit-docs/02-coverage/02-faker)该如何做测试。
 
 ## 为什么要进行测试
 
