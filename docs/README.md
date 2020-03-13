@@ -22,7 +22,7 @@ order: 1
 
 [TDD](https://baike.baidu.com/item/TDD/9064369): 测试驱动开发，英文为 Testing Driven Development，强调的是一种开发方式**以先写测试用例**，来驱动整个项目。**先描述函数的输入以及输出，在去写代码逻辑。** `先想象要什么样的结果，在去写功能的一种开发方式`。
 
-[BDD](https://baike.baidu.com/item/%E8%A1%8C%E4%B8%BA%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/9424963?fr=aladdin&fromtitle=BDD&fromid=10735732): 行为驱动测试，英文为 Behavior Driven Development，强调的是`系统最终的实现与用户期望的行为是一致的`，验证代码实现是否符合设计目标。**比如门店创建功能，用 HandleLess 技术模仿用户输入表单信息，点击确定按钮后，页面是否会显示"提交成功"这几个字。** 对功能是否有效的一项开发方式。
+[BDD](https://baike.baidu.com/item/%E8%A1%8C%E4%B8%BA%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/9424963?fr=aladdin&fromtitle=BDD&fromid=10735732): 行为驱动开发，英文为 Behavior Driven Development，强调的是`系统最终的实现与用户期望的行为是一致的`，验证代码实现是否符合设计目标。**比如门店创建功能，用 HandleLess 技术模仿用户输入表单信息，点击确定按钮后，页面是否会显示"提交成功"这几个字。** 对功能是否有效的一项开发方式。
 
 ## 测试类型
 
