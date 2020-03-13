@@ -9,8 +9,7 @@ group:
 
 ## 介绍
 
-在分布式系统中，一个调用链路上可能会涉及多个业务系统。如下图（此图以部分链路举例）。 
-
+在分布式系统中，一个调用链路上可能会涉及到多个业务系统。如下图：
 ![](../assets/BMPN流程图.png)
 
 在增加新功能时，可能链路中的多个业务系统，开发完成时间不同步，服务不能随时提供。如果下游系统服务未开发完成，那这时上游系统要如何测试业务保障代码没有问题？如果下游系统已经开发完成，那下游系统又要怎么保证服务是可用的？针对这些问题，本节将介绍，在这些场景下如何去做单元测试。
@@ -73,11 +72,9 @@ public class ShopServiceImpl implements ShopService {
 }
 ```
 
-
-
 ##### 测试代码
 
-假定智云膳系统此时不可用，通过模拟 HTTP 请求结果来测试推送业务 ，不论是RPC接口还是 HTTP 请求，只要给出接口定义，万物皆可模拟（ps : static、final、private除外）。
+假定智云膳系统此时不可用，通过模拟 HTTP 请求结果来测试推送业务 ，不论是 RPC 接口还是 HTTP 请求，只要给出接口定义，万物皆可模拟（ps : static、final、private 除外）。
 
 ```java
 @Slf4j
@@ -130,15 +127,11 @@ class MiddleStageTestUnavailableApplicationTests {
 }
 ```
 
-
-
 ##### 运行结果
 
 ```java
 2020-03-13 16:18:21.651  INFO 5816 --- [main] ddleStageTestUnavailableApplicationTests : [测试通过]
 ```
-
-
 
 ### 下游系统不可用
 
@@ -164,8 +157,6 @@ public class ApiShopController {
     }
 }
 ```
-
-
 
 ##### 测试代码
 
@@ -211,8 +202,6 @@ class ApiShopControllerTest {
 }
 ```
 
-
-
 ##### 运行结果
 
 ```java
@@ -227,6 +216,3 @@ MockHttpServletResponse:
           Cookies = []
 2020-03-13 16:48:20.543  INFO 16620 --- [main] c.m.s.t.u.C.ApiShopControllerTest        : [测试通过]
 ```
-
-
-
