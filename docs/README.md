@@ -12,7 +12,7 @@ order: 1
 
 **高级技巧**：如何查看-[代码覆盖率](/java-unit-docs/01-testing-method/04-coverage)、如何进行[代码重构](/java-unit-docs/02-coverage/01-optimize)、遇到[上游系统无法使用](/java-unit-docs/02-coverage/02-faker)该如何做测试。
 
-## 计划
+## 整体计划
 
 | 阶段 | 目标 | 日期 |
 | :---| :---: | :----: |
