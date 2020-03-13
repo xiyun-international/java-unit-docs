@@ -1,5 +1,4 @@
 ---
-
 order: 2
 group:
   title: 介绍
@@ -18,12 +17,12 @@ group:
 
 ## 准备工作
 
-我们采用的测试工具是 JUnit + Mockito。在这里，我将告诉您的是：您不需要准备任何的环境、依赖的包。Spring Boot 集成了 Mockito，它会帮您引入较新的版本。在您创建项目时 Spring Boot 也会自动帮您引入 starter-test 模块。
+我们采用的测试工具是 JUnit + Mockito。如果是用 Spring Boot 的话不需要准备任何的环境和依赖的包。Spring Boot 集成了 Mockito 它会引入较新的版本。在创建项目时 Spring Boot 也会自动引入 starter-test 模块。
 
 ```xml
 <dependency>
-	<groupId>org.springframework.boot</groupId>
-	<artifactId>spring-boot-starter-test</artifactId>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-test</artifactId>
 </dependency>
 ```
 
@@ -33,9 +32,7 @@ group:
 import static org.mockito.Mockito.*;
 ```
 
-
-
-**非Spring boot工程需填加以下依赖。**
+### 非 Spring boot 工程需填加以下依赖。
 
 ```xml
 <dependency>
@@ -46,8 +43,6 @@ import static org.mockito.Mockito.*;
 </dependency>
 
 ```
-
-
 
 ## 演示 Demo
 
@@ -64,7 +59,7 @@ UserDO selectByMobile(String mobile);
 
 ### Service 代码
 
-这里为用户登录场景。通过手机号查询用户信息，判断用户是否未注册、登录密码是否正确，并返回信息。
+这里是用户登录的场景：通过手机号查询用户信息，判断用户是否未注册、登录密码是否正确，并返回信息。
 
 ```java
 @Service
