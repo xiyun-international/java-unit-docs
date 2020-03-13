@@ -2,7 +2,6 @@ package com.middle.stage.test.unavailable.service.impl;
 
 
 import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.middle.stage.test.unavailable.commons.CallResult;
 import com.middle.stage.test.unavailable.commons.HttpClientUtil;
 import com.middle.stage.test.unavailable.data.PushData;
@@ -10,8 +9,6 @@ import com.middle.stage.test.unavailable.data.ShopDO;
 import com.middle.stage.test.unavailable.mapper.PushDataMapper;
 import com.middle.stage.test.unavailable.mapper.ShopMapper;
 import com.middle.stage.test.unavailable.service.ShopService;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
