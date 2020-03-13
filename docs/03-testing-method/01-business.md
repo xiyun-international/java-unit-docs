@@ -1,15 +1,15 @@
 ---
-order: 2
+order: 1
 group:
   title: 单元测试
-  order: 2
+  order: 3
 ---
 
 # 业务测试
 
 ## 介绍
 
-业务测试也就是对您的 Service 等业务代码进行测试。通常业务代码会有很多的依赖关系，而对于业务代码的测试我们最需要注意的原则有：
+业务测试也就是对 Service 业务代码进行测试，通常业务代码会有很多的依赖关系。对于业务代码测试最需要注意的原则有：
 
 - 隔离依赖
 - 全自动&非交互式
@@ -20,11 +20,11 @@ group:
 
 ### Service 代码
 
-这里为用户登录场景。通过传递的用户数据查询，判断用户是否注册、密码是否正确及返回信息。
+以用户登录的场景举例：通过手机号查询用户信息后，判断用户是否注册以及登录密码是否正确，并返回信息。
 
 ```java
-@Service
 @Slf4j
+@Service
 public class UserServiceImpl implements UserService {
 
     @Resource
@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
 
 ### 测试代码
 
-- 通过 @BeforeAll 注解，在测试方法运行前准备测试用例。userDO 为用户登录参数，userResult 为模拟的查询结果。
+- 通过 @BeforeAll 注解在测试方法运行前，准备测试数据。userDO 为用户登录参数，userResult 为模拟的查询结果。
 - 通过 when 方法设置当输入参数为 mobile 时，模拟查询过程返回模拟的查询结果。
 - 执行业务方法，通过 verify 方法验证模拟的方法是否执行。再通过断言验证返回的业务状态码是否服务我们的预期。
 

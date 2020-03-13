@@ -6,15 +6,13 @@ order: 2
 
 本节将介绍什么是 Mockito 及如何在单元测试中快速使用 `Mockito`。我们还提供了后续所有演示 demo 的[**源码**](https://github.com/xiyun-international/java-unit-docs/tree/master/source)，您可以实际运行我们提供的 demo 来查看运行结果。
 
-本节的演示 demo 与业务一节的演示 demo 相同。这里只介绍 Mockito 用法。
-
 ## Mokito
 
-单元测试的思路是：想在不涉及依赖关系的情况下，测试代码的有效性，而我们就是通过 Mockito 来隔离这种依赖关系。Mockito 是一个针对 Java 的 Mock 框架。它能以一种可控的方式去获取一个假对象，通过假对象来模拟真实的对象行为。
+单元测试的思路是：想在`不涉及依赖关系`的情况下，测试代码的有效性，而我们就是通过 Mockito 来`隔离`这种依赖关系。Mockito 是一个针对 Java 的 Mock 框架。它能以一种可控的方式去获取一个假对象，通过假对象来模拟真实的对象行为。
 
 ## 准备工作
 
-我们采用的测试工具是 JUnit + Mockito。如果是用 Spring Boot 的话不需要准备任何的环境和依赖的包。Spring Boot 集成了 Mockito 它会引入较新的版本。在创建项目时 Spring Boot 也会自动引入 starter-test 模块。
+我们采用的测试工具是 JUnit + Mockito。如果使用 Spring Boot 的话，就`不需要`准备任何的环境和依赖的包。因为 Spring Boot 集成了 Mockito，在创建项目时 Spring Boot 也会自动引入 starter-test 模块。
 
 ```xml
 <dependency>
@@ -23,13 +21,7 @@ order: 2
 </dependency>
 ```
 
-**您只需要在编写测试代码时，静态的引入 Mockito 包即可。**
-
-```java
-import static org.mockito.Mockito.*;
-```
-
-### 非 Spring boot 工程需填加以下依赖。
+### 非 Spring Boot 工程需填加以下依赖
 
 ```xml
 <dependency>
@@ -38,10 +30,17 @@ import static org.mockito.Mockito.*;
     <version>3.3.0</version>
     <scope>test</scope>
 </dependency>
+```
 
+然后在编写测试代码时，静态的引入 Mockito 包即可。
+
+```java
+import static org.mockito.Mockito.*;
 ```
 
 ## 演示 Demo
+
+以用户登录的场景举例：通过手机号查询用户信息后，判断用户是否注册以及登录密码是否正确，并返回信息。
 
 ### Mapper 代码
 
@@ -56,7 +55,6 @@ UserDO selectByMobile(String mobile);
 
 ### Service 代码
 
-这里是用户登录的场景：通过手机号查询用户信息，判断用户是否未注册、登录密码是否正确，并返回信息。
 
 ```java
 @Service

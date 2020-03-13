@@ -1,15 +1,15 @@
 ---
-order: 3
+order: 2
 group:
   title: 单元测试
-  order: 2
+  order: 3
 ---
 
 # 数据访问测试
 
 ## 介绍
 
-数据访问测试也就是您项目中的 DAO 层测试。DAO 的测试相对简单，与您以往的测试方式相差不大。这一层不需要隔离依赖，您只需要遵守单元测试的几点原则：
+数据访问测试，就是项目中的 DAO 层测试。DAO 的测试相对简单，这一层不需要隔离依赖，您只需要遵守单元测试的几点原则：
 
 - 全自动&非交互式
 - 设定自动回滚
@@ -37,7 +37,7 @@ UserDO selectByMobile(String mobile);
 
 ### mapper.xml
 
-mapper 中的代码过长就不予展示，您可通[下载源码](https://github.com/xiyun-international/java-unit-docs/tree/master/source/middle-stage-test-dao/src/main/resources)查看。
+mapper 中的代码过长就不予展示，可以[在线查看](https://github.com/xiyun-international/java-unit-docs/blob/master/source/middle-stage-test-dao/src/main/resources/mapper/UserMapper.xml)。
 
 ### 测试代码
 
@@ -67,9 +67,9 @@ class MiddleStageTestDaoApplicationTests {
         userDO.setUpdateTime(new Date());
     }
 
-    @DisplayName("测试添加用户")
     @Test
     @Transactional
+    @DisplayName("测试添加用户")
     void insertTest() {
 
         //验证测试用例是否创建

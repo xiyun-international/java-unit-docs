@@ -2,30 +2,34 @@
 order: 1
 group:
   title: 复杂场景案例
-  order: 3
+  order: 4
 ---
 
 # 代码重构
 
 ## 介绍
 
-质量好的代码，在结构上往往比较清晰容易阅读。但现实中，随着需求迭代等因素，导致代码变的臃肿，如下图。这样的代码不仅可读性差、难以维护，还不便于测试。想象一下，130 行的代码，在进行单元测试时，有时可能都不知道程序运行到某一行时会得到什么样的结果，这就增加了编写桩代码的难度，并且单元测试的代码覆盖率也难以保证。所以本节将介绍，站在单元测试的角度，怎么针对臃肿代码进行优化。
-
+质量好的代码，在结构上往往比较清晰容易阅读。但现实中，随着需求迭代等因素，导致代码变的臃肿，如下图：
 ![](../assets/service.png)
+_图(1)_
 
+这样的代码不仅可读性差并且难以维护，还不便于测试。想象一下，上图的 130 行的代码，在进行单元测试时，有时可能都不知道程序运行时会得到什么样的结果，这就增加了编写桩代码的难度，并且代码覆盖率也难以保证。
 
+所以本节将介绍，站在单元测试的角度，怎么针对臃肿代码进行优化。
 
 ## 业务场景
 
 ### [案例](https://github.com/xiyun-international/java-unit-docs/tree/master/source/middle-stage-test-optimization)
 
-图1（错误示范图）是业务代码混乱的效果。为了便于理解，我以一个虚拟的业务（更新门店餐别）来讲解代码优化，先来大致的了解下业务逻辑：
+图 1 中是业务代码混乱的效果。结下了，为了便于你的理解，我以一个虚拟的业务`更新门店餐别`来讲解代码优化。
 
-- 数据为空，向集合中添加【全天】餐别。
+先来大致的了解一下业务逻辑：
+
+- 数据为空，向集合中添加“全天”餐别。
 - 处理新旧数据集合。获取各自的差集、交集。
 - 集合不为空，批量添加，更新，删除。
-- 产生变更记录，推送 isv，保存日志。
-- 集合中不包括【全天】更新缓存。
+- 产生变更记录，推送 ISV，保存日志。
+- 集合中不包括“全天”更新缓存。
 
 ![](../assets/670f60a22e085246f3ea8aa8540820d.png)
 
@@ -34,7 +38,7 @@ group:
 - 根据不同功能、业务进行代码拆分。
 - 拆分准则做到模块的输入输出可预测。
 - 拆分后的模块独立测试。
-- 上层业务组织下层模块代码，测试业务时，模拟下层业务。
+- 上层业务，组织下层模块代码，测试业务时，模拟下层业务。
 
 如下方展示的伪代码。
 
@@ -43,7 +47,7 @@ public void operate(){
 	//验证并设置基础数据
 	baseData = validate();
 	//得到新旧餐别数据集合，获取交集、差集
-	data = processData(baseData); 
+	data = processData(baseData);
 	//批量添加
 	batchInsert(data.insertList);
 	//批量更新
@@ -51,13 +55,13 @@ public void operate(){
 	//批量删除
 	batchDelete(data.deLeteList);
 	//更新缓存，推送数据，记录日志
-	push(); 
+	push();
 }
 ```
 
 ### 优势
 
-这些功能单一、规模较小的逻辑单元会有较大的复用性。在庞大的业务代码中，是不是总有一些代码由于耦合度较高，没办法复用？以这种提取方式，在之后的开发中，如果需要这些功能，就不需要再写重复的代码去做处理。
+这些功能单一、规模较小的逻辑单元会有较大的复用性。在庞大的业务代码中总有一些代码由于耦合度较高，没办法复用。那么以这种提取方式，在今后的开发中，如果需要这些功能，就不用写重复的代码了。
 
 ```java
 processData(){
@@ -68,11 +72,9 @@ processData(){
 }
 ```
 
-
-
 ## 测试 Demo
 
-此处展示的代码为获取两个集合差集、交集的工具类。
+[以下代码](https://github.com/xiyun-international/java-unit-docs/blob/master/source/middle-stage-test-optimization/src/main/java/com/middle/stage/test/optimization/commons/CommonsListUtil.java)拆分成可复用的工具类以后，它既可以独立的进行测试，也方便业务上的复用。
 
 ### 工具代码
 
@@ -133,8 +135,6 @@ public class CommonsListUtil<T> {
 }
 ```
 
-
-
 ### 测试代码
 
 ```java
@@ -189,8 +189,6 @@ class MiddleStageTestOptimizationApplicationTests {
 }
 ```
 
-
-
 ### 运行结果
 
 ```java
@@ -202,9 +200,6 @@ class MiddleStageTestOptimizationApplicationTests {
 
 ```
 
-
-
 ## 分享
 
-最后给大家分享一篇文章 [35个 Java 代码性能优化总结](https://wenku.baidu.com/view/d865624053d380eb6294dd88d0d233d4b14e3f30.html)。请根据工程的实际业务场景，参考这些优化点。
-
+最后给大家分享一篇文章 [35 个 Java 代码性能优化总结](https://wenku.baidu.com/view/d865624053d380eb6294dd88d0d233d4b14e3f30.html)。请根据工程的实际业务场景，参考这些优化点。
