@@ -1,5 +1,5 @@
 ---
-order: 6
+order: 4
 group:
   title: 单元测试
   order: 2
