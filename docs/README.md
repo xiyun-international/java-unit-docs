@@ -1,13 +1,16 @@
 ---
 order: 1
-group:
-  title: 介绍
-  order: 1
 ---
 
-# 前置知识
+# 首页
 
-本节希望以通俗易懂的方式进行描述，让大家对测试有个初步的了解；涉及到专业性的关键词，就以链接的形式放出来了。
+禧云信息《Java 单元测试作战手册》是中台研发部针对于公司推出的测试作战手册。我们希望用通俗易懂的方式进行描述，让测试真正的运用到项目上；
+
+整个手册，主要分为两大类：
+
+**基础讲解**：[快速上手](http://localhost:8000/java-unit-docs/01-guide/02-getting-started)、[业务测试](http://localhost:8000/java-unit-docs/02-testing-method/01-business)、[数据库访问测试](http://localhost:8000/java-unit-docs/02-testing-method/02-dao)、[HTTP 接口测试](http://localhost:8000/java-unit-docs/02-testing-method/03-http)。
+
+**高级技巧**：如何查看-[代码覆盖率](http://localhost:8000/java-unit-docs/02-testing-method/04-coverage)、如何进行[代码重构](http://localhost:8000/java-unit-docs/03-coverage/01-optimize)、遇到[上游系统无法使用](http://localhost:8000/java-unit-docs/03-coverage/02-faker)该如何做测试。
 
 ## 为什么要进行测试
 
