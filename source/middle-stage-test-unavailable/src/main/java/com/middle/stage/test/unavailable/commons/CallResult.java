@@ -22,16 +22,6 @@ public class CallResult {
     public static final int RETURN_STATUS_FAIL = -1;
 
     /**
-     * 未注册
-     */
-    public static final int RETURN_STATUS_UNREGISTERED = -2;
-
-    /**
-     * 密码不正确
-     */
-    public static final int RETURN_STATUS_PASW_INCORRECT = -3;
-
-    /**
      * 参数异常
      */
     public static final int RETURN_STATUS_PARAM_ERROR = -4;
