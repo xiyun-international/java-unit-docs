@@ -2,7 +2,7 @@
 order: 3
 group:
   title: 单元测试
-  order: 2
+  order: 3
 ---
 
 # HTTP 接口测试

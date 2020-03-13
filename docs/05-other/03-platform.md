@@ -2,7 +2,7 @@
 order: 3
 group:
   title: 其它
-  order: 4
+  order: 5
 ---
 
 # 质量监控平台
