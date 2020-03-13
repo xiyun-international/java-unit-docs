@@ -9,7 +9,7 @@ group:
 
 ## 介绍
 
-在您保证了 Service 和 DAO 层的测试后。对于暴露出的 HTTP 接口，您只需要关注它是否可用即可。对于 Http 接口的测试，您同样要关注几点原则：
+在保证了 Service 和 DAO 层的测试后，对于暴露出的 HTTP 接口，只需要关注它是否可用即可。对于 HTTP 接口的测试同样要关注几点原则：
 
 - 全自动&非交互式
 - 设定自动回滚
@@ -18,13 +18,9 @@ group:
 
 ## 演示 [Demo](https://github.com/xiyun-international/java-unit-docs/tree/master/source/middle-stage-test-web)
 
-### Service 代码
-
-> 与业务测试一节中的代码一致，这里不予展示。
-
 ### Controller 代码
 
-这里为用户登录场景。判断数据是否为空，执行登录。
+以用户登录的场景举例：判断数据是否为空，执行登录。
 
 ```java
 @RestController
@@ -44,10 +40,45 @@ public class UserController {
 }
 ```
 
+### Service 代码
+
+```java
+@Slf4j
+@Service
+public class UserServiceImpl implements UserService {
+
+    @Resource
+    private UserMapper userMapper;
+
+    /**
+     * Mockito使用注解注入依赖关系，需提供构造器
+     *
+     * @param userMapper
+     */
+    public UserServiceImpl(UserMapper userMapper) {
+        this.userMapper = userMapper;
+    }
+
+    @Override
+    public CallResult login(UserDO userDO) {
+        UserDO userResult = userMapper.selectByMobile(userDO.getMobile());
+        if (userResult == null) {
+            log.info("没有该用户信息，请先注册！");
+            return CallResult.fail(CallResult.RETURN_STATUS_UNREGISTERED, "没有该用户信息，请先注册！");
+        }
+        if (!userDO.getPassword().equals(userResult.getPassword())) {
+            return CallResult.fail(CallResult.RETURN_STATUS_PASW_INCORRECT, "您的密码不正确！");
+        }
+        return CallResult.success(CallResult.RETURN_STATUS_OK, "登录成功！", userResult);
+    }
+}
+```
+
+
 ### 测试代码
 
-- 通过 @BeforeAll 注解，在测试方法执行前准备测试用例。
-- 通过 Spring 自带的 MockMvc 对象，进行 HTTP 接口测试。它实现了对 HTTP 请求的模拟，能够直接以网络的形式，转换到 Controller 的调用，并且不依赖网络环境。
+- 通过 @BeforeAll 注解，在测试方法执行前准备测试数据。
+- 通过 Spring 自带的 `MockMvc` 对象，进行 HTTP 接口测试。它实现了对 HTTP 请求的模拟，能够直接以网络的形式，转换到 Controller 的调用，并且`不依赖网络环境`。
 - 通过 MockMvc 设置请求接口地址、请求方式、参数类型、参数、打印响应、获取响应。
 
 ```java
@@ -71,22 +102,24 @@ class MiddleStageTestWebApplicationTests {
     @Test
     void loginInterfaceTest() throws Exception {
 
-        //验证测试用例是否创建
+        // 验证测试用例是否创建
         Assertions.assertNotNull(userDO, "userDO is null");
 
+        // !注意这里代码
         MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.post("/user/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JSONObject.toJSONString(userDO)))
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn()
                 .getResponse();
-        //验证http状态码
+
+        // 验证 HTTP 状态码
         Assertions.assertNotEquals(MockMvcResultMatchers.status().isOk(), response.getStatus());
         CallResult callResult = JSONObject.parseObject(response.getContentAsString(), CallResult.class);
-        //验证业务状态码
+
+        // 验证业务状态码
         Assertions.assertEquals(callResult.getCode(),CallResult.RETURN_STATUS_UNREGISTERED);
         log.info("[测试通过]");
-
     }
 }
 ```
