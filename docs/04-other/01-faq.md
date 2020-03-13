@@ -1,8 +1,8 @@
 ---
-order: 3
+order: 2
 group:
-  title: 介绍
-  order: 1
+  title: 其它
+  order: 4
 ---
 
 # FAQ

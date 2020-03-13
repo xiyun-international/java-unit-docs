@@ -1,8 +1,8 @@
 ---
-order: 1
+order: 3
 group:
-  title: 未来愿景
-  order: 5
+  title: 其它
+  order: 4
 ---
 
 # 质量监控平台

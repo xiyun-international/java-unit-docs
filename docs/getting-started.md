@@ -1,8 +1,5 @@
 ---
 order: 2
-group:
-  title: 介绍
-  order: 1
 ---
 
 # 快速上手

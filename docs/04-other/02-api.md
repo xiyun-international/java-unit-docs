@@ -1,9 +1,11 @@
 ---
-order: 4
+order: 3
 group:
-  title: 介绍
-  order: 1
+  title: 其它
+  order: 4
 ---
+
+# API 介绍
 
 ## 更多简易用法
 
