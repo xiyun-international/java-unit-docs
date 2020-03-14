@@ -86,9 +86,9 @@ class MiddleStageTestServiceByAnnotationApplicationTests {
         userDO.setMobile(mobile);
         userDO.setPassword(password);
 
-        userResult = new UserDO();
-        userResult.setMobile(mobile);
-        userResult.setPassword("654321");
+        mockUserResult = new UserDO();
+        mockUserResult.setMobile(mobile);
+        mockUserResult.setPassword("123456");
     }
 
     @Test

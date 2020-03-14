@@ -16,7 +16,6 @@ group:
 
 单元测试的基本目标：代码覆盖率达到 70% ；核心的应用、业务、模块的语句覆盖率要达到 100%。[《阿里单元测试原则》](https://github.com/alibaba/p3c/blob/master/p3c-gitbook/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95.md#L17)
 
-
 ## 工具
 
 您可以通过 IDEA 自带的工具来查看单元测试的代码覆盖率。
@@ -27,7 +26,7 @@ group:
 
 ### Service 代码
 
-此处业务代码只处理到调用会员中心保持C端信息。
+此处业务代码只处理到调用会员中心保持 C 端信息。
 
 ```java
 public class ShopServiceImpl implements ShopService {
@@ -78,8 +77,6 @@ public class ShopServiceImpl implements ShopService {
 }
 ```
 
-
-
 ### 测试代码
 
 此处的单元测试方法已通过 Ctrl + Shift + T (Win 快捷键）创建。您在实际运行时，直接选择 Run login() whith Coverage 选项运行即可。
@@ -116,6 +113,7 @@ class ShopServiceImplTest {
 
 
     @BeforeAll
+    @BeforeAll
     static void beforLoginTest() {
         markttingModel = new MarkttingModel();
         markttingModel.setPayAmount(new BigDecimal("26.75"));
@@ -123,13 +121,14 @@ class ShopServiceImplTest {
         markttingModel.setShopId(shopId);
         markttingModel.setFlag(falg);
 
-        shopResult = new ShopDO();
-        shopResult.setId(shopId);
-        shopResult.setMarktingSwitch(true);
+        mockShopResult = new ShopDO();
+        mockShopResult.setId(shopId);
+        mockShopResult.setMarktingSwitch(true);
 
         mockOpenIdResult = new CallResult(CallResult.RETURN_STATUS_OK, "查询成功", "asdasd56789asdfgjhkklllasd");
         mockUserModel = new UserModel("zyq", openId, "17612345678", "zyq");
         mockUserResult = new CallResult(CallResult.RETURN_STATUS_OK, "查询成功", JSONObject.toJSONString(mockUserModel));
+
     }
 
     @Test
@@ -137,11 +136,11 @@ class ShopServiceImplTest {
     void payTest() {
 
         Assertions.assertNotNull(markttingModel, "markttingModel can not be null!");
-        Assertions.assertNotNull(shopResult, "shopResult can not be null!");
+        Assertions.assertNotNull(mockShopResult, "shopResult can not be null!");
         Assertions.assertNotNull(mockOpenIdResult, "openIdResult can not be null!");
         Assertions.assertNotNull(mockUserModel, "userModel can not be null!");
 
-        when(mockShopMapper.selectById(shopId)).thenReturn(shopResult);
+        when(mockShopMapper.selectById(shopId)).thenReturn(mockShopResult);
         when(mockFuyouDubboService.getOpenId(falg)).thenReturn(mockOpenIdResult);
         when(mockUserDubboService.getUserInfo(openId)).thenReturn(mockUserResult);
 
