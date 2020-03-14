@@ -72,9 +72,9 @@ processData(){
 }
 ```
 
-## 测试 Demo
+## 测试 [Demo](https://github.com/xiyun-international/java-unit-docs/tree/master/source/middle-stage-test-optimization)
 
-[以下代码](https://github.com/xiyun-international/java-unit-docs/blob/master/source/middle-stage-test-optimization/src/main/java/com/middle/stage/test/optimization/commons/CommonsListUtil.java)拆分成可复用的工具类以后，它既可以独立的进行测试，也方便业务上的复用。
+[以下代码](https://github.com/xiyun-international/java-unit-docs/blob/master/source/middle-stage-test-optimization/src/main/java/com/middle/stage/test/optimization/service/impl/ShopServiceImpl.java)为优化后的业务代码。
 
 ### Service 代码
 
