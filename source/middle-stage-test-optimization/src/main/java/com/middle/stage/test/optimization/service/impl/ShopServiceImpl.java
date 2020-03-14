@@ -31,8 +31,8 @@ import java.util.stream.Collectors;
  * @author zyq
  * @date 2020/2/9
  */
-@Service
 @Slf4j
+@Service
 public class ShopServiceImpl implements ShopService {
 
     private static final int DINNER_TYPE_OF_FULL_DAY = 1;

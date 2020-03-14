@@ -11,8 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 import java.util.UUID;
 
-@SpringBootTest
 @Slf4j
+@SpringBootTest
 class MiddleStageTestDaoApplicationTests {
 
     @Autowired

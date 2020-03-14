@@ -17,7 +17,6 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/user/login")
-    @ResponseBody
     public CallResult login(@RequestBody UserDO userDO) {
         if (userDO == null) {
             return CallResult.fail(CallResult.RETURN_STATUS_PARAM_ERROR, "参数异常，请检查参数！");

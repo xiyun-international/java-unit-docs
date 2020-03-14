@@ -58,16 +58,24 @@ class MiddleStageTestUnavailableApplicationTests {
     @Test
     void pushDataTest() throws Exception {
 
+        //判断测试数据是否为空
+        Assertions.assertNotNull(pushData, "pushData can not be null");
+        Assertions.assertNotNull(shopDO, "shopDO can not be null");
+
+        //设置桩代码
         when(pushDataMapper.selectLately()).thenReturn(pushData);
         when(shopMapper.selectById(objectId)).thenReturn(shopDO);
         when(httpClientUtil.sendHttpPost(url, JSONObject.toJSONString(shopDO))).thenReturn(httpResult);
 
+        //执行推送
         CallResult callResult = shopService.pushData();
 
+        //验证
         verify(pushDataMapper).selectLately();
         verify(shopMapper).selectById(objectId);
         verify(httpClientUtil).sendHttpPost(url, JSONObject.toJSONString(shopDO));
 
+        //判断结果是否符合预期
         Assertions.assertEquals(CallResult.RETURN_STATUS_OK, callResult.getCode());
         Assertions.assertEquals(callResult.getContent(), httpResult);
         log.info("[测试通过]");

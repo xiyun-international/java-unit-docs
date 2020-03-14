@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class ApiShopController {
 
     @PostMapping("/shop/save")
-    @ResponseBody
     public CallResult shopSave(@RequestBody ShopDO shopDO) {
         if (shopDO == null) {
             return CallResult.fail(CallResult.RETURN_STATUS_PARAM_ERROR, "参数异常，请检查参数！");

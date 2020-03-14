@@ -13,8 +13,8 @@ import javax.annotation.Resource;
  * @author zhaoyongqiang
  * @date 2020/3/7
  */
-@Service
 @Slf4j
+@Service
 public class UserServiceImpl implements UserService {
 
     @Resource

@@ -8,8 +8,7 @@ import java.io.Serializable;
 /**
  * 门店数据传输对象
  *
- * @author cjw
- * @date 2019-07-30
+ * @author zyq
  */
 @Data
 public class CanteenDTO implements Serializable {

@@ -16,8 +16,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
 @Slf4j
+@SpringBootTest
 class MiddleStageTestServiceByAnnotationApplicationTests {
 
     @Mock

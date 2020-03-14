@@ -13,8 +13,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
 @Slf4j
+@SpringBootTest
 class MiddleStageTestServiceByCodeApplicationTests {
 
     //登录参数
