@@ -47,6 +47,7 @@ class ApiShopControllerTest {
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn()
                 .getResponse();
+
         //验证http状态码
         Assertions.assertNotEquals(MockMvcResultMatchers.status().isOk(), response.getStatus());
         CallResult shopResponse = JSONObject.parseObject(response.getContentAsString(), CallResult.class);
