@@ -52,9 +52,6 @@ class ApiShopControllerTest {
         CallResult callResult = JSONObject.parseObject(response.getContentAsString(), CallResult.class);
         //验证业务状态码
         Assertions.assertEquals(callResult.getCode(), CallResult.RETURN_STATUS_OK);
-
         log.info("[测试通过]");
-
     }
-
 }

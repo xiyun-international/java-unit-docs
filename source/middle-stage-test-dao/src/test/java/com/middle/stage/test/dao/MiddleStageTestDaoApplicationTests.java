@@ -36,9 +36,9 @@ class MiddleStageTestDaoApplicationTests {
         userDO.setUpdateTime(new Date());
     }
 
-    @DisplayName("测试添加用户")
     @Test
     @Transactional
+    @DisplayName("测试添加用户")
     void insertTest() {
 
         //验证测试用例是否创建
