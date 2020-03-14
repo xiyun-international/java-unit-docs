@@ -83,7 +83,7 @@ public class ShopServiceImpl implements ShopService {
 
 假设智云膳系统此时接口未开发完成，服务不可用。我们可以通过模拟 HTTP 请求结果来测试推送业务，这样不论是 RPC 接口还是 HTTP 请求，只要给出接口定义，万物皆可模拟。
 
-[注意](http://localhost:8000/java-unit-docs/04-other/01-faq#%E6%A1%86%E6%9E%B6%E5%AF%B9%E6%AF%94)：static、final、private 除外。
+[注意](https://xiyun-international.github.io/java-unit-docs/05-other/01-faq#%E6%A8%A1%E6%8B%9F-staticprivate-%E6%96%B9%E6%B3%95)：static、final、private 除外。
 
 ```java
 @Slf4j
