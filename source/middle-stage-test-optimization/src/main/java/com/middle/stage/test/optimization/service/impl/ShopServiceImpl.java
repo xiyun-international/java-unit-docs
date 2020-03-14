@@ -14,11 +14,9 @@ import com.middle.stage.test.optimization.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.util.Lists;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.HashMap;
