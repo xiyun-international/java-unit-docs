@@ -21,7 +21,7 @@ class MiddleStageTestServiceByCodeApplicationTests {
     static UserDO userDO;
 
     //模拟查询结果
-    static UserDO userResult;
+    static UserDO fakerUserResult;
 
     static String mobile = "17612345678";
 
@@ -33,9 +33,9 @@ class MiddleStageTestServiceByCodeApplicationTests {
         userDO.setMobile(mobile);
         userDO.setPassword(password);
 
-        userResult = new UserDO();
-        userResult.setMobile(mobile);
-        userResult.setPassword("123456");
+        fakerUserResult = new UserDO();
+        fakerUserResult.setMobile(mobile);
+        fakerUserResult.setPassword("123456");
     }
 
     @Test
@@ -51,7 +51,7 @@ class MiddleStageTestServiceByCodeApplicationTests {
         UserServiceImpl userService = new UserServiceImpl(mockUserMapper);
 
         //当程序运行时，模拟查询结果，返回我们指定的预期结果
-        when(mockUserMapper.selectByMobile(mobile)).thenReturn(userResult);
+        when(mockUserMapper.selectByMobile(mobile)).thenReturn(fakerUserResult);
 
         CallResult loginCallResult = userService.login(userDO);
 
@@ -60,7 +60,9 @@ class MiddleStageTestServiceByCodeApplicationTests {
 
         //验证是否与我们预期的状态值相符
         Assertions.assertEquals(CallResult.RETURN_STATUS_OK, loginCallResult.getCode());
-        Assertions.assertNotNull(loginCallResult.getContent());
+        //! 桩代码设置成功
+        UserDO login = (UserDO) loginCallResult.getContent();
+        Assertions.assertEquals(fakerUserResult.getMobile(), login.getMobile());
         log.info("[测试通过]");
     }
 
