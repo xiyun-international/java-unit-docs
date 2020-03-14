@@ -47,7 +47,7 @@ class MiddleStageTestServiceByAnnotationApplicationTests {
 
         userResult = new UserDO();
         userResult.setMobile(mobile);
-        userResult.setPassword("654321");
+        userResult.setPassword("123456");
     }
 
     @Test
@@ -65,8 +65,8 @@ class MiddleStageTestServiceByAnnotationApplicationTests {
         verify(mockUserMapper).selectByMobile(mobile);
 
         //验证是否与我们预期的状态值相符
-        Assertions.assertEquals(CallResult.RETURN_STATUS_PASW_INCORRECT, loginCallResult.getCode());
+        Assertions.assertEquals(CallResult.RETURN_STATUS_OK, loginCallResult.getCode());
+        Assertions.assertNotNull(loginCallResult.getContent());
         log.info("[测试通过]");
     }
-
 }

@@ -1,4 +1,4 @@
-package com.middle.stage.test.unavailable.Controller;
+package com.middle.stage.test.unavailable.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.middle.stage.test.unavailable.commons.CallResult;
@@ -52,6 +52,9 @@ class ApiShopControllerTest {
         CallResult callResult = JSONObject.parseObject(response.getContentAsString(), CallResult.class);
         //验证业务状态码
         Assertions.assertEquals(callResult.getCode(), CallResult.RETURN_STATUS_OK);
+
+        ShopDO shopResult = JSONObject.parseObject(callResult.getContent(), ShopDO.class);
+        Assertions.assertEquals(shopDO.getShopName(), shopResult.getShopName());
         log.info("[测试通过]");
     }
 }

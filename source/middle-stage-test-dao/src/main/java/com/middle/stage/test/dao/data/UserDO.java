@@ -22,6 +22,11 @@ public class UserDO {
     private String userName;
 
     /**
+     * 手机号
+     */
+    private String mobile;
+
+    /**
      * 密码
      */
     private String password;
@@ -35,9 +40,4 @@ public class UserDO {
      * 更新时间
      */
     private Date updateTime;
-
-    /**
-     * 手机号
-     */
-    private String mobile;
 }

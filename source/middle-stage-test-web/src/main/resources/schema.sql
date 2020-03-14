@@ -8,3 +8,4 @@ CREATE TABLE `t_user`  (
   `crate_time` datetime(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
+INSERT INTO `t_user` VALUES('zyq','zyq','123456','17612345678',NOW(),NOW());

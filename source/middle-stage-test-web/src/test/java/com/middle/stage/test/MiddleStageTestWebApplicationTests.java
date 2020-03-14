@@ -50,9 +50,10 @@ class MiddleStageTestWebApplicationTests {
         Assertions.assertNotEquals(MockMvcResultMatchers.status().isOk(), response.getStatus());
         CallResult callResult = JSONObject.parseObject(response.getContentAsString(), CallResult.class);
         //验证业务状态码
-        Assertions.assertEquals(callResult.getCode(), CallResult.RETURN_STATUS_UNREGISTERED);
+        Assertions.assertEquals(callResult.getCode(), CallResult.RETURN_STATUS_OK);
 
+        UserDO userResult = JSONObject.parseObject(callResult.getContent(), UserDO.class);
+        Assertions.assertEquals(MiddleStageTestWebApplicationTests.userDO.getMobile(), userResult.getMobile());
         log.info("[测试通过]");
-
     }
 }

@@ -1,5 +1,6 @@
 package com.middle.stage.test.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.middle.stage.test.commons.CallResult;
 import com.middle.stage.test.data.UserDO;
 import com.middle.stage.test.mapper.UserMapper;
@@ -40,6 +41,6 @@ public class UserServiceImpl implements UserService {
         if (!userDO.getPassword().equals(userEntity.getPassword())) {
             return CallResult.fail(CallResult.RETURN_STATUS_PASW_INCORRECT, "您的密码不正确！");
         }
-        return CallResult.success(CallResult.RETURN_STATUS_OK, "登录成功！", userEntity);
+        return CallResult.success(CallResult.RETURN_STATUS_OK, "登录成功！", JSONObject.toJSONString(userEntity));
     }
 }
