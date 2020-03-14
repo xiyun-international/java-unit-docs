@@ -193,7 +193,7 @@ class MiddleStageTestOptimizationApplicationTests {
 
 ```java
 2020-03-12 17:41:39.546  INFO 15924 --- [main] dleStageTestOptimizationApplicationTests : tmpNewObjectList = [[{"defaultEndTime":120,"defaultStartTime":60,"dinnerTypeId":1,"dinnerTypeName":"早餐"}]]
-2020-03-12 17:41:39.547  INFO 15924 --- [main] dleStageTestOptimizationApplicationTests : oldObjectList = [[{"defaultEndTime":250,"defaultStartTime":200,"dinnerTypeId":3,"dinnerTypeName":"晚餐"}]]
+2020-03-12 17:41:39.547  INFO 15924 --- [main] dleStageTestOptimizationApplicationTests : tmpOldObjectList = [[{"defaultEndTime":250,"defaultStartTime":200,"dinnerTypeId":3,"dinnerTypeName":"晚餐"}]]
 2020-03-12 17:41:39.547  INFO 15924 --- [main] dleStageTestOptimizationApplicationTests : tmpIntersectNewObjectList = [[{"defaultEndTime":180,"defaultStartTime":120,"dinnerTypeId":2,"dinnerTypeName":"午餐"}]]
 2020-03-12 17:41:39.547  INFO 15924 --- [main] dleStageTestOptimizationApplicationTests : tmpIntersectOldObjectList = [[{"defaultEndTime":180,"defaultStartTime":130,"dinnerTypeId":2,"dinnerTypeName":"午餐"}]]
 2020-03-12 17:41:39.547  INFO 15924 --- [main] dleStageTestOptimizationApplicationTests : [测试通过]
