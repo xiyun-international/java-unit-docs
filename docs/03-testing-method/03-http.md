@@ -101,11 +101,9 @@ class MiddleStageTestWebApplicationTests {
 
     @Test
     void loginInterfaceTest() throws Exception {
-
-        // 验证测试用例是否创建
+        //验证测试用例是否创建
         Assertions.assertNotNull(userDO, "userDO is null");
 
-        // !注意这里代码
         MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.post("/user/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JSONObject.toJSONString(userDO)))
@@ -113,12 +111,14 @@ class MiddleStageTestWebApplicationTests {
                 .andReturn()
                 .getResponse();
 
-        // 验证 HTTP 状态码
+        //验证http状态码
         Assertions.assertNotEquals(MockMvcResultMatchers.status().isOk(), response.getStatus());
-        CallResult callResult = JSONObject.parseObject(response.getContentAsString(), CallResult.class);
+        CallResult userResponse = JSONObject.parseObject(response.getContentAsString(), CallResult.class);
+        //验证业务状态码
+        Assertions.assertEquals(userResponse.getCode(), CallResult.RETURN_STATUS_OK);
 
-        // 验证业务状态码
-        Assertions.assertEquals(callResult.getCode(),CallResult.RETURN_STATUS_UNREGISTERED);
+        UserDO userResult = JSONObject.parseObject(userResponse.getContent(), UserDO.class);
+        Assertions.assertEquals(userDO.getMobile(), userResult.getMobile());
         log.info("[测试通过]");
     }
 }
@@ -132,10 +132,9 @@ MockHttpServletResponse:
     Error message = null
           Headers = [Content-Type:"application/json;charset=UTF-8"]
      Content type = application/json
-             Body = {"code":-2,"msg":"没有该用户信息，请先注册！","content":null}
+             Body = {"code":1,"msg":"登录成功！","content":"{\"crateTime\":1584206228000,\"id\":\"zyq\",\"mobile\":\"17612345678\",\"password\":\"123456\",\"updateTime\":1584206228000,\"userName\":\"zyq\"}"}
     Forwarded URL = null
    Redirected URL = null
           Cookies = []
-2020-03-08 19:44:39.795  INFO 19020 --- [main] s.t.w.MiddleStageTestWebApplicationTests : [测试通过]
-
+2020-03-15 01:17:10.567  INFO 30640 --- [           main] m.s.t.MiddleStageTestWebApplicationTests : [测试通过]
 ```

@@ -94,14 +94,17 @@ class MiddleStageTestServiceByAnnotationApplicationTests {
     @Test
     @DisplayName("登录测试")
     void login() {
-
         //验证测试用例是否创建
         Assertions.assertNotNull(userDO, "userDO is null");
 
-        //设置桩代码，模拟查询过程
-        when(mockUserMapper.selectByMobile(mobile)).thenReturn(userResult);
+        //模拟登录业务中，依赖的dao层查询接口
+        UserMapper mockUserMapper = mock(UserMapper.class);
+        //将模拟的接口注入
+        UserServiceImpl userService = new UserServiceImpl(mockUserMapper);
 
-        //登录
+        //当程序运行时，模拟查询结果，返回我们指定的预期结果
+        when(mockUserMapper.selectByMobile(mobile)).thenReturn(mockUserResult);
+
         CallResult loginCallResult = userService.login(userDO);
 
         //验证是否执行
@@ -109,7 +112,8 @@ class MiddleStageTestServiceByAnnotationApplicationTests {
 
         //验证是否与我们预期的状态值相符
         Assertions.assertEquals(CallResult.RETURN_STATUS_OK, loginCallResult.getCode());
-    	log.info("[测试通过]");
+        Assertions.assertNotNull(loginCallResult.getContent());
+        log.info("[测试通过]");
     }
 }
 ```
@@ -117,5 +121,5 @@ class MiddleStageTestServiceByAnnotationApplicationTests {
 ### 运行结果
 
 ```java
-2020-03-08 19:36:08.053  INFO 17720 --- [main] eTestServiceByAnnotationApplicationTests : [测试通过]
+2020-03-15 01:13:22.055  INFO 30348 --- [           main] leStageTestServiceByCodeApplicationTests : [测试通过]
 ```
