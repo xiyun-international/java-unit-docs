@@ -8,19 +8,9 @@ order: 1
 
 整个手册，主要分为两大类：
 
-**基础讲解**：[快速上手](/java-unit-docs/getting-started)、[业务测试](/java-unit-docs/01-testing-method/01-business)、[数据库访问测试](/java-unit-docs/01-testing-method/02-dao)、[HTTP 接口测试](/java-unit-docs/01-testing-method/03-http)。
+**基础讲解**：[快速上手](/java-unit-docs/02-getting-started)、[业务测试](/java-unit-docs/03-testing-method/01-businessle)、[数据库访问测试](/java-unit-docs/03-testing-method/02-dao)、[HTTP 接口测试](/java-unit-docs/03-testing-method/03-http)。
 
-**高级技巧**：如何查看-[代码覆盖率](/java-unit-docs/01-testing-method/04-coverage)、如何进行[代码重构](/java-unit-docs/02-coverage/01-optimize)、遇到[上游系统无法使用](/java-unit-docs/02-coverage/02-faker)该如何做测试。
-
-## 整体计划
-
-| 阶段 | 目标 | 日期 |
-| :---| :---: | :----: |
-| 一期 | 单元测试常见的使用方式 | 2020-3-15 |
-| 二期 | 如何让工程接入质量管理平台，如 Sonar | -- |
-| 三期 | 基于现有的工具基础之上，包一层更好用的封装 | 需要一定的经验积累 |
-| 四期 | 如何让[质量监控平台](/java-unit-docs/05-other/03-platform)，贯通整个公司 | 待定 |
-
+**高级技巧**：如何查看-[代码覆盖率](/java-unit-docs/03-testing-method/04-coverage)、如何进行[代码重构](/java-unit-docs/04-complex/01-optimize)、遇到[上游系统无法使用](/java-unit-docs/04-complex/02-system-error)该如何做测试。
 
 ## 为什么要进行测试
 
@@ -43,3 +33,12 @@ order: 1
 [功能测试](https://baike.baidu.com/item/%E5%8A%9F%E8%83%BD%E6%B5%8B%E8%AF%95/10921202?fr=aladdin)：功能测试就是对产品的各功能进行验证，根据功能测试用例，逐项测试，检查产品是否达到用户要求的功能。
 
 [冒烟测试](https://baike.baidu.com/item/%E5%86%92%E7%83%9F%E6%B5%8B%E8%AF%95)：在正式提测之前，对主要功能进行的测试，确认主要功能是否满足需要软件是否能正常运行。
+
+## 整体计划
+
+| 阶段 | 目标 | 日期 |
+| :---| :---: | :----: |
+| 一期 | 单元测试常见的使用方式 | 2020-3-15 |
+| 二期 | 如何让工程接入质量管理平台，如 Sonar | -- |
+| 三期 | 基于现有的工具基础之上，包一层更好用的封装 | 需要一定的经验积累 |
+| 四期 | 如何让[质量监控平台](/java-unit-docs/05-other/03-platform)，贯通整个公司 | 待定 |
