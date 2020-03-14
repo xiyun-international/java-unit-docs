@@ -76,61 +76,69 @@ processData(){
 
 [以下代码](https://github.com/xiyun-international/java-unit-docs/blob/master/source/middle-stage-test-optimization/src/main/java/com/middle/stage/test/optimization/commons/CommonsListUtil.java)拆分成可复用的工具类以后，它既可以独立的进行测试，也方便业务上的复用。
 
-### 工具代码
+### Service 代码
 
 ```java
-@Data
-public class CommonsListUtil<T> {
+public class ShopServiceImpl implements ShopService {
 
     /**
-     * 输入参数-新数据集合
+     * 保存门店餐别关系
+     *
+     * @param loginUser
+     * @param canteenDTO
      */
-    private List<T> newObjectList;
-    /**
-     * 输入参数-旧数据集合
-     */
-    private List<T> oldObjectList;
-    /**
-     * 新集合求出的差集
-     */
-    private List<T> tmpNewObjectList;
-    /**
-     * 旧集合求出的差集
-     */
-    private List<T> tmpOldObjectList;
-    /**
-     * 新集合求出的交集
-     */
-    private List<T> tmpIntersectNewObjectList;
-    /**
-     * 旧集合求出的交集
-     */
-    private List<T> tmpIntersectOldObjectList;
+    public CallResult saveCanteenDinnerRelation(List<DinnerTypeForm> newDinnerList, UserDO loginUser, CanteenDTO canteenDTO) {
 
-    public CommonsListUtil(List<T> newObjectList, List<T> oldObjectList) {
-        this.newObjectList = newObjectList;
-        this.oldObjectList = oldObjectList;
-    }
+        log.info("ShopService.updateCanteen newDinnerList = [{}]", JSONObject.toJSON(newDinnerList));
 
-    public CommonsListUtil invoke() {
-        //复制原集合
-        tmpNewObjectList = Lists.newArrayList();
-        tmpNewObjectList.addAll(newObjectList);
-        tmpOldObjectList = Lists.newArrayList();
-        tmpOldObjectList.addAll(oldObjectList);
-        tmpIntersectNewObjectList = Lists.newArrayList();
-        tmpIntersectNewObjectList.addAll(newObjectList);
-        tmpIntersectOldObjectList = Lists.newArrayList();
-        tmpIntersectOldObjectList.addAll(oldObjectList);
+        DinnerTypeDO dinnerType = dinnerTypeService.selectByPrimaryKey(DINNER_TYPE_OF_FULL_DAY);
+        if (CollectionUtils.isEmpty(newDinnerList)) {
+            DinnerTypeView dinnerTypeView = DinnerTypeView.intDefaultTimeToStr(dinnerType);
+            DinnerTypeForm dinnerTypeForm = new DinnerTypeForm();
+            BeanUtils.copyProperties(dinnerTypeView, dinnerTypeForm);
+            newDinnerList.add(dinnerTypeForm);
+        }
+        //转换实体类及时间
+        List<DinnerTypeDO> newDinnerTypeDOList = dinnerTypeFormListToDinnerTypeDOList(newDinnerList);
+        List<DinnerTypeDO> oldDinnerList = dinnerTypeService.selectDinnerTypeByCanteenId(canteenDTO.getCanteenId());
+        List<DinnerTypeDO> oldDinnerTypeDOList = Lists.newArrayList();
+        if (CollectionUtils.isEmpty(oldDinnerList)) {
+            //历史门店没有餐别，默认将旧数据设置为全天
+            oldDinnerTypeDOList.add(dinnerType);
+        } else {
+            oldDinnerTypeDOList = oldDinnerList;
+        }
+        log.info("ShopService.updateCanteen oldDinnerList = [{}]", JSONObject.toJSON(oldDinnerList));
+        //通用集合求差集、交集
+        CommonsListUtil commonsListUtil = new CommonsListUtil(newDinnerTypeDOList, oldDinnerTypeDOList).invoke();
+        List<DinnerTypeDO> tmpNewDinnerTypeDOList = commonsListUtil.getTmpNewObjectList();
+        List<DinnerTypeDO> tmpOldDinnerTypeDOList = commonsListUtil.getTmpOldObjectList();
+        List<DinnerTypeDO> tmpIntersectNewDinnerTypeDOList = commonsListUtil.getTmpIntersectNewObjectList();
+        List<DinnerTypeDO> tmpIntersectOldDinnerTypeDOList = commonsListUtil.getTmpIntersectOldObjectList();
+        //排序
+        tmpIntersectNewDinnerTypeDOList.stream().sorted(Comparator.comparing(DinnerTypeDO::getDinnerTypeId));
+        tmpIntersectOldDinnerTypeDOList.stream().sorted(Comparator.comparing(DinnerTypeDO::getDinnerTypeId));
+        //本次操作信息记录
+        StringBuffer updateRecord = new StringBuffer();
+        List<DinnerTypeDO> dinnerTypeEntities = dinnerTypeService.selectAll();
+        HashMap<Integer, DinnerTypeDO> dinnerTypeDOMap = dinnerTypeService.listToMap(dinnerTypeEntities);
 
-        //求差集操作（对象必须重写hashCode 和equals方法）
-        tmpNewObjectList.removeAll(oldObjectList);
-        tmpOldObjectList.removeAll(newObjectList);
-
-        //求交集操作（对象必须重写hashCode 和equals方法）
-        tmpIntersectNewObjectList.retainAll(oldObjectList);
-        tmpIntersectOldObjectList.retainAll(newObjectList);
-        return this;
+        // 旧集合求出差集不为空，执行逻辑删除
+        int deleteResult = getDeleteResult(loginUser, canteenDTO, tmpOldDinnerTypeDOList, updateRecord, dinnerTypeDOMap);
+        //交集求出数据更新
+        List<DinnerTypeDO> batchUpdateList = Lists.newArrayList();
+        setBatchUpdateList(tmpIntersectNewDinnerTypeDOList, tmpIntersectOldDinnerTypeDOList, batchUpdateList);
+        int updateResult = getUpdateResult(loginUser, canteenDTO, updateRecord, dinnerTypeDOMap, batchUpdateList);
+        // 新集合求出差集不为空，执行添加
+        int insertResult = getInsertResult(loginUser, canteenDTO, tmpNewDinnerTypeDOList, updateRecord, dinnerTypeDOMap);
+        //添加本次变更操作记录
+        if (updateRecord.length() > 0) {
+            pushDataAndSaveLog(newDinnerList, loginUser, canteenDTO, newDinnerTypeDOList, oldDinnerList, updateRecord);
+        }
+        log.info("ShopService.updateCanteen insertResult = [{}] tmpNewDinnerTypeDOList = [{}]", insertResult, JSONObject.toJSON(tmpNewDinnerTypeDOList));
+        log.info("ShopService.updateCanteen deleteResult = [{}] tmpOldDinnerTypeDOList = [{}]", deleteResult, JSONObject.toJSON(tmpOldDinnerTypeDOList));
+        log.info("ShopService.updateCanteen updateResult = [{}] batchUpdateList = [{}]", updateResult, JSONObject.toJSON(batchUpdateList));
+        return CallResult.success(CallResult.RETURN_STATUS_OK, "操作成功", deleteResult + updateResult + insertResult);
     }
 }
 ```
@@ -140,50 +148,113 @@ public class CommonsListUtil<T> {
 ```java
 @Slf4j
 @SpringBootTest
-class MiddleStageTestOptimizationApplicationTests {
+class ShopServiceImplTest {
 
-    private static List<DinnerTypeDO> newDinnerTypeDOList;
-    private static List<DinnerTypeDO> oldDinnerTypeDOList;
+    @Mock
+    private DinnerTypeService mockDinnerTypeService;
+    @Mock
+    private DinnerService mockDinnerService;
+    @Mock
+    private ShopCommonService mockShopCommonService;
+    @Mock
+    private CanteenDinnerService mockCanteenDinnerService;
+    @Mock
+    private OperationLogService mockOperationLogService;
 
-    @BeforeAll
-    static void beforeGetDinnerListTest() {
-        newDinnerTypeDOList = new ArrayList<>();
-        oldDinnerTypeDOList = new ArrayList<>();
-        DinnerTypeDO d1 = new DinnerTypeDO(1, "早餐", 60, 120);
-        DinnerTypeDO d2 = new DinnerTypeDO(2, "午餐", 120, 180);
-        DinnerTypeDO d3 = new DinnerTypeDO(2, "午餐", 130, 180);
-        DinnerTypeDO d4 = new DinnerTypeDO(3, "晚餐", 200, 250);
-        newDinnerTypeDOList.add(d1);
-        newDinnerTypeDOList.add(d2);
-        oldDinnerTypeDOList.add(d3);
-        oldDinnerTypeDOList.add(d4);
+    @InjectMocks
+    private ShopServiceImpl shopService;
+
+    @Autowired
+    private DinnerTypeMapper dinnerTypeMapper;
+
+    //全部数据集合
+    private static List<DinnerTypeDO> dinnerTypeDOList = new ArrayList<>();
+    //新餐别数据
+    private static List<DinnerTypeForm> newDinnerList = new ArrayList<>();
+    //旧餐别数据
+    private static List<DinnerTypeDO> oldDinnerList = new ArrayList<>();
+    //门店数据
+    private static CanteenDTO canteenDTO = new CanteenDTO();
+    //用户数据
+    private static UserDO userDO = new UserDO();
+    //转换map
+    private static HashMap<Integer, DinnerTypeDO> dinnerTypeDOMap = new HashMap<>();
+    //查询结果
+    private static DinnerTypeDO dinnerTypeDO = new DinnerTypeDO();
+
+
+    /**
+     * 测试数据
+     */
+    @BeforeEach
+    void beforSaveCanteenDinnerRelation() {
+        userDO.setUserId(1);
+        userDO.setUserName("zyq");
+        userDO.setMerchantId(1);
+
+        canteenDTO.setCanteenId(279);
+        canteenDTO.setMerchantId(96);
+        canteenDTO.setEquId(3);
+
+        dinnerTypeDOList = dinnerTypeMapper.selectAll();
+        // 这里使用断言判断准备的数据是否正确
+        Assertions.assertNotEquals(0, dinnerTypeDOList.size(), "dinnerTypeDOList size is 0");
+
+        dinnerTypeDO = dinnerTypeMapper.selectByPrimaryKey(1);
+        Assertions.assertNotNull(dinnerTypeDO, "dinnerTypeDO is null");
+        oldDinnerList = dinnerTypeMapper.selectDinnerTypeByCanteenId(279);
+        Assertions.assertNotEquals(0, oldDinnerList.size(), "oldDinnerList size is 0");
+
+        DinnerTypeForm dinnerTypeOne = new DinnerTypeForm(2, "早餐", "09:00", "10:00");
+        DinnerTypeForm dinnerTypeTwo = new DinnerTypeForm(3, "午餐", "11:30", "13:00");
+        newDinnerList.add(dinnerTypeOne);
+        newDinnerList.add(dinnerTypeTwo);
+
+        dinnerTypeDOMap = ShopServiceImpl.listToMap(dinnerTypeDOList);
+        Assertions.assertNotEquals(0, dinnerTypeDOMap.size(), "dinnerTypeDOMap size is 0");
     }
 
     @Test
-    void getDinnerListTest() {
-        Assertions.assertNotNull(newDinnerTypeDOList, "newDinnerTypeDOList can not be null!");
-        Assertions.assertNotNull(oldDinnerTypeDOList, "newDinnerTypeDOList can not be null!");
-        //通用集合求差集、交集
-        CommonsListUtil commonsListUtil = new CommonsListUtil(newDinnerTypeDOList, oldDinnerTypeDOList).invoke();
-        //新集合求出交集
-        List tmpIntersectNewObjectList = commonsListUtil.getTmpIntersectNewObjectList();
-        //旧集合求出交集
-        List tmpIntersectOldObjectList = commonsListUtil.getTmpIntersectOldObjectList();
-        //新集求出合差集
-        List tmpNewObjectList = commonsListUtil.getTmpNewObjectList();
-        //旧集求出合差集
-        List tmpOldObjectList = commonsListUtil.getTmpOldObjectList();
+    void saveCanteenDinnerRelation() {
 
-        Assertions.assertEquals(1, tmpIntersectNewObjectList.size());
-        Assertions.assertEquals(1, tmpIntersectOldObjectList.size());
-        Assertions.assertEquals(1, tmpNewObjectList.size());
-        Assertions.assertEquals(1, tmpOldObjectList.size());
-        log.info("tmpNewObjectList = [{}]", JSONObject.toJSONString(tmpNewObjectList));
-        log.info("tmpOldObjectList = [{}]", JSONObject.toJSONString(tmpOldObjectList));
-        log.info("tmpIntersectNewObjectList = [{}]", JSONObject.toJSONString(tmpIntersectNewObjectList));
-        log.info("tmpIntersectOldObjectList = [{}]", JSONObject.toJSONString(tmpIntersectOldObjectList));
+        //设置桩代码
+        when(mockDinnerTypeService.selectByPrimaryKey(1)).thenReturn(dinnerTypeDO);
+        when(mockDinnerTypeService.selectDinnerTypeByCanteenId(canteenDTO.getCanteenId())).thenReturn(oldDinnerList);
+        when(mockDinnerTypeService.selectAll()).thenReturn(dinnerTypeDOList);
+        when(mockDinnerTypeService.listToMap(dinnerTypeDOList)).thenReturn(dinnerTypeDOMap);
 
-        //如果感兴趣，可以验证集合里的数据
+        //以下知识点同学们自己学吧，师傅领进门，修行靠个人
+
+        //知识点-自定义参数匹配器
+        when(mockDinnerService.batchDeleteByCondition(argThat(new BatchDeleteMatcher()))).thenReturn(1);
+        when(mockDinnerService.batchUpdateByCondition(argThat(new BatchUpdateMatcher()))).thenReturn(1);
+        when(mockDinnerService.batchInsert(argThat(new BatchInsertMatcher()))).thenReturn(1);
+
+        //知识点-无返回值方法的桩代码
+        doNothing().when(mockShopCommonService).pushDinnerToIsv(anyInt(), anyInt(), anyInt(), anyInt(), anyInt());
+        doNothing().when(mockOperationLogService).saveLog(anyLong(), any(), anyInt(), anyString(), anyString(), anyString(), anyInt(), anyInt());
+        doNothing().when(mockCanteenDinnerService).putCanteenDinnerType2Cache(anyInt(), anyList());
+
+        //执行被测试方法
+        CallResult callResult = shopService.saveCanteenDinnerRelation(newDinnerList, userDO, canteenDTO);
+
+        //验证是否执行（以目前的测试数据，所有方法都会执行到）
+        verify(mockDinnerTypeService).selectAll();
+        verify(mockDinnerTypeService).selectByPrimaryKey(1);
+        verify(mockDinnerTypeService).selectDinnerTypeByCanteenId(canteenDTO.getCanteenId());
+        verify(mockDinnerTypeService).listToMap(dinnerTypeDOList);
+        verify(mockDinnerService).batchDeleteByCondition(argThat(new BatchDeleteMatcher()));
+        verify(mockDinnerService).batchUpdateByCondition(argThat(new BatchUpdateMatcher()));
+        verify(mockDinnerService).batchInsert(argThat(new BatchInsertMatcher()));
+        verify(mockShopCommonService).pushDinnerToIsv(anyInt(), anyInt(), anyInt(), anyInt(), anyInt());
+        verify(mockOperationLogService).saveLog(anyLong(), any(), anyInt(), anyString(), anyString(), anyString(), anyInt(), anyInt());
+        verify(mockCanteenDinnerService).putCanteenDinnerType2Cache(anyInt(), anyList());
+
+        //验证结果
+        Assertions.assertNotNull(callResult);
+        Assertions.assertEquals(CallResult.RETURN_STATUS_OK, callResult.getCode());
+        //验证数据处理条数
+        Assertions.assertEquals(3, callResult.getContent());
         log.info("[测试通过]");
     }
 }
@@ -192,11 +263,12 @@ class MiddleStageTestOptimizationApplicationTests {
 ### 运行结果
 
 ```java
-2020-03-12 17:41:39.546  INFO 15924 --- [main] dleStageTestOptimizationApplicationTests : tmpNewObjectList = [[{"defaultEndTime":120,"defaultStartTime":60,"dinnerTypeId":1,"dinnerTypeName":"早餐"}]]
-2020-03-12 17:41:39.547  INFO 15924 --- [main] dleStageTestOptimizationApplicationTests : tmpOldObjectList = [[{"defaultEndTime":250,"defaultStartTime":200,"dinnerTypeId":3,"dinnerTypeName":"晚餐"}]]
-2020-03-12 17:41:39.547  INFO 15924 --- [main] dleStageTestOptimizationApplicationTests : tmpIntersectNewObjectList = [[{"defaultEndTime":180,"defaultStartTime":120,"dinnerTypeId":2,"dinnerTypeName":"午餐"}]]
-2020-03-12 17:41:39.547  INFO 15924 --- [main] dleStageTestOptimizationApplicationTests : tmpIntersectOldObjectList = [[{"defaultEndTime":180,"defaultStartTime":130,"dinnerTypeId":2,"dinnerTypeName":"午餐"}]]
-2020-03-12 17:41:39.547  INFO 15924 --- [main] dleStageTestOptimizationApplicationTests : [测试通过]
+2020-03-15 01:16:08.055  INFO 13908 --- [main] c.m.s.t.o.service.impl.ShopServiceImpl   : ShopService.updateCanteen newDinnerList = [[{"dinnerTypeName":"早餐","strDefaultEndTime":"10:00","strDefaultStartTime":"09:00","dinnerTypeId":2},{"dinnerTypeName":"午餐","strDefaultEndTime":"13:00","strDefaultStartTime":"11:30","dinnerTypeId":3}]]
+2020-03-15 01:16:08.069  INFO 13908 --- [main] c.m.s.t.o.service.impl.ShopServiceImpl   : ShopService.updateCanteen oldDinnerList = [[{"defaultEndTime":120,"dinnerTypeName":"全天","defaultStartTime":60,"dinnerTypeId":1},{"defaultEndTime":660,"dinnerTypeName":"早餐","defaultStartTime":540,"dinnerTypeId":2}]]
+2020-03-15 01:16:08.076  INFO 13908 --- [main] c.m.s.t.o.service.impl.ShopServiceImpl   : ShopService.updateCanteen insertResult = [1] tmpNewDinnerTypeDOList = [[{"defaultEndTime":780,"dinnerTypeName":"午餐","defaultStartTime":690,"dinnerTypeId":3}]]
+2020-03-15 01:16:08.076  INFO 13908 --- [main] c.m.s.t.o.service.impl.ShopServiceImpl   : ShopService.updateCanteen deleteResult = [1] tmpOldDinnerTypeDOList = [[{"defaultEndTime":120,"dinnerTypeName":"全天","defaultStartTime":60,"dinnerTypeId":1}]]
+2020-03-15 01:16:08.076  INFO 13908 --- [main] c.m.s.t.o.service.impl.ShopServiceImpl   : ShopService.updateCanteen updateResult = [1] batchUpdateList = [[{"defaultEndTime":600,"dinnerTypeName":"早餐","defaultStartTime":540,"dinnerTypeId":2}]]
+2020-03-15 01:16:08.085  INFO 13908 --- [main] c.m.s.t.o.ShopServiceImplTest            : [测试通过]
 
 ```
 
