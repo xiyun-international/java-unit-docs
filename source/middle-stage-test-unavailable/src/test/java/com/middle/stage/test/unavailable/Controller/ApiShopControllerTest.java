@@ -29,14 +29,14 @@ class ApiShopControllerTest {
     static ShopDO shopDO;
 
     @BeforeAll
-    static void beforLoginTest() {
+    static void beforSaveTest() {
         shopDO = new ShopDO();
         shopDO.setShopId(1);
         shopDO.setShopName("zyq");
     }
 
     @Test
-    void loginInterfaceTest() throws Exception {
+    void saveTest() throws Exception {
 
         //验证测试用例是否创建
         Assertions.assertNotNull(shopDO, "shopDO is null");
