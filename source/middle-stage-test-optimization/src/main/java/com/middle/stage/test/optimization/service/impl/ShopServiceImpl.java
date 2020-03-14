@@ -119,7 +119,7 @@ public class ShopServiceImpl implements ShopService {
         log.info("ShopService.updateCanteen insertResult = [{}] tmpNewDinnerTypeDOList = [{}]", insertResult, JSONObject.toJSON(tmpNewDinnerTypeDOList));
         log.info("ShopService.updateCanteen deleteResult = [{}] tmpOldDinnerTypeDOList = [{}]", deleteResult, JSONObject.toJSON(tmpOldDinnerTypeDOList));
         log.info("ShopService.updateCanteen updateResult = [{}] batchUpdateList = [{}]", updateResult, JSONObject.toJSON(batchUpdateList));
-        return CallResult.success(CallResult.RETURN_STATUS_OK, "操作成功", "");
+        return CallResult.success(CallResult.RETURN_STATUS_OK, "操作成功", deleteResult + updateResult + insertResult);
     }
 
     public void pushDataAndSaveLog(List<DinnerTypeForm> newDinnerList, UserDO loginUser, CanteenDTO canteenDTO, List<DinnerTypeDO> newDinnerTypeDOList, List<DinnerTypeDO> oldDinnerList, StringBuffer updateRecord) {
