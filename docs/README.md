@@ -8,7 +8,7 @@ order: 1
 
 整个手册，主要分为两大类：
 
-**基础讲解**：[快速上手](/java-unit-docs/02-getting-started)、[业务测试](/java-unit-docs/03-testing-method/01-businessle)、[数据库访问测试](/java-unit-docs/03-testing-method/02-dao)、[HTTP 接口测试](/java-unit-docs/03-testing-method/03-http)。
+**基础讲解**：[快速上手](/java-unit-docs/02-getting-started)、[业务测试](/java-unit-docs/03-testing-method/01-business)、[数据库访问测试](/java-unit-docs/03-testing-method/02-dao)、[HTTP 接口测试](/java-unit-docs/03-testing-method/03-http)。
 
 **高级技巧**：如何查看-[代码覆盖率](/java-unit-docs/03-testing-method/04-coverage)、如何进行[代码重构](/java-unit-docs/04-complex/01-optimize)、遇到[上游系统无法使用](/java-unit-docs/04-complex/02-system-error)该如何做测试。
 
