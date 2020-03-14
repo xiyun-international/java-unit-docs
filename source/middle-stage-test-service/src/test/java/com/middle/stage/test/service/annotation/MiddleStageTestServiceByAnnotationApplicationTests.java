@@ -68,7 +68,6 @@ class MiddleStageTestServiceByAnnotationApplicationTests {
 
         //! 桩代码设置成功
         UserDO login = (UserDO) loginCallResult.getContent();
-        System.out.println(login.getMobile());
         Assertions.assertEquals(fakerUserResult.getMobile(), login.getMobile());
 
         log.info("[测试通过]");
