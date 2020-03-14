@@ -46,7 +46,7 @@ class ShopServiceImplTest {
     static MarkttingModel markttingModel;
 
     //模拟门店结果
-    static ShopDO shopResult;
+    static ShopDO mockShopResult;
 
     //模拟openID查询结果
     static CallResult mockOpenIdResult;
@@ -70,9 +70,9 @@ class ShopServiceImplTest {
         markttingModel.setShopId(shopId);
         markttingModel.setFlag(falg);
 
-        shopResult = new ShopDO();
-        shopResult.setId(shopId);
-        shopResult.setMarktingSwitch(true);
+        mockShopResult = new ShopDO();
+        mockShopResult.setId(shopId);
+        mockShopResult.setMarktingSwitch(true);
 
         mockOpenIdResult = new CallResult(CallResult.RETURN_STATUS_OK, "查询成功", "asdasd56789asdfgjhkklllasd");
         mockUserModel = new UserModel("zyq", openId, "17612345678", "zyq");
@@ -86,11 +86,11 @@ class ShopServiceImplTest {
     void payTest() {
 
         Assertions.assertNotNull(markttingModel, "markttingModel can not be null!");
-        Assertions.assertNotNull(shopResult, "shopResult can not be null!");
+        Assertions.assertNotNull(mockShopResult, "shopResult can not be null!");
         Assertions.assertNotNull(mockOpenIdResult, "openIdResult can not be null!");
         Assertions.assertNotNull(mockUserModel, "userModel can not be null!");
 
-        when(mockShopMapper.selectById(shopId)).thenReturn(shopResult);
+        when(mockShopMapper.selectById(shopId)).thenReturn(mockShopResult);
         when(mockFuyouDubboService.getOpenId(falg)).thenReturn(mockOpenIdResult);
         when(mockUserDubboService.getUserInfo(openId)).thenReturn(mockUserResult);
 

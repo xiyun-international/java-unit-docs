@@ -48,12 +48,12 @@ class MiddleStageTestWebApplicationTests {
                 .getResponse();
         //验证http状态码
         Assertions.assertNotEquals(MockMvcResultMatchers.status().isOk(), response.getStatus());
-        CallResult callResult = JSONObject.parseObject(response.getContentAsString(), CallResult.class);
+        CallResult userResponse = JSONObject.parseObject(response.getContentAsString(), CallResult.class);
         //验证业务状态码
-        Assertions.assertEquals(callResult.getCode(), CallResult.RETURN_STATUS_OK);
+        Assertions.assertEquals(userResponse.getCode(), CallResult.RETURN_STATUS_OK);
 
-        UserDO userResult = JSONObject.parseObject(callResult.getContent(), UserDO.class);
-        Assertions.assertEquals(MiddleStageTestWebApplicationTests.userDO.getMobile(), userResult.getMobile());
+        UserDO userResult = JSONObject.parseObject(userResponse.getContent(), UserDO.class);
+        Assertions.assertEquals(userDO.getMobile(), userResult.getMobile());
         log.info("[测试通过]");
     }
 }

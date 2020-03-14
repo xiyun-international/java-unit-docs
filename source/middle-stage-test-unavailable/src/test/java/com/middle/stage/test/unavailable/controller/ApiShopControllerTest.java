@@ -49,11 +49,11 @@ class ApiShopControllerTest {
                 .getResponse();
         //验证http状态码
         Assertions.assertNotEquals(MockMvcResultMatchers.status().isOk(), response.getStatus());
-        CallResult callResult = JSONObject.parseObject(response.getContentAsString(), CallResult.class);
+        CallResult shopResponse = JSONObject.parseObject(response.getContentAsString(), CallResult.class);
         //验证业务状态码
-        Assertions.assertEquals(callResult.getCode(), CallResult.RETURN_STATUS_OK);
+        Assertions.assertEquals(shopResponse.getCode(), CallResult.RETURN_STATUS_OK);
 
-        ShopDO shopResult = JSONObject.parseObject(callResult.getContent(), ShopDO.class);
+        ShopDO shopResult = JSONObject.parseObject(shopResponse.getContent(), ShopDO.class);
         Assertions.assertEquals(shopDO.getShopName(), shopResult.getShopName());
         log.info("[测试通过]");
     }

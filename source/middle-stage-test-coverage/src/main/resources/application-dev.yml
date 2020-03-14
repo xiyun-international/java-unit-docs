@@ -17,4 +17,4 @@ mybatis:
   mapper-locations: classpath:mapper/*.xml
 logging:
   level:
-    com.xiyun.xiyuntest.dao: DEBUG
+    com.middle.stage.test.coverage.mapper: DEBUG

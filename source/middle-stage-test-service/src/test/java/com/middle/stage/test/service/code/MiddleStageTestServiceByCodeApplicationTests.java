@@ -21,7 +21,7 @@ class MiddleStageTestServiceByCodeApplicationTests {
     static UserDO userDO;
 
     //模拟查询结果
-    static UserDO userResult;
+    static UserDO mockUserResult;
 
     static String mobile = "17612345678";
 
@@ -33,9 +33,9 @@ class MiddleStageTestServiceByCodeApplicationTests {
         userDO.setMobile(mobile);
         userDO.setPassword(password);
 
-        userResult = new UserDO();
-        userResult.setMobile(mobile);
-        userResult.setPassword("123456");
+        mockUserResult = new UserDO();
+        mockUserResult.setMobile(mobile);
+        mockUserResult.setPassword("123456");
     }
 
     @Test
@@ -51,7 +51,7 @@ class MiddleStageTestServiceByCodeApplicationTests {
         UserServiceImpl userService = new UserServiceImpl(mockUserMapper);
 
         //当程序运行时，模拟查询结果，返回我们指定的预期结果
-        when(mockUserMapper.selectByMobile(mobile)).thenReturn(userResult);
+        when(mockUserMapper.selectByMobile(mobile)).thenReturn(mockUserResult);
 
         CallResult loginCallResult = userService.login(userDO);
 

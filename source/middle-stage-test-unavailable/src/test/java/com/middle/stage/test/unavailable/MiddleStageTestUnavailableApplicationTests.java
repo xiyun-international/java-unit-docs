@@ -36,7 +36,7 @@ class MiddleStageTestUnavailableApplicationTests {
 
     private static PushData pushData;
 
-    private static ShopDO shopDO;
+    private static ShopDO mockShopResult;
 
     private static Integer objectId = 123;
 
@@ -50,9 +50,9 @@ class MiddleStageTestUnavailableApplicationTests {
         pushData.setObjectId(objectId);
         pushData.setObjectType(1);
 
-        shopDO = new ShopDO();
-        shopDO.setShopId(objectId);
-        shopDO.setShopName("zyq");
+        mockShopResult = new ShopDO();
+        mockShopResult.setShopId(objectId);
+        mockShopResult.setShopName("zyq");
     }
 
     @Test
@@ -60,12 +60,12 @@ class MiddleStageTestUnavailableApplicationTests {
 
         //判断测试数据是否为空
         Assertions.assertNotNull(pushData, "pushData can not be null");
-        Assertions.assertNotNull(shopDO, "shopDO can not be null");
+        Assertions.assertNotNull(mockShopResult, "shopDO can not be null");
 
         //设置桩代码
         when(pushDataMapper.selectLately()).thenReturn(pushData);
-        when(shopMapper.selectById(objectId)).thenReturn(shopDO);
-        when(httpClientUtil.sendHttpPost(url, JSONObject.toJSONString(shopDO))).thenReturn(httpResult);
+        when(shopMapper.selectById(objectId)).thenReturn(mockShopResult);
+        when(httpClientUtil.sendHttpPost(url, JSONObject.toJSONString(mockShopResult))).thenReturn(httpResult);
 
         //执行推送
         CallResult callResult = shopService.pushData();
@@ -73,7 +73,7 @@ class MiddleStageTestUnavailableApplicationTests {
         //验证
         verify(pushDataMapper).selectLately();
         verify(shopMapper).selectById(objectId);
-        verify(httpClientUtil).sendHttpPost(url, JSONObject.toJSONString(shopDO));
+        verify(httpClientUtil).sendHttpPost(url, JSONObject.toJSONString(mockShopResult));
 
         //判断结果是否符合预期
         Assertions.assertEquals(CallResult.RETURN_STATUS_OK, callResult.getCode());
