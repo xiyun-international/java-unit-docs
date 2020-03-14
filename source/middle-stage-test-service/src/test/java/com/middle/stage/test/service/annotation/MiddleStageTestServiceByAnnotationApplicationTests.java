@@ -32,7 +32,7 @@ class MiddleStageTestServiceByAnnotationApplicationTests {
     static UserDO userDO;
 
     //模拟查询结果
-    static UserDO userResult;
+    static UserDO fakerUserResult;
 
     static String mobile = "17612345678";
 
@@ -45,28 +45,32 @@ class MiddleStageTestServiceByAnnotationApplicationTests {
         userDO.setMobile(mobile);
         userDO.setPassword(password);
 
-        userResult = new UserDO();
-        userResult.setMobile(mobile);
-        userResult.setPassword("123456");
+        fakerUserResult = new UserDO();
+        fakerUserResult.setMobile("13888888888");
+        fakerUserResult.setPassword("123456");
     }
 
     @Test
     @DisplayName("登录测试")
     void login() {
 
-        //验证测试用例是否创建
-        Assertions.assertNotNull(userDO, "userDO is null");
+        //其它方法只要运行这个函数，就模拟返回 fakerUserResult 数据
+        when(mockUserMapper.selectByMobile(mobile)).thenReturn(fakerUserResult);
 
-        when(mockUserMapper.selectByMobile(mobile)).thenReturn(userResult);
-
+        //! userDO 的 mobile 是 17612345678，但因为设置了桩代码，返回值应该是 13888888888
         CallResult loginCallResult = userService.login(userDO);
 
         //验证是否执行
         verify(mockUserMapper).selectByMobile(mobile);
 
-        //验证是否与我们预期的状态值相符
+        //验证业务状态
         Assertions.assertEquals(CallResult.RETURN_STATUS_OK, loginCallResult.getCode());
-        Assertions.assertNotNull(loginCallResult.getContent());
+
+        //! 桩代码设置成功
+        UserDO login = (UserDO) loginCallResult.getContent();
+        System.out.println(login.getMobile());
+        Assertions.assertEquals(fakerUserResult.getMobile(), login.getMobile());
+
         log.info("[测试通过]");
     }
 }
