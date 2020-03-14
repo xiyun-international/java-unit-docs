@@ -76,13 +76,9 @@ class ShopServiceImplTest {
         canteenDTO.setEquId(3);
 
         dinnerTypeDOList = dinnerTypeMapper.selectAll();
-        // 这里使用断言判断准备的数据是否正确
-        Assertions.assertNotEquals(0, dinnerTypeDOList.size(), "dinnerTypeDOList size is 0");
 
         dinnerTypeDO = dinnerTypeMapper.selectByPrimaryKey(1);
-        Assertions.assertNotNull(dinnerTypeDO, "dinnerTypeDO is null");
         oldDinnerList = dinnerTypeMapper.selectDinnerTypeByCanteenId(279);
-        Assertions.assertNotEquals(0, oldDinnerList.size(), "oldDinnerList size is 0");
 
         DinnerTypeForm dinnerTypeOne = new DinnerTypeForm(2, "早餐", "09:00", "10:00");
         DinnerTypeForm dinnerTypeTwo = new DinnerTypeForm(3, "午餐", "11:30", "13:00");
