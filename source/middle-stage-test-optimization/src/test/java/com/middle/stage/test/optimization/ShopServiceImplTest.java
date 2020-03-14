@@ -1,6 +1,7 @@
 package com.middle.stage.test.optimization;
 
 import com.middle.stage.test.optimization.commons.CallResult;
+import com.middle.stage.test.optimization.dao.DinnerTypeMapper;
 import com.middle.stage.test.optimization.dao.data.DinnerDO;
 import com.middle.stage.test.optimization.dao.data.DinnerTypeDO;
 import com.middle.stage.test.optimization.dao.data.UserDO;
@@ -10,18 +11,18 @@ import com.middle.stage.test.optimization.service.*;
 import com.middle.stage.test.optimization.service.impl.ShopServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatcher;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
 
 @Slf4j
@@ -42,6 +43,9 @@ class ShopServiceImplTest {
     @InjectMocks
     private ShopServiceImpl shopService;
 
+    @Autowired
+    private DinnerTypeMapper dinnerTypeMapper;
+
     //全部数据集合
     private static List<DinnerTypeDO> dinnerTypeDOList = new ArrayList<>();
     //新餐别数据
@@ -54,15 +58,15 @@ class ShopServiceImplTest {
     private static UserDO userDO = new UserDO();
     //转换map
     private static HashMap<Integer, DinnerTypeDO> dinnerTypeDOMap = new HashMap<>();
-    //模拟查询结果
+    //查询结果
     private static DinnerTypeDO dinnerTypeDO = new DinnerTypeDO();
 
 
     /**
      * 测试数据
      */
-    @BeforeAll
-    static void beforSaveCanteenDinnerRelation() {
+    @BeforeEach
+    void beforSaveCanteenDinnerRelation() {
         userDO.setUserId(1);
         userDO.setUserName("zyq");
         userDO.setMerchantId(1);
@@ -71,21 +75,13 @@ class ShopServiceImplTest {
         canteenDTO.setMerchantId(96);
         canteenDTO.setEquId(3);
 
-        dinnerTypeDOList = new ArrayList<>();
-        DinnerTypeDO d1 = new DinnerTypeDO(1, "全天", 60, 120);
-        DinnerTypeDO d2 = new DinnerTypeDO(2, "早餐", 540, 550);
-        DinnerTypeDO d3 = new DinnerTypeDO(3, "午餐", 690, 780);
-        dinnerTypeDOList.add(d1);
-        dinnerTypeDOList.add(d2);
-        dinnerTypeDOList.add(d3);
-
+        dinnerTypeDOList = dinnerTypeMapper.selectAll();
         // 这里使用断言判断准备的数据是否正确
         Assertions.assertNotEquals(0, dinnerTypeDOList.size(), "dinnerTypeDOList size is 0");
-        dinnerTypeDO = d1;
+
+        dinnerTypeDO = dinnerTypeMapper.selectByPrimaryKey(1);
         Assertions.assertNotNull(dinnerTypeDO, "dinnerTypeDO is null");
-        oldDinnerList = new ArrayList<>();
-        oldDinnerList.add(d1);
-        oldDinnerList.add(d2);
+        oldDinnerList = dinnerTypeMapper.selectDinnerTypeByCanteenId(279);
         Assertions.assertNotEquals(0, oldDinnerList.size(), "oldDinnerList size is 0");
 
         DinnerTypeForm dinnerTypeOne = new DinnerTypeForm(2, "早餐", "09:00", "10:00");
@@ -126,9 +122,9 @@ class ShopServiceImplTest {
         verify(mockDinnerTypeService).selectByPrimaryKey(1);
         verify(mockDinnerTypeService).selectDinnerTypeByCanteenId(canteenDTO.getCanteenId());
         verify(mockDinnerTypeService).listToMap(dinnerTypeDOList);
-        verify(mockDinnerService).batchDeleteByCondition(isA(List.class));
-        verify(mockDinnerService).batchUpdateByCondition(isA(List.class));
-        verify(mockDinnerService).batchInsert(isA(List.class));
+        verify(mockDinnerService).batchDeleteByCondition(argThat(new BatchDeleteMatcher()));
+        verify(mockDinnerService).batchUpdateByCondition(argThat(new BatchUpdateMatcher()));
+        verify(mockDinnerService).batchInsert(argThat(new BatchInsertMatcher()));
         verify(mockShopCommonService).pushDinnerToIsv(anyInt(), anyInt(), anyInt(), anyInt(), anyInt());
         verify(mockOperationLogService).saveLog(anyLong(), any(), anyInt(), anyString(), anyString(), anyString(), anyInt(), anyInt());
         verify(mockCanteenDinnerService).putCanteenDinnerType2Cache(anyInt(), anyList());
