@@ -102,7 +102,7 @@ class ShopServiceImplTest {
         when(mockDinnerTypeService.selectAll()).thenReturn(dinnerTypeDOList);
         when(mockDinnerTypeService.listToMap(dinnerTypeDOList)).thenReturn(dinnerTypeDOMap);
 
-        //以下知识点同学们自己学吧，师傅领进门，修行靠个人
+        // @see https://xiyun-international.github.io/java-unit-docs/05-other/02-api
 
         //知识点-自定义参数匹配器
         when(mockDinnerService.batchDeleteByCondition(argThat(new BatchDeleteMatcher()))).thenReturn(1);
