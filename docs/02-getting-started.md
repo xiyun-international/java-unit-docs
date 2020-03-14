@@ -90,7 +90,7 @@ public class UserServiceImpl implements UserService {
 @SpringBootTest
 class MiddleStageTestServiceByAnnotationApplicationTests {
 
-    //准备测试用例及模拟数据，省略后续....   
+    //准备测试数据，省略后续....   
     String mobile = "17612345678";
     UserDO userResult = new UserDO();
         

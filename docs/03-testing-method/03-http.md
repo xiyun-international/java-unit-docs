@@ -9,7 +9,7 @@ group:
 
 ## 介绍
 
-在保证了 Service 和 DAO 层的测试后，对于暴露出的 HTTP 接口，只需要关注它是否可用即可。对于 HTTP 接口的测试同样要关注几点原则：
+在保证了 Service 和 DAO 层的测试后，对于暴露出的 HTTP 接口，只需要关注它是否可用即可。对于 HTTP 接口的测试同样要关注几点[原则](https://github.com/alibaba/p3c/blob/master/p3c-gitbook/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95.md#L17)：
 
 - 全自动&非交互式
 - 设定自动回滚
