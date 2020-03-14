@@ -142,7 +142,7 @@ public class ShopServiceImpl implements ShopService {
         if (updateRecord.length() > 0) {
             pushDataAndSaveLog(newDinnerList, loginUser, canteenDTO, newDinnerTypeDOList, oldDinnerList, updateRecord);
         }
-        
+
         log.info("ShopService.updateCanteen insertResult = [{}] tmpNewDinnerTypeDOList = [{}]", insertResult, JSONObject.toJSON(tmpNewDinnerTypeDOList));
         log.info("ShopService.updateCanteen deleteResult = [{}] tmpOldDinnerTypeDOList = [{}]", deleteResult, JSONObject.toJSON(tmpOldDinnerTypeDOList));
         log.info("ShopService.updateCanteen updateResult = [{}] batchUpdateList = [{}]", updateResult, JSONObject.toJSON(batchUpdateList));
@@ -196,7 +196,7 @@ class ShopServiceImplTest {
      */
     @BeforeEach
     void beforSaveCanteenDinnerRelation() {
-        userDO.setUserId(1);
+                userDO.setUserId(1);
         userDO.setUserName("zyq");
         userDO.setMerchantId(1);
 
@@ -205,6 +205,7 @@ class ShopServiceImplTest {
         canteenDTO.setEquId(3);
 
         dinnerTypeDOList = dinnerTypeMapper.selectAll();
+
         dinnerTypeDO = dinnerTypeMapper.selectByPrimaryKey(1);
         oldDinnerList = dinnerTypeMapper.selectDinnerTypeByCanteenId(279);
 
@@ -225,7 +226,7 @@ class ShopServiceImplTest {
         when(mockDinnerTypeService.selectAll()).thenReturn(dinnerTypeDOList);
         when(mockDinnerTypeService.listToMap(dinnerTypeDOList)).thenReturn(dinnerTypeDOMap);
 
-        //以下知识点同学们自己学吧，师傅领进门，修行靠个人
+        // @see https://xiyun-international.github.io/java-unit-docs/05-other/02-api
 
         //知识点-自定义参数匹配器
         when(mockDinnerService.batchDeleteByCondition(argThat(new BatchDeleteMatcher()))).thenReturn(1);
