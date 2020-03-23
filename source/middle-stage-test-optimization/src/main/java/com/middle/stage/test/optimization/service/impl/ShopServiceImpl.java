@@ -77,6 +77,7 @@ public class ShopServiceImpl implements ShopService {
             BeanUtils.copyProperties(dinnerTypeView, dinnerTypeForm);
             newDinnerList.add(dinnerTypeForm);
         }
+
         //转换实体类及时间
         List<DinnerTypeDO> newDinnerTypeDOList = dinnerTypeFormListToDinnerTypeDOList(newDinnerList);
         List<DinnerTypeDO> oldDinnerList = dinnerTypeService.selectDinnerTypeByCanteenId(canteenDTO.getCanteenId());
@@ -88,15 +89,18 @@ public class ShopServiceImpl implements ShopService {
             oldDinnerTypeDOList = oldDinnerList;
         }
         log.info("ShopService.updateCanteen oldDinnerList = [{}]", JSONObject.toJSON(oldDinnerList));
+
         //通用集合求差集、交集
         CommonsListUtil commonsListUtil = new CommonsListUtil(newDinnerTypeDOList, oldDinnerTypeDOList).invoke();
         List<DinnerTypeDO> tmpNewDinnerTypeDOList = commonsListUtil.getTmpNewObjectList();
         List<DinnerTypeDO> tmpOldDinnerTypeDOList = commonsListUtil.getTmpOldObjectList();
         List<DinnerTypeDO> tmpIntersectNewDinnerTypeDOList = commonsListUtil.getTmpIntersectNewObjectList();
         List<DinnerTypeDO> tmpIntersectOldDinnerTypeDOList = commonsListUtil.getTmpIntersectOldObjectList();
+
         //排序
         tmpIntersectNewDinnerTypeDOList.stream().sorted(Comparator.comparing(DinnerTypeDO::getDinnerTypeId));
         tmpIntersectOldDinnerTypeDOList.stream().sorted(Comparator.comparing(DinnerTypeDO::getDinnerTypeId));
+
         //本次操作信息记录
         StringBuffer updateRecord = new StringBuffer();
         List<DinnerTypeDO> dinnerTypeEntities = dinnerTypeService.selectAll();
@@ -104,16 +108,20 @@ public class ShopServiceImpl implements ShopService {
 
         // 旧集合求出差集不为空，执行逻辑删除
         int deleteResult = getDeleteResult(loginUser, canteenDTO, tmpOldDinnerTypeDOList, updateRecord, dinnerTypeDOMap);
+
         //交集求出数据更新
         List<DinnerTypeDO> batchUpdateList = Lists.newArrayList();
         setBatchUpdateList(tmpIntersectNewDinnerTypeDOList, tmpIntersectOldDinnerTypeDOList, batchUpdateList);
         int updateResult = getUpdateResult(loginUser, canteenDTO, updateRecord, dinnerTypeDOMap, batchUpdateList);
+
         // 新集合求出差集不为空，执行添加
         int insertResult = getInsertResult(loginUser, canteenDTO, tmpNewDinnerTypeDOList, updateRecord, dinnerTypeDOMap);
+
         //添加本次变更操作记录
         if (updateRecord.length() > 0) {
             pushDataAndSaveLog(newDinnerList, loginUser, canteenDTO, newDinnerTypeDOList, oldDinnerList, updateRecord);
         }
+
         log.info("ShopService.updateCanteen insertResult = [{}] tmpNewDinnerTypeDOList = [{}]", insertResult, JSONObject.toJSON(tmpNewDinnerTypeDOList));
         log.info("ShopService.updateCanteen deleteResult = [{}] tmpOldDinnerTypeDOList = [{}]", deleteResult, JSONObject.toJSON(tmpOldDinnerTypeDOList));
         log.info("ShopService.updateCanteen updateResult = [{}] batchUpdateList = [{}]", updateResult, JSONObject.toJSON(batchUpdateList));

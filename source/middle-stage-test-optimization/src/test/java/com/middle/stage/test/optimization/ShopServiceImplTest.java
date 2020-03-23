@@ -86,7 +86,6 @@ class ShopServiceImplTest {
         newDinnerList.add(dinnerTypeTwo);
 
         dinnerTypeDOMap = ShopServiceImpl.listToMap(dinnerTypeDOList);
-        Assertions.assertNotEquals(0, dinnerTypeDOMap.size(), "dinnerTypeDOMap size is 0");
     }
 
     @Test

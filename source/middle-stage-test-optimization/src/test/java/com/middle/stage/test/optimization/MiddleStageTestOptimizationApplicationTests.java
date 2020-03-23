@@ -37,6 +37,7 @@ class MiddleStageTestOptimizationApplicationTests {
     void getDinnerListTest() {
         Assertions.assertNotNull(newDinnerTypeDOList, "newDinnerTypeDOList can not be null!");
         Assertions.assertNotNull(oldDinnerTypeDOList, "newDinnerTypeDOList can not be null!");
+
         //通用集合求差集、交集
         CommonsListUtil commonsListUtil = new CommonsListUtil(newDinnerTypeDOList, oldDinnerTypeDOList).invoke();
         //新集合求出交集
