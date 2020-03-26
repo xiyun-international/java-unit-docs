@@ -1,4 +1,11 @@
-# 持续集成检测
+---
+order: 3
+group:
+  title: 对接平台
+  order: 5
+---
+
+# GitLab-CI + Sonar
 
 ## 背景
 
