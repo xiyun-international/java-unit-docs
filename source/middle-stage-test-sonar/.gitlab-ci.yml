@@ -1,0 +1,8 @@
+sonar_analyze:
+  stage: build
+  script:
+  - mvn clean sonar:sonar
+  only:
+  - master
+  tags:
+  - sonar
