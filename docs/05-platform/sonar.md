@@ -88,7 +88,7 @@ SonarQube 访问地址：http://localhost:9000，默认账号密码为 `admin`�
 
 ![](../assets/sonar-plugins.png)
 
-Gitlab 无需其他基础配置，请自行注册账号并将提供的[源码工程]()提交到仓库。
+Gitlab 无需其他基础配置，请自行注册账号并将提供的[源码工程](https://github.com/xiyun-international/java-unit-docs/tree/master/source/middle-stage-test-sonar)提交到仓库。
 
 ### GitLab-Runner
 
@@ -250,4 +250,58 @@ OS/Arch:      linux/amd64
 
 ## 问题及解决方案
 
-还在整理
+**Q:** docker 启动 Sonarqube 失败容器退出，并打印如下信息：
+
+```shell
+max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]
+```
+
+**A：**
+
+1.执行以下命令（临时修改）
+
+```
+sysctl -w vm.max_map_count=262144
+```
+
+2.编辑  /etc/sysctl.conf，在文件最后一行添加 vm.max_map_count=262144。永久修改。
+
+
+
+**Q:**  GitLab 安装成功后，下载代码 Git 地址 ip 变成字符串导致无法下载代码，如：
+
+```
+http://ABCDEFGHIJKLMN/sonar/middle-stage-test-optimization.git
+```
+
+**A：**
+
+进入 Gitlab 容器，编辑 /etc/gitlab/gitlab.rb 文件，在其中加入下列配置：
+
+```
+external_url 'http://192.168.231.128'
+```
+
+
+
+**Q:** 提交代码 Gitlab CI - jobs 输出信息如下：
+
+```
+[ERROR] Failed to execute goal org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar (default-cli) on project middle-stage-test-optimization: Unable to execute SonarQube: Fail to get bootstrap index from server: Failed to connect to /192.168.231.128:9000: 拒绝连接 (Connection refused) -> [Help 1]
+```
+
+**A:**
+
+检查 Gitlab 与 Sonarqube 的授权配置，请按照文档步骤，仔细核对。
+
+
+
+**Q:** 提交代码 Gitlab CI - jobs 输出信息如下：
+
+```
+ [ERROR] Failed to execute goal org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar (default-cli) on project middle-stage-test-optimization: Fail to parse response of api/plugins/installed: Fail to request http://192.168.231.129:9000/api/plugins/installed: timeout: Socket closed -> [Help 1]
+```
+
+**A:**
+
+机器性能的原因，稍后重试一下。
