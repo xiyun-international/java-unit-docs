@@ -254,7 +254,7 @@ OS/Arch:      linux/amd64
 
 ## 问题及解决方案
 
-**Q：**docker 启动 Sonarqube 失败容器退出，并打印如下信息：
+**Q:** docker 启动 Sonarqube 失败容器退出，并打印如下信息：
 
 ```shell
 max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]
