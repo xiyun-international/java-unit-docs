@@ -17,121 +17,9 @@ group:
 
 ![](../assets/部署架构图.png)
 
-图中的 Sonar Scanner我并没有部署单独的服务，而是采用在 .gitlab_ci.yml 执行 mvn 命令，通过 maven 插件来做扫描。
 
-## 环境、软件安装
 
-由于我的虚拟机系统为 centos7，所以此次环境的搭建基于 centos7。
-
-### docker
-
-1.安装需要的软件包， yum-util 提供 yum-config-manager功能。
-
-```shell
-$ sudo yum install -y yum-utils device-mapper-persistent-data lvm2
-```
-
-2.设置yum源
-
-```shell
-$ sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-```
-
-3.查看仓库中所有 docker 版本，可选择特定版本安装，这里列举了最新的三个版本。
-
-```shell
-$ yum list docker-ce --showduplicates | sort -r
-```
-
-|                  |      版本       |                  |
-| :--------------: | :-------------: | :--------------: |
-| docker-ce.x86_64 | 3:19.03.8-3.el7 | docker-ce-stable |
-| docker-ce.x86_64 | 3:19.03.7-3.el7 | docker-ce-stable |
-| docker-ce.x86_64 | 3:19.03.6-3.el7 | docker-ce-stable |
-
-说明：版本号为第一个冒号 `:` 开始，直到第一个连字符 `-` 之间的数字字符串。如：19.03.58。
-
-4.安装
-
-```shell
-#安装命令 sudo yum install docker-ce-版本号
-#这里我选用了最新版本：19.03.58。
-$ sudo yum install docker-ce-19.03.58
-```
-
-5.启动并加入开机启动
-
-```shell
-#启动
-$ sudo systemctl start docker
-#开机启动
-$ sudo systemctl enable docker
-```
-
-6.查看docker版本
-
-```shell
-$ docker version
-```
-
-```
-Client: Docker Engine - Community
- Version:           19.03.8
- API version:       1.40
- Go version:        go1.12.17
- Git commit:        afacb8b
- Built:             Wed Mar 11 01:27:04 2020
- OS/Arch:           linux/amd64
- Experimental:      false
-
-Server: Docker Engine - Community
- Engine:
-  Version:          19.03.8
-  API version:      1.40 (minimum version 1.12)
-  Go version:       go1.12.17
-  Git commit:       afacb8b
-  Built:            Wed Mar 11 01:25:42 2020
-  OS/Arch:          linux/amd64
-  Experimental:     false
- containerd:
-  Version:          1.2.13
-  GitCommit:        7ad184331fa3e55e52b890ea95e65ba581ae3429
- runc:
-  Version:          1.0.0-rc10
-  GitCommit:        dc9208a3303feef5b3839f4323d9beb36df0a9dd
- docker-init:
-  Version:          0.18.0
-  GitCommit:        fec3683
-```
-
-### docker-compose
-
-1.安装
-
-可以访问 https://github.com/docker/compose/releases/ 自行选择版本。
-
-```shell
-$ curl -L https://github.com/docker/compose/releases/download/1.25.4/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
-```
-
-2.授权
-
-```shell
-$ chmod +x /usr/local/bin/docker-compose
-```
-
-3.查看版本
-
-```shell
-$ docker-compose version
-```
-
-```
-docker-compose version 1.25.4, build 8d51620a
-docker-py version: 4.1.0
-CPython version: 3.7.5
-OpenSSL version: OpenSSL 1.1.0l  10 Sep 2019
-```
+## 安装
 
 ### GitLab + SonarQube
 
@@ -206,15 +94,9 @@ SonarQube 访问地址：http://localhost:9000，默认账号密码为 `admin`�
 
 Gitlab无需其他基础配置，请自行注册账号并将提供的[源码工程]()提交到仓库。
 
-### GitLab-runner
+### GitLab-Runner
 
-由于我使用 docker 安装 runner 时，总不能将镜像下载完全，等了几小时也没有反应，如图（始终卡在此处）：
-
-![](../assets/GitLab-runner.png)
-
-
-
-所以采用 Linux 的安装方式安装 GitLab-runner。
+使用 docker 安装 runner 时，可能出现镜像下载不完全的情况，所以采用 Linux 的安装方式。
 
 1.下载
 
@@ -232,7 +114,9 @@ $ sudo chmod +x /usr/local/bin/GitLab-ci-multi-runner
 
 ```shell
 $ GitLab-ci-multi-runner register
------------------------------------------------------------------------------------------
+```
+
+```shell
 #输入下图中的URL
 #Please enter the GitLab-ci coordinator URL (e.g. https://GitLab.com/):
 
@@ -273,7 +157,9 @@ $ GitLab-ci-multi-runner start
 
 ```shell
 $ GitLab-runner -version
------------------------------------------------------------------------------------------
+```
+
+```shell
 Version:      9.5.0
 Git revision: 413da38
 Git branch:   9-5-stable
