@@ -133,20 +133,9 @@ CPython version: 3.7.5
 OpenSSL version: OpenSSL 1.1.0l  10 Sep 2019
 ```
 
-### Gitlab + Sonarqube
+### GitLab + SonarQube
 
-对于 Gitlab + Sonarqube 的安装已给出 docker-compose.yml。将 yml 放入虚拟机执行命令，即可拉取所需镜像并启动容器运行。
-
-说明：最好不要更改镜像版本，不同版本Gitlab 和 Sonarqube 的授权访问是不同的，此处采用的都为教新版本。
-
-```shell
-# 运行命令即可拉取所需镜像，并启动容器。
-$ docker-compose up
-```
-
-Gitlab 访问地址：http://192.168.231.129 ，首次访问时，需设置 root 账号密码。
-
-Sonarqube 访问地址：http://192.168.231.129:9000，默认账号密码为 admin。
+对于 GitLab + SonarQube 的安装请看 `docker-compose.yml`。
 
 #### docker-compose.yml
 
@@ -182,13 +171,30 @@ networks:
     driver: bridge
 ```
 
+最好不要更改镜像版本，不同版本 GitLab 和 SonarQube 的授权访问是不同的。
+
+```shell
+# 使用 docker-compose 启动服务。
+$ docker-compose up
+```
+
+GitLab 访问地址：http://localhost:8080，首次访问时需设置 `root` 账号密码。
+
+SonarQube 访问地址：http://localhost:9000，默认账号密码为 `admin`。
+
 #### 基础配置及插件安装
 
-**Sonarqube 插件安装**
+**SonarQube 插件安装**
 
-1.点击Administration  --->  2.点击Marketplace  --->  3.在 Plugins 处搜索插件  --->  4.重启 Sonarqube 服务
+1. 点击 Administration；
+2. 点击 Marketplace；
+3. 在 Plugins 处搜索插件；
+4. 重启 SonarQube 服务；
 
-需要安装的插件：**1.Chinese Pack（中文包）**、**2.GitLab Auth（Gitlab访问授权插件）**。
+需要安装的插件：
+
+1. Chinese Pack（中文包）；
+2. GitLab Auth（GitLab 访问授权插件）；
 
 如图(此处已安装中文包)：
 
@@ -196,48 +202,48 @@ networks:
 
 
 
-**Gitlab**
+**GitLab**
 
 Gitlab无需其他基础配置，请自行注册账号并将提供的[源码工程]()提交到仓库。
 
-### gitlab-runner
+### GitLab-runner
 
 由于我使用 docker 安装 runner 时，总不能将镜像下载完全，等了几小时也没有反应，如图（始终卡在此处）：
 
-![](../assets/gitlab-runner.png)
+![](../assets/GitLab-runner.png)
 
 
 
-所以采用 Linux 的安装方式安装 gitlab-runner。
+所以采用 Linux 的安装方式安装 GitLab-runner。
 
 1.下载
 
 ```shell
-$ sudo curl --output /usr/local/bin/gitlab-ci-multi-runner https://gitlab-ci-multi-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-ci-multi-runner-darwin-amd64
+$ sudo curl --output /usr/local/bin/GitLab-ci-multi-runner https://GitLab-ci-multi-runner-downloads.s3.amazonaws.com/latest/binaries/GitLab-ci-multi-runner-darwin-amd64
 ```
 
 2.授权
 
 ```shell
-$ sudo chmod +x /usr/local/bin/gitlab-ci-multi-runner
+$ sudo chmod +x /usr/local/bin/GitLab-ci-multi-runner
 ```
 
 3.注册（使用 docker 安装需登录容器进行注册）
 
 ```shell
-$ gitlab-ci-multi-runner register
+$ GitLab-ci-multi-runner register
 -----------------------------------------------------------------------------------------
 #输入下图中的URL
-#Please enter the gitlab-ci coordinator URL (e.g. https://gitlab.com/):
+#Please enter the GitLab-ci coordinator URL (e.g. https://GitLab.com/):
 
 #输入下图中的token
-#Please enter the gitlab-ci token for this runner:
+#Please enter the GitLab-ci token for this runner:
 
 #输入一个描述信息(随便输入),sonar
-#Please enter the gitlab-ci description for this runner:
+#Please enter the GitLab-ci description for this runner:
 
 #输入标签，后续编写gitlab_ci文件需用到,sonar
-#Please enter the gitlab-ci tags for this runner (comma separated):
+#Please enter the GitLab-ci tags for this runner (comma separated):
 
 #设置是否可以无标签构建,false
 #Whether to run untagged builds [true/false]:
@@ -259,14 +265,14 @@ $ gitlab-ci-multi-runner register
 4.安装 & 启动
 
 ```shell
-$ gitlab-ci-multi-runner install 
-$ gitlab-ci-multi-runner start
+$ GitLab-ci-multi-runner install 
+$ GitLab-ci-multi-runner start
 ```
 
 5.查看版本
 
 ```shell
-$ gitlab-runner -version
+$ GitLab-runner -version
 -----------------------------------------------------------------------------------------
 Version:      9.5.0
 Git revision: 413da38
@@ -280,25 +286,25 @@ OS/Arch:      linux/amd64
 
 ## 授权配置
 
-### Gitlab 授权配置
+### GitLab 授权配置
 
 #### 配置
 
 1.点击Admin Area  ---> 2.点击Applications  ---> 3.点击New Application 进入添加页面。如图（此图用编辑举例，演示填写）：
 
-![](../assets/gitlab-grant-conf.png)
+![](../assets/GitLab-grant-conf.png)
 
 
 
 #### 保存
 
-保存成功后生成的 Application ID 及 Secret 在 Sonarqube 授权时需填写。
+保存成功后生成的 Application ID 及 Secret 在 SonarQube 授权时需填写。
 
-![](../assets/gitlab-save-success.png)
+![](../assets/GitLab-save-success.png)
 
 
 
-### Sonarqube 授权配置
+### SonarQube 授权配置
 
 #### 配置
 
@@ -308,11 +314,11 @@ OS/Arch:      linux/amd64
 
 为了启用Gitlab身份验证：
 
-- Sonarqube必须只能通过HTTPS公开访问。
+- SonarQube必须只能通过HTTPS公开访问。
 - 必须将属性 **sonar.core.serverBaseURL** 设置为此公共 **HTTPS URL**。
-- 在您的GitLab配置文件中，您需要创建一个开发人员应用程序，其“授权回调URL”必须设置为`<value_of_sonar.core.serverBaseURL_property>/oauth2/callback/gitlab`。
+- 在您的GitLab配置文件中，您需要创建一个开发人员应用程序，其“授权回调URL”必须设置为`<value_of_sonar.core.serverBaseURL_property>/oauth2/callback/GitLab`。
 
-此处的 **sonar.core.serverBaseURL** 即为 Gitlab 中设置的回调 **URI**，对其属性值的设置，请沿着Gitlab选项卡向下寻找到**通用**选项卡，在其中设置值即可。
+此处的 **sonar.core.serverBaseURL** 即为 GitLab 中设置的回调 **URI**，对其属性值的设置，请沿着Gitlab选项卡向下寻找到**通用**选项卡，在其中设置值即可。
 
 ![](../assets/sonar-grant-conf.png)
 
@@ -320,15 +326,15 @@ OS/Arch:      linux/amd64
 
 #### 登录授权
 
-配置完成后，请重新登录，这时登录选项中会出现**通过 Gitlab 登录**，如图：
+配置完成后，请重新登录，这时登录选项中会出现**通过 GitLab 登录**，如图：
 
-![](../assets/sonar-gitlab-login.png)
+![](../assets/sonar-GitLab-login.png)
 
 
 
-点击 Gitlab 登录，如果此时没有登录的账号，则会跳转到 Gitlab 登录页面，如果已有登录的 Gitlab 账号，则会直接跳转到下图页面，如图：
+点击 GitLab 登录，如果此时没有登录的账号，则会跳转到 GitLab 登录页面，如果已有登录的 GitLab 账号，则会直接跳转到下图页面，如图：
 
-![](../assets/sonar-gitlab-login-success.png)
+![](../assets/sonar-GitLab-login-success.png)
 
 点击 Authorize 即可完成授权。
 
@@ -336,7 +342,7 @@ OS/Arch:      linux/amd64
 
 ## 提交代码触发分析
 
-完成授权配置后，请先下载提供的[**源码**](https://github.com/xiyun-international/java-unit-docs/tree/master/source/middle-stage-test-sonar)并提交到 Gitlab 中。此处的演示为直接在 master 分支修改代码并提交的演示。提交代码后，Gitlab 会自动通过 gitlab-runner 执行构建任务，点击CI/CD选项即可看到执行中的任务。如下图：
+完成授权配置后，请先下载提供的[**源码**](https://github.com/xiyun-international/java-unit-docs/tree/master/source/middle-stage-test-sonar)并提交到 GitLab 中。此处的演示为直接在 master 分支修改代码并提交的演示。提交代码后，Gitlab 会自动通过 GitLab-runner 执行构建任务，点击CI/CD选项即可看到执行中的任务。如下图：
 
 ![](../assets/pipline.png)
 
@@ -348,7 +354,7 @@ OS/Arch:      linux/amd64
 
 
 
-构建成功后，登录 Sonarqube 平台，即可看到分析结果，如下图：
+构建成功后，登录 SonarQube 平台，即可看到分析结果，如下图：
 
 ![](../assets/sonar-project.png)
 
