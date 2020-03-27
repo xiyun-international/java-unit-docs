@@ -88,11 +88,7 @@ SonarQube 访问地址：http://localhost:9000，默认账号密码为 `admin`�
 
 ![](../assets/sonar-plugins.png)
 
-
-
-**GitLab**
-
-Gitlab无需其他基础配置，请自行注册账号并将提供的[源码工程]()提交到仓库。
+Gitlab 无需其他基础配置，请自行注册账号并将提供的[源码工程]()提交到仓库。
 
 ### GitLab-Runner
 
