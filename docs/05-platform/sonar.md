@@ -11,7 +11,7 @@ group:
 
 目前只能通过本地 IDE 来检测代码质量以及单元测试覆盖率。没办法通过一个自动化的平台来给所有的研发人员提供这些检测服务，要解决这个问题，就需要搭建一套持续集成的检测服务。
 
-现方案为：通过 GitLab CI + GitLab Runner + SonarQube 在每次 commit 代码时完成自动化检测，通过 SonarQube 平台让所有研发人员查看检测结果。
+现方案为：通过 GitLab CI + GitLab Runner + SonarQube 在每次 `commit` 代码时完成自动化检测，通过 SonarQube 平台让所有研发人员查看检测结果。
 
 ## 部署架构图
 
